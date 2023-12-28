@@ -1,0 +1,31 @@
+import 'package:app/feature/home/home_page.dart'; // TODO: fix here
+import 'package:app/feature/auth/index.dart';
+import 'package:app/util/route/index.dart';
+import 'package:flutter/material.dart';
+
+class RouteGenerator {
+  Route<MaterialPageRoute> generateRoute(RouteSettings settings) {
+    final args = settings.arguments;
+
+    if (settings.name == RouteEnum.signin.name) {
+      return MaterialPageRoute(builder: (_) => SignInPage());
+    } else if (settings.name == RouteEnum.signup.name) {
+      return MaterialPageRoute(builder: (_) => SignUpPage());
+    } else if (settings.name == RouteEnum.home.name) {
+      return MaterialPageRoute(builder: (_) => HomePage());
+    } else {
+      return _errorRoute();
+    }
+  }
+
+  // TODO: change that
+  Route<MaterialPageRoute> _errorRoute() {
+    return MaterialPageRoute(builder: (_) {
+      return const Scaffold(
+        body: Center(
+          child: Text('ERROR'),
+        ),
+      );
+    });
+  }
+}
