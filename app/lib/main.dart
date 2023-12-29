@@ -1,42 +1,46 @@
+import 'package:app/shared/constant/index.dart';
+import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/util/http/index.dart';
+import 'package:app/util/route/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-void main() {
-  runApp(const MyApp());
+Future main() async {
+  await dotenv.load(fileName: '.env');
+  DependencyInjection.configure();
+
+  final initialRoute = await _getInitialRoute();
+  FlutterNativeSplash.remove();
+
+  runApp(MyApp(initialRoute: initialRoute));
+}
+
+Future<RouteEnum> _getInitialRoute() async {
+  final jwtStorage = DependencyInjection.getIt<JwtStorage>();
+  final jwt = await jwtStorage.getToken();
+
+  // TODO: uncomment this line to enable authentication
+  // return jwt.isNotEmpty ? RouteEnum.home : RouteEnum.signin;
+  return RouteEnum.home;
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final RouteEnum initialRoute;
+
+  const MyApp({required this.initialRoute, super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: AppStrings.appName,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Init the app'),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: const Center(
-        child: Text(
-          'Hello, world!',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
+      initialRoute: initialRoute.name,
+      onGenerateRoute: DependencyInjection.getIt<RouteGenerator>().generateRoute,
     );
   }
 }
