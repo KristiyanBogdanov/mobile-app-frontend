@@ -1,11 +1,14 @@
 import 'package:app/feature/home/home_view_model.dart';
+import 'package:app/feature/location/locations_page.dart';
+import 'package:app/shared/constant/index.dart';
+import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   final _viewModel = HomeViewModel();
 
-  HomePage({Key? key}) : super(key: key);
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,44 +17,66 @@ class HomePage extends StatelessWidget {
       child: Consumer<HomeViewModel>(
         builder: (context, viewModel, child) {
           return Scaffold(
-            appBar: AppBar(
-              title: const Text('Home'),
-            ),
+            appBar: _buildAppBarForIndex(viewModel.currentPageIndex),
             body: _buildBodyForIndex(viewModel.currentPageIndex),
-            bottomNavigationBar: _buildBottomNavigationBar(context),
+            bottomNavigationBar: _BottomNavigationBar(viewModel: viewModel),
           );
         },
       ),
     );
   }
 
-  Widget _buildBottomNavigationBar(BuildContext context) {
+  PreferredSizeWidget? _buildAppBarForIndex(int index) {
+    switch (index) {
+      case 0:
+        return const AppBarWidget(title: AppStrings.locationsPageTitle);
+      case 1:
+        return const AppBarWidget(title: AppStrings.assistantPageTitle);
+      case 2:
+        return const AppBarWidget(title: AppStrings.marketplacePageTitle);
+    }
+
+    return null;
+  }
+
+  Widget? _buildBodyForIndex(int index) {
+    switch (index) {
+      case 0:
+        return const LocationsPage();
+      case 1:
+        return const Center(child: Text(AppStrings.assistantPageTitle));
+      case 2:
+        return const Center(child: Text(AppStrings.marketplacePageTitle));
+    }
+
+    return null;
+  }
+}
+
+class _BottomNavigationBar extends StatelessWidget {
+  final HomeViewModel viewModel;
+
+  const _BottomNavigationBar({required this.viewModel, super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: _viewModel.currentPageIndex,
-      onTap: (index) => _viewModel.changePage(index),
+      currentIndex: viewModel.currentPageIndex,
+      onTap: (index) => viewModel.changePage(index),
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.location_on),
-          label: 'Location',
+          icon: Icon(Icons.solar_power_rounded),
+          label: AppStrings.locationsPageNavBarLabel,
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
+          icon: Icon(Icons.assistant_rounded),
+          label: AppStrings.assistantPageNavBarLabel,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.shopping_cart_rounded),
+          label: AppStrings.marketplacePageNavBarLabel,
         ),
       ],
     );
   }
-
-  Widget _buildBodyForIndex(int index) {
-    switch (index) {
-      // case 0:
-      //   return _buildLocationPage();
-      // case 1:
-      //   return _buildProfilePage();
-      default:
-        return const Text('ERROR');
-    }
-  }
 }
-
-// TODO: each _build... should be a separate view

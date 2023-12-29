@@ -51,7 +51,7 @@ class SignInPage extends StatelessWidget {
 }
 
 class _SignInForm extends StatelessWidget {
-  const _SignInForm({Key? key}) : super(key: key);
+  const _SignInForm({super.key});
 
   @override
   Widget build(BuildContext context) {

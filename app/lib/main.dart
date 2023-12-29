@@ -22,7 +22,7 @@ Future<RouteEnum> _getInitialRoute() async {
 
   // TODO: uncomment this line to enable authentication
   // return jwt.isNotEmpty ? RouteEnum.home : RouteEnum.signin;
-  return RouteEnum.signin;
+  return RouteEnum.home;
 }
 
 class MyApp extends StatelessWidget {

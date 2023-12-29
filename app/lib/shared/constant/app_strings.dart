@@ -32,4 +32,13 @@ class AppStrings {
   static const String signUpBadRequest = 'Invalid sign up data';
 
   static const String unknownError = 'Something went wrong. Please try again later';
+
+  static const String locationsPageNavBarLabel = 'Locations';
+  static const String assistantPageNavBarLabel = 'Assistant';
+  static const String marketplacePageNavBarLabel = 'Marketplace';
+
+  static const String locationsPageTitle = 'Locations';
+  static const String assistantPageTitle = 'Assistant';
+  static const String marketplacePageTitle = 'Marketplace';
+
 }
