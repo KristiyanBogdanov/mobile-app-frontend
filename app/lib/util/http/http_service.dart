@@ -25,7 +25,7 @@ class HttpService {
     return headers;
   }
 
-  Future<http.Response> post(String url, Object body) async {
+  Future<http.Response> post(String url, Object? body) async {
     return await http.post(
       Uri.parse(url),
       headers: await _getHeaders(),
