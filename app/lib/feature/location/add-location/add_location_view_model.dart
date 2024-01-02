@@ -1,11 +1,9 @@
 import 'package:app/api/location/index.dart';
 import 'package:app/api/user/index.dart';
-import 'package:app/feature/global_state.dart';
 import 'package:app/feature/location/add-device/index.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:app/util/dependency_injection/index.dart';
 import 'package:app/util/http/index.dart';
-import 'package:app/util/route/index.dart';
 import 'package:app/util/stacked-services/index.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -20,11 +18,9 @@ class AddLocationViewModel extends ChangeNotifier {
   String? _nameError;
   String? _weatherStationError;
   final _formKey = GlobalKey<FormState>();
-  final _navigatonService = DependencyInjection.getIt<NavigationService>();
   final _snackbarService = DependencyInjection.getIt<SnackbarService>();
   final _dialogService = DependencyInjection.getIt<DialogService>();
   final _userRepotitory = DependencyInjection.getIt<UserRepository>();
-  final _globalState = DependencyInjection.getIt<GlobalState>();
 
   Future<LocationModel?> addNewLocation() async {
     _clearErrors();
@@ -45,12 +41,7 @@ class AddLocationViewModel extends ChangeNotifier {
     try {
       return await _userRepotitory.addNewLocation(newLocationDto);
     } on UnauthorizedApiException {
-      final response = await _dialogService.showUnauthorizedDialog();
-
-      if (response!.confirmed) {
-        _globalState.logout();
-        _navigatonService.clearStackAndShow(RouteEnum.signin.name);
-      }
+      handleUnauthorizedApiException();
     } on STSerialNumberAlreadyUsedException catch (e) {
       _snackbarService.showSnackbar(message: e.message);
     } on BadRequestApiException catch (e) {
@@ -141,7 +132,7 @@ class AddLocationViewModel extends ChangeNotifier {
       ),
     );
 
-    if (response!.confirmed) {
+    if (response != null && response.confirmed) {
       _solarTrackers.add(response.data as String);
       notifyListeners();
     }

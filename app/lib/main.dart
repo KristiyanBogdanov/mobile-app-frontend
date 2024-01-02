@@ -25,7 +25,7 @@ Future<RouteEnum> _getInitialRoute() async {
   final jwtStorage = DependencyInjection.getIt<JwtStorage>();
   final jwt = await jwtStorage.getToken();
 
-  return jwt.isNotEmpty ? RouteEnum.home : RouteEnum.signin;
+  return jwt.isNotEmpty ? RouteEnum.home : RouteEnum.welcome;
 }
 
 class MyApp extends StatelessWidget {
