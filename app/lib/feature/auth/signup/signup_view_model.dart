@@ -4,7 +4,9 @@ import 'package:app/feature/global_state.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:app/util/dependency_injection/index.dart';
 import 'package:app/util/http/index.dart';
+import 'package:app/util/route/index.dart';
 import 'package:flutter/material.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class SignUpViewModel extends ChangeNotifier {
   String _username = '';
@@ -14,21 +16,23 @@ class SignUpViewModel extends ChangeNotifier {
   String? _emailError;
   String? _passwordError;
   final _formKey = GlobalKey<FormState>();
+  final _navigationService = DependencyInjection.getIt<NavigationService>();
+  final _snackbarService = DependencyInjection.getIt<SnackbarService>();
   final _authRepository = DependencyInjection.getIt<AuthRepository>();
   final _globalState = DependencyInjection.getIt<GlobalState>();
   final _authValidator = DependencyInjection.getIt<AuthValidator>();
 
-  Future<bool> signUp(Function showSnackbar) async {
+  Future<void> signUp() async {
     _clearErrors();
 
     if (!_formKey.currentState!.validate()) {
-      return false;
+      return;
     }
 
     try {
       final userModel = await _authRepository.signUp(SignUpDto(_username, _email, _password));
       _globalState.setUser(userModel);
-      return true;
+      _navigationService.clearStackAndShow(RouteEnum.home.name);
     } on EmailAlreadyUsedException catch (e) {
       _emailError = e.message;
       notifyListeners();
@@ -44,15 +48,13 @@ class SignUpViewModel extends ChangeNotifier {
             notifyListeners();
             break;
           default:
-            showSnackbar(e.message);
+            _snackbarService.showSnackbar(message: e.message);
             break;
         }
       }
     } on UnknownApiException catch (e) {
-      showSnackbar(e.message);
+      _snackbarService.showSnackbar(message: e.message);
     }
-
-    return false;
   }
 
   String? validateUsername(String? username) {

@@ -1,6 +1,7 @@
 import 'package:app/shared/constant/index.dart';
 import 'package:email_validator/email_validator.dart';
 
+// TODO: think about singleton nature of this class
 class AuthValidator {
   bool _fieldIsEmpty(String? field) {
     return field == null || field.isEmpty;

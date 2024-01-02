@@ -3,7 +3,9 @@ import 'package:app/feature/auth/auth_validator.dart';
 import 'package:app/feature/global_state.dart';
 import 'package:app/util/dependency_injection/index.dart';
 import 'package:app/util/http/index.dart';
+import 'package:app/util/route/index.dart';
 import 'package:flutter/material.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class SignInViewModel extends ChangeNotifier {
   String _email = '';
@@ -11,21 +13,23 @@ class SignInViewModel extends ChangeNotifier {
   String? _emailError;
   String? _passwordError;
   final _formKey = GlobalKey<FormState>();
+  final _navigationService = DependencyInjection.getIt<NavigationService>();
+  final _snackbarService = DependencyInjection.getIt<SnackbarService>();
   final _authRepository = DependencyInjection.getIt<AuthRepository>();
   final _globalState = DependencyInjection.getIt<GlobalState>();
   final _authValidator = DependencyInjection.getIt<AuthValidator>();
 
-  Future<bool> signIn(Function showSnackbar) async {
+  Future<void> signIn() async {
     _clearErrors();
 
     if (!_formKey.currentState!.validate()) {
-      return false;
+      return;
     }
 
     try {
       final userModel = await _authRepository.signIn(SignInDto(_email, _password));
       _globalState.setUser(userModel);
-      return true;
+      _navigationService.clearStackAndShow(RouteEnum.home.name);
     } on InvalidEmailException catch (e) {
       _emailError = e.message;
       notifyListeners();
@@ -33,12 +37,10 @@ class SignInViewModel extends ChangeNotifier {
       _passwordError = e.message;
       notifyListeners();
     } on BadRequestApiException catch (e) {
-      showSnackbar(e.message);
+      _snackbarService.showSnackbar(message: e.message);
     } on UnknownApiException catch (e) {
-      showSnackbar(e.message);
+      _snackbarService.showSnackbar(message: e.message);
     }
-
-    return false;
   }
 
   String? validateEmail(String? email) {

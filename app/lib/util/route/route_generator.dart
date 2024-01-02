@@ -9,7 +9,9 @@ class RouteGenerator {
   Route<MaterialPageRoute> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
-    if (settings.name == RouteEnum.signin.name) {
+    if (settings.name == RouteEnum.welcome.name) {
+      return MaterialPageRoute(builder: (_) => WelcomePage());
+    } else if (settings.name == RouteEnum.signin.name) {
       return MaterialPageRoute(builder: (_) => SignInPage());
     } else if (settings.name == RouteEnum.signup.name) {
       return MaterialPageRoute(builder: (_) => SignUpPage());
