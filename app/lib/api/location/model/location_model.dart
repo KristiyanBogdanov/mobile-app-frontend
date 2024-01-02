@@ -1,3 +1,4 @@
+import 'package:app/api/user/index.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'generated/location_model.g.dart';
@@ -7,12 +8,12 @@ class LocationModel {
   final String uuid;
   final String name;
   final String location;
-  final num capacity;
+  final int capacity;
   final List<String> solarTrackers;
   final String? weatherStation;
   final String? cctv;
   final bool amIOwner;
-  final List<String> sharedWith;
+  final List<BriefUserInfoModel> sharedWith;
 
   LocationModel(
     this.uuid,

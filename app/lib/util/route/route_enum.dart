@@ -3,4 +3,5 @@ enum RouteEnum {
   signin,
   signup,
   home,
+  locationInsights,
 }
