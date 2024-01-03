@@ -37,4 +37,8 @@ class MobileAppApi {
   String validateWSSerialNumber(String serialNumber) {
     return _createApiEndpoint('$_location/validate/ws-serial-number/$serialNumber');
   }
+
+  String getLocationInsights(String locationUuid) {
+    return _createApiEndpoint('$_location/$locationUuid/insights');
+  }
 }

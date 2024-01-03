@@ -14,10 +14,10 @@ class HomeViewModel extends ChangeNotifier {
   final _globalState = DependencyInjection.getIt<GlobalState>();
 
   HomeViewModel() {
-    fetchUserData();
+    _fetchUserData();
   }
 
-  Future<void> fetchUserData() async {
+  Future<void> _fetchUserData() async {
     try {
       final userModel = await _userRepotitory.fetchData();
       _globalState.setUser(userModel);

@@ -1,5 +1,6 @@
 import 'package:app/api/location/index.dart';
 import 'package:app/feature/global_state.dart';
+import 'package:app/feature/location/index.dart';
 import 'package:app/util/dependency_injection/index.dart';
 import 'package:app/util/route/index.dart';
 import 'package:app/util/stacked-services/index.dart';
@@ -24,7 +25,7 @@ class LocationsViewModel extends ChangeNotifier {
   }
 
   void navigateToLocation(LocationModel locationModel) {
-    _navigationService.navigateTo(RouteEnum.locationInsights.name, arguments: locationModel);
+    _navigationService.navigateTo(RouteEnum.locationInsights.name, arguments: LocationInsightsViewModel(locationModel));
   }
 
   List<LocationModel> get locations => _globalState.userModel!.locations;

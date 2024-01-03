@@ -1,29 +1,32 @@
-import 'package:app/api/location/model/location_model.dart';
+import 'package:app/feature/location/location-insights/location_insights_view_model.dart';
 import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LocationInsightsPage extends StatelessWidget {
-  final LocationModel locationModel;
+  final LocationInsightsViewModel viewModel;
 
-  const LocationInsightsPage({required this.locationModel, super.key});
+  const LocationInsightsPage({required this.viewModel, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarWidget(title: locationModel.name),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(locationModel.name),
-            Text(locationModel.location),
-            Text(locationModel.capacity.toString()),
-            Text(locationModel.solarTrackers.toString()),
-            Text(locationModel.weatherStation.toString()),
-            Text(locationModel.cctv.toString()),
-            Text(locationModel.amIOwner.toString()),
-            Text(locationModel.sharedWith.toString()),
-          ],
+    return ChangeNotifierProvider(
+      create: (context) => viewModel,
+      child: Scaffold(
+        appBar: AppBarWidget(title: viewModel.locationModel.name),
+        body: Consumer<LocationInsightsViewModel>(
+          builder: (context, viewModel, child) {
+            return viewModel.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(viewModel.locationInsightsModel.toString()),
+                      ],
+                    ),
+                  );
+          },
         ),
       ),
     );

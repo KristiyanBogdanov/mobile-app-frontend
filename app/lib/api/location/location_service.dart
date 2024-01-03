@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/api/location/dto/index.dart';
+import 'package:app/api/location/model/index.dart';
 import 'package:app/util/api/index.dart';
 import 'package:app/util/dependency_injection/index.dart';
 import 'package:app/util/http/index.dart';
@@ -31,5 +32,22 @@ class LocationService {
 
   Future<ValidateSerialNumberDto> validateWSSerialNumber(String serialNumber) async {
     return await _validateSerialNumber(serialNumber, _mobileAppApi.validateWSSerialNumber(serialNumber));
+  }
+
+  Future<LocationInsightsModel> getLocationInsights(String locationUuid) async {
+    final response = await _httpService.get(_mobileAppApi.getLocationInsights(locationUuid));
+
+    final jsonBody = jsonDecode(response.body);
+
+    print(jsonBody);
+
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return LocationInsightsModel.fromJson(jsonBody);
+      case HttpStatus.unauthorized:
+        throw UnauthorizedApiException();
+      default:
+        throw UnknownApiException();
+    }
   }
 }

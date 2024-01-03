@@ -10,9 +10,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       json['uuid'] as String,
       json['username'] as String,
       json['email'] as String,
-      (json['locations'] as List<dynamic>)
-          .map((e) => LocationModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      (json['locations'] as List<dynamic>).map((e) => LocationModel.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{

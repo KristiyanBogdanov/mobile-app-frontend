@@ -1,5 +1,6 @@
 import 'package:app/api/location/dto/index.dart';
 import 'package:app/api/location/location_service.dart';
+import 'package:app/api/location/model/index.dart';
 import 'package:app/util/dependency_injection/index.dart';
 
 class LocationRepository {
@@ -11,5 +12,9 @@ class LocationRepository {
 
   Future<ValidateSerialNumberDto> validateWSSerialNumber(String serialNumber) async {
     return await _locationService.validateWSSerialNumber(serialNumber);
+  }
+
+  Future<LocationInsightsModel> getLocationInsights(String locationUuid) async {
+    return await _locationService.getLocationInsights(locationUuid);
   }
 }

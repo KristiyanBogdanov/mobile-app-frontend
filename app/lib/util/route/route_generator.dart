@@ -1,4 +1,3 @@
-import 'package:app/api/location/model/location_model.dart';
 import 'package:app/feature/home/home_page.dart'; // TODO: fix here
 import 'package:app/feature/auth/index.dart';
 import 'package:app/feature/location/index.dart';
@@ -18,7 +17,7 @@ class RouteGenerator {
     } else if (settings.name == RouteEnum.home.name) {
       return MaterialPageRoute(builder: (_) => const HomePage());
     } else if (settings.name == RouteEnum.locationInsights.name) {
-      return MaterialPageRoute(builder: (_) => LocationInsightsPage(locationModel: args as LocationModel));
+      return MaterialPageRoute(builder: (_) => LocationInsightsPage(viewModel: args as LocationInsightsViewModel));
     } else {
       return _errorRoute();
     }

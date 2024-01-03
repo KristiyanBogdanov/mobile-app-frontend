@@ -6,8 +6,7 @@ part of '../new_location_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-NewLocationDto _$NewLocationDtoFromJson(Map<String, dynamic> json) =>
-    NewLocationDto(
+NewLocationDto _$NewLocationDtoFromJson(Map<String, dynamic> json) => NewLocationDto(
       json['name'] as String,
       json['location'] as String,
       json['capacity'] as int,
@@ -16,8 +15,7 @@ NewLocationDto _$NewLocationDtoFromJson(Map<String, dynamic> json) =>
       json['cctv'] as String?,
     );
 
-Map<String, dynamic> _$NewLocationDtoToJson(NewLocationDto instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$NewLocationDtoToJson(NewLocationDto instance) => <String, dynamic>{
       'name': instance.name,
       'location': instance.location,
       'capacity': instance.capacity,
