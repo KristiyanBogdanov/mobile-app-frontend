@@ -5,7 +5,7 @@ import 'package:app/util/route/index.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
-  Route<MaterialPageRoute> generateRoute(RouteSettings settings) {
+  Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
 
     if (settings.name == RouteEnum.welcome.name) {
@@ -16,6 +16,8 @@ class RouteGenerator {
       return MaterialPageRoute(builder: (_) => SignUpPage());
     } else if (settings.name == RouteEnum.home.name) {
       return MaterialPageRoute(builder: (_) => const HomePage());
+    } else if (settings.name == RouteEnum.addLocation.name) {
+      return MaterialPageRoute(builder: (_) => const AddLocationPage());
     } else if (settings.name == RouteEnum.locationInsights.name) {
       return MaterialPageRoute(builder: (_) => LocationInsightsPage(viewModel: args as LocationInsightsViewModel));
     } else {

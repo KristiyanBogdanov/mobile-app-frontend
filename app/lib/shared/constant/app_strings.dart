@@ -51,20 +51,19 @@ class AppStrings {
   static const String addNewLocationBadRequest = 'Invalid add new location data';
   static const String addExistingLocationBadRequest = 'Invalid add existing location data'; // TODO: I think this string is meaningless
 
+  static const String addNewLocationPageTitle = 'Add new location';
   static const String locationNameLabel = 'Location name';
-  static const String locationNameHint = 'Enter location name';
   static const String locationCoordinatesLabel = 'Location coordinates';
-  static const String locationCoordinatesHint = 'Enter location coordinates';
   static const String capacityLabel = 'Capacity (kW)';
-  static const String capacityHint = 'Enter location capacity';
-  static const String solarTrackerLabel = 'Solar tracker serial number';
-  static const String solarTrackerHint = 'Enter solar tracker serial number';
-  static const String weatherStationLabel = 'Weather station serial number';
-  static const String weatherStationHint = 'Enter weather station serial number';
+  static const String solarTrackersLabel = 'Solar trackers';
+  static const String weatherStationLabel = 'Weather station';
+  static const String serialNumberLabel = 'Serial number';
+  static const String inputFieldHint = 'Type here...';
   static const String addDeviceButton = 'Add device';
   static const String cancelButton = 'Cancel';
   static const String addSolarTrackerButton = 'Add Solar Tracker';
   static const String addWeatherStationButton = 'Add Weather Station';
+  static const String addLocationButton = 'Add location';
 
   static const String requiredLocationName = 'Location name is required';
   static const String requiredLocationCoordinates = 'Location coordinates are required';
@@ -78,4 +77,21 @@ class AppStrings {
   static const String invalidLocationNameLength = 'Location name length is out of range';
   static const String invalidCapacity = 'Capacity must be positive integer';
   static const String invalidSTArraySize = 'Solar trackers array must contain at least one serial number';
+
+  static const String weatherStation = 'Weather station';
+  static const String cctv = 'CCTV';
+  static const String capacity = 'Capacity';
+  static const String kwh = 'kWh';
+  static String installedSolarTrackers(int count) => count == 1 ? 'Solar tracker' : 'Solar trackers';
+  static const String installed = 'installed';
+  static String sharedWith(int count) => count == 1 ? 'Shared with $count person' : 'Shared with $count people';
+  static const String notShared = 'Not shared with anyone';
+
+  static const String addNewLocationButton = 'new';
+
+  static const String scanQRCodeTitle = 'Scan QR Code';
+  static const String scanQRCodeDescription = 'Align the QR Code within the frame';
+
+  static const String noLocationsTitle = 'No locations yet';
+  static const String noLocationsDescription = 'Add a new location from the button above.';
 }

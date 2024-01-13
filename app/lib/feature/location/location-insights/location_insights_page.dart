@@ -13,7 +13,7 @@ class LocationInsightsPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => viewModel,
       child: Scaffold(
-        appBar: AppBarWidget(title: viewModel.locationModel.name),
+        appBar: AppBarView(title: viewModel.locationModel.name),
         body: Consumer<LocationInsightsViewModel>(
           builder: (context, viewModel, child) {
             return viewModel.isLoading

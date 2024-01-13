@@ -1,3 +1,3 @@
 enum BottomSheetType {
-  addLocation,
+  addDevice,
 }

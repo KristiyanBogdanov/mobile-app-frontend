@@ -1,3 +1,4 @@
+import 'package:app/shared/constant/index.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
@@ -8,13 +9,21 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return ElevatedButton(
       onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size.fromHeight(AppStyle.primaryButtonHeight),
+        backgroundColor: AppStyle.contrastColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppStyle.borderRadius12),
+        ),
+      ),
       child: Text(
         text,
-        style: theme.textTheme.labelLarge,
+        style: TextStyle(
+          color: AppStyle.textColor,
+          fontSize: AppStyle.fontSize14,
+        ),
       ),
     );
   }

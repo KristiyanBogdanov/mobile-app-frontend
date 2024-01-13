@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Future main() async {
   await dotenv.load(fileName: '.env');
@@ -35,16 +36,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: AppStrings.appName,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return ScreenUtilInit(
+      designSize: const Size(AppStyle.designWidth, AppStyle.designHeight),
+      minTextAdapt: true,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: AppStrings.appName,
+        theme: ThemeData(
+          fontFamily: 'Nunito',
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        navigatorKey: StackedService.navigatorKey,
+        initialRoute: initialRoute.name,
+        onGenerateRoute: DependencyInjection.getIt<RouteGenerator>().generateRoute,
       ),
-      navigatorKey: StackedService.navigatorKey,
-      initialRoute: initialRoute.name,
-      onGenerateRoute: DependencyInjection.getIt<RouteGenerator>().generateRoute,
     );
   }
 }
+
+// TODO: fix error handling where snackbar is shown
+// TODO: change qr code scanner package
