@@ -22,6 +22,7 @@ class LocationService {
       case HttpStatus.unauthorized:
         throw UnauthorizedApiException();
       default:
+        print(jsonBody);
         throw UnknownApiException();
     }
   }

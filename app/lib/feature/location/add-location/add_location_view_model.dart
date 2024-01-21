@@ -10,36 +10,42 @@ import 'package:stacked_services/stacked_services.dart';
 
 class AddLocationViewModel extends ChangeNotifier {
   String _name = '';
-  String _location = '';
-  int _capacity = 0;
+  String _location = 'nqma';
+  String _capacity = '';
   final List<String> _solarTrackers = [];
   String? _weatherStation;
   String? _cctv;
   String? _nameError;
+  String? _capacityError;
   String? _weatherStationError;
-  final _formKey = GlobalKey<FormState>();
   final _snackbarService = DependencyInjection.getIt<SnackbarService>();
-  final _dialogService = DependencyInjection.getIt<DialogService>();
+  final _bottomSheetService = DependencyInjection.getIt<BottomSheetService>();
+  final _navigationService = DependencyInjection.getIt<NavigationService>();
   final _userRepotitory = DependencyInjection.getIt<UserRepository>();
 
-  Future<LocationModel?> addNewLocation() async {
+  Future<void> addNewLocation() async {
     _clearErrors();
 
-    if (!_formKey.currentState!.validate()) {
-      return null;
+    _nameError = _validateName();
+    _capacityError = _validateCapacity();
+
+    if (_nameError != null || _capacityError != null) {
+      notifyListeners();
+      return;
     }
 
     final newLocationDto = NewLocationDto(
       _name,
       _location,
-      _capacity,
+      int.parse(_capacity),
       _solarTrackers,
       _weatherStation,
       _cctv,
     );
 
     try {
-      return await _userRepotitory.addNewLocation(newLocationDto);
+      final location = await _userRepotitory.addNewLocation(newLocationDto);
+      _navigationService.back(result: location);
     } on UnauthorizedApiException {
       handleUnauthorizedApiException();
     } on STSerialNumberAlreadyUsedException catch (e) {
@@ -64,8 +70,6 @@ class AddLocationViewModel extends ChangeNotifier {
     } on UnknownApiException catch (e) {
       _snackbarService.showSnackbar(message: e.message);
     }
-
-    return null;
   }
 
   String? _validateField(String? field, String errorMessage) {
@@ -76,22 +80,22 @@ class AddLocationViewModel extends ChangeNotifier {
     return null;
   }
 
-  String? validateName(String? name) {
-    return _validateField(name, AppStrings.requiredLocationName);
+  String? _validateName() {
+    return _validateField(_name, AppStrings.requiredLocationName);
   }
 
-  String? validateLocation(String? location) {
-    return _validateField(location, AppStrings.requiredLocationCoordinates);
-  }
+  // String? validateLocation(String? location) {
+  //   return _validateField(location, AppStrings.requiredLocationCoordinates);
+  // }
 
-  String? validateCapacity(String? capacity) {
-    final result = _validateField(capacity, AppStrings.requiredCapacity);
+  String? _validateCapacity() {
+    final result = _validateField(_capacity, AppStrings.requiredCapacity);
 
     if (result != null) {
       return result;
     }
 
-    if (int.tryParse(capacity!) == null || int.parse(capacity) <= 0) {
+    if (int.tryParse(_capacity) == null || int.parse(_capacity) <= 0) {
       return AppStrings.invalidCapacity;
     }
 
@@ -100,6 +104,7 @@ class AddLocationViewModel extends ChangeNotifier {
 
   void _clearErrors() {
     _nameError = null;
+    _capacityError = null;
     _weatherStationError = null;
     notifyListeners();
   }
@@ -112,20 +117,20 @@ class AddLocationViewModel extends ChangeNotifier {
     _location = location;
   }
 
-  void setCapacity(int capacity) {
+  void setCapacity(String capacity) {
     _capacity = capacity;
   }
 
-  Future<DialogResponse?> _showAddDeviceDialog(AddDeviceViewModel viewModel) async {
-    return await _dialogService.showCustomDialog(
-      barrierDismissible: false,
-      variant: DialogType.addDevice,
+  Future<SheetResponse?> _showAddDeviceSheet(AddDeviceViewModel viewModel) async {
+    return await _bottomSheetService.showCustomSheet(
+      variant: BottomSheetType.addDevice,
+      isScrollControlled: true,
       data: viewModel,
     );
   }
 
   Future<void> addSolarTracker() async {
-    final response = await _showAddDeviceDialog(
+    final response = await _showAddDeviceSheet(
       AddDeviceViewModel(
         deviceType: DeviceType.solarTracker,
         solarTrackerSerialNumbers: _solarTrackers,
@@ -148,7 +153,7 @@ class AddLocationViewModel extends ChangeNotifier {
   }
 
   Future<void> addWeatherStation() async {
-    final response = await _showAddDeviceDialog(
+    final response = await _showAddDeviceSheet(
       AddDeviceViewModel(
         deviceType: DeviceType.weatherStation,
         solarTrackerSerialNumbers: _solarTrackers,
@@ -161,11 +166,15 @@ class AddLocationViewModel extends ChangeNotifier {
     }
   }
 
+  void removeWeatherStation() {
+    _weatherStation = null;
+    notifyListeners();
+  }
+
   List<String> get solarTrackers => _solarTrackers;
   String? get weatherStation => _weatherStation;
 
   String? get nameError => _nameError;
+  String? get capacityError => _capacityError;
   String? get weatherStationError => _weatherStationError;
-
-  GlobalKey<FormState> get formKey => _formKey;
 }

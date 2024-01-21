@@ -1,5 +1,6 @@
 import 'package:app/feature/home/home_view_model.dart';
 import 'package:app/shared/constant/index.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigationBarView extends StatelessWidget {
@@ -9,23 +10,48 @@ class BottomNavigationBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: viewModel.currentPageIndex,
-      onTap: (index) => viewModel.changePage(index),
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.solar_power_rounded),
-          label: AppStrings.locationsPageNavBarLabel,
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppStyle.bgColor,
+        border: Border(
+          top: BorderSide(color: AppStyle.secondaryColor2),
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.assistant_rounded),
-          label: AppStrings.assistantPageNavBarLabel,
+      ),
+      child: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppStyle.horizontalPadding16,
+            vertical: AppStyle.verticalPadding8,
+          ),
+          child: GNav(
+            gap: AppStyle.gNavGap,
+            activeColor: AppStyle.iconColor,
+            iconSize: AppStyle.iconSize24,
+            padding: EdgeInsets.symmetric(
+              horizontal: AppStyle.horizontalPadding16,
+              vertical: AppStyle.verticalPadding12,
+            ),
+            tabBackgroundColor: AppStyle.secondaryColor2,
+            color: AppStyle.iconColor,
+            tabs: const [
+              GButton(
+                icon: Icons.home_rounded,
+                text: AppStrings.locationsPageNavBarLabel,
+              ),
+              GButton(
+                icon: Icons.assistant_rounded,
+                text: AppStrings.assistantPageNavBarLabel,
+              ),
+              GButton(
+                icon: Icons.shopping_cart_rounded,
+                text: AppStrings.marketplacePageNavBarLabel,
+              ),
+            ],
+            selectedIndex: viewModel.currentPageIndex,
+            onTabChange: (index) => viewModel.changePage(index),
+          ),
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart_rounded),
-          label: AppStrings.marketplacePageNavBarLabel,
-        ),
-      ],
+      ),
     );
   }
 }

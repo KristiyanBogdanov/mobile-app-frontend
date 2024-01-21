@@ -2,6 +2,7 @@ import 'package:app/feature/home/home_view_model.dart';
 import 'package:app/feature/home/views/index.dart';
 import 'package:app/feature/location/locations_page.dart';
 import 'package:app/shared/constant/index.dart';
+import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,9 +16,8 @@ class HomePage extends StatelessWidget {
       child: Consumer<HomeViewModel>(
         builder: (context, viewModel, child) {
           return Scaffold(
-            body: viewModel.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : _buildBodyForIndex(viewModel.currentPageIndex),
+            backgroundColor: AppStyle.bgColor,
+            body: viewModel.isLoading ? const LoadingView() : _buildBodyForIndex(viewModel.currentPageIndex),
             bottomNavigationBar: BottomNavigationBarView(viewModel: viewModel),
           );
         },
