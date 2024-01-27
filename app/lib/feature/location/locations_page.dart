@@ -1,6 +1,7 @@
 import 'package:app/feature/location/locations_view_model.dart';
 import 'package:app/feature/location/views/index.dart';
 import 'package:app/shared/constant/index.dart';
+import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,7 +58,11 @@ class LocationsPage extends StatelessWidget {
                   sliver: viewModel.locations.isEmpty
                       ? const SliverFillRemaining(
                           hasScrollBody: false,
-                          child: NoLocationsView(),
+                          child: NoContentView(
+                            svgAsset: 'assets/images/no-locations.svg',
+                            title: AppStrings.noLocationsTitle,
+                            description: AppStrings.noLocationsDescription,
+                          ),
                         )
                       : SliverList(
                           delegate: SliverChildBuilderDelegate(

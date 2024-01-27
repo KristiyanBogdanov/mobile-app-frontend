@@ -7,6 +7,7 @@ part of '../location_model.dart';
 // **************************************************************************
 
 LocationModel _$LocationModelFromJson(Map<String, dynamic> json) => LocationModel(
+      json['id'] as String,
       json['uuid'] as String,
       json['name'] as String,
       json['location'] as String,
@@ -19,6 +20,7 @@ LocationModel _$LocationModelFromJson(Map<String, dynamic> json) => LocationMode
     );
 
 Map<String, dynamic> _$LocationModelToJson(LocationModel instance) => <String, dynamic>{
+      'id': instance.id,
       'uuid': instance.uuid,
       'name': instance.name,
       'location': instance.location,

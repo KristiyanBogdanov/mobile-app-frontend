@@ -1,4 +1,4 @@
-import 'package:app/feature/home/home_page.dart'; // TODO: fix here
+import 'package:app/feature/home/index.dart';
 import 'package:app/feature/auth/index.dart';
 import 'package:app/feature/location/index.dart';
 import 'package:app/util/route/index.dart';
@@ -15,7 +15,10 @@ class RouteGenerator {
     } else if (settings.name == RouteEnum.signup.name) {
       return MaterialPageRoute(builder: (_) => SignUpPage());
     } else if (settings.name == RouteEnum.home.name) {
-      return MaterialPageRoute(builder: (_) => const HomePage());
+      return MaterialPageRoute(builder: (_) {
+        final currentPageIndex = (args as int?) ?? PageEnum.locations.value;
+        return Home(viewModel: HomeViewModel(currentPageIndex: currentPageIndex));
+      });
     } else if (settings.name == RouteEnum.addLocation.name) {
       return MaterialPageRoute(builder: (_) => const AddLocationPage());
     } else if (settings.name == RouteEnum.locationInsights.name) {

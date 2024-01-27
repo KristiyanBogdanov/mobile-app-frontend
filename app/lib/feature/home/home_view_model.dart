@@ -8,12 +8,12 @@ import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends ChangeNotifier {
   bool _isLoading = true;
-  int _currentPageIndex = 0;
+  int currentPageIndex;
   final _dialogService = DependencyInjection.getIt<DialogService>();
   final _userRepotitory = DependencyInjection.getIt<UserRepository>();
   final _globalState = DependencyInjection.getIt<GlobalState>();
 
-  HomeViewModel() {
+  HomeViewModel({required this.currentPageIndex}) {
     _fetchUserData();
   }
 
@@ -31,12 +31,12 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   void changePage(int index) {
-    _currentPageIndex = index;
+    currentPageIndex = index;
     notifyListeners();
   }
 
   bool get isLoading => _isLoading;
-  int get currentPageIndex => _currentPageIndex;
+  
 }
 
 // TODO: wait location page to fetch user data and redirect meanwhile

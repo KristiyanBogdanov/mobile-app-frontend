@@ -39,17 +39,18 @@ class AppStrings {
   static const String unknownErrorDialogButton = 'OK';
 
   static const String locationsPageNavBarLabel = 'Locations';
-  static const String assistantPageNavBarLabel = 'Assistant';
+  static const String notificationsPageNavBarLabel = 'Notifications';
   static const String marketplacePageNavBarLabel = 'Marketplace';
 
   static const String locationsPageTitle = 'Locations';
-  static const String assistantPageTitle = 'Assistant';
+  static const String notificationsPageTitle = 'Notifications';
   static const String marketplacePageTitle = 'Marketplace';
 
   static const String stSerialNumberAlreadyUsedError = 'Some of the solar trackers are already used';
   static const String locationAlreadyAddedError = 'Location is already added';
   static const String addNewLocationBadRequest = 'Invalid add new location data';
-  static const String addExistingLocationBadRequest = 'Invalid add existing location data'; // TODO: I think this string is meaningless
+  static const String addExistingLocationBadRequest =
+      'Invalid add existing location data'; // TODO: I think this string is meaningless
 
   static const String addNewLocationPageTitle = 'Add new location';
   static const String locationNameLabel = 'Location name';
@@ -71,7 +72,8 @@ class AppStrings {
   static const String requiredSeialNumber = 'Serial number is required';
   static const String stSerialNumberAlreadyAdded = 'You have already added this solar tracker';
   static const String invalidSTSerialNumber = 'Invalid solar tracker serial number';
-  static const String locationWithThisSTSerialNumberAlreadyAdded = 'You have already added location with this solar tracker';
+  static const String locationWithThisSTSerialNumberAlreadyAdded =
+      'You have already added location with this solar tracker';
   static const String locationWithThisSTSerialNumberAlreadExists = 'Location with this solar tracker already exists';
   static const String invalidWSSerialNumber = 'Invalid weather station serial number';
   static const String invalidLocationNameLength = 'Location name length is out of range';
@@ -94,4 +96,15 @@ class AppStrings {
 
   static const String noLocationsTitle = 'No locations yet';
   static const String noLocationsDescription = 'Add a new location from the button above.';
+  static const String noNotificationsTitle = 'No notifications yet';
+  static const String noNotificationsDescription = 'You will see notifications here.';
+  static String daysAgo(int days) => '${days} days';
+  static String hoursAgo(int hours) => '${hours} hours';
+  static String minutesAgo(int minutes) => '${minutes} min';
+  static const String justNow = 'Just now';
+  static const String deviceState = 'Device state';
+  static const String inactiveDevice = 'Iinactive device';
+  static const String information = 'No action required';
+  static const String warning = 'You should check your device';
+  static const String critical = 'We recommend you to check your device immediately and contact support';
 }

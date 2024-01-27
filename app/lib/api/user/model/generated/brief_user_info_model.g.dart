@@ -7,11 +7,11 @@ part of '../brief_user_info_model.dart';
 // **************************************************************************
 
 BriefUserInfoModel _$BriefUserInfoModelFromJson(Map<String, dynamic> json) => BriefUserInfoModel(
-      json['uuid'] as String,
+      json['id'] as String,
       json['username'] as String,
     );
 
 Map<String, dynamic> _$BriefUserInfoModelToJson(BriefUserInfoModel instance) => <String, dynamic>{
-      'uuid': instance.uuid,
+      'id': instance.id,
       'username': instance.username,
     };

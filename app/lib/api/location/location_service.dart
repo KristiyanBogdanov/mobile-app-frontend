@@ -35,12 +35,10 @@ class LocationService {
     return await _validateSerialNumber(serialNumber, _mobileAppApi.validateWSSerialNumber(serialNumber));
   }
 
-  Future<LocationInsightsModel> getLocationInsights(String locationUuid) async {
-    final response = await _httpService.get(_mobileAppApi.getLocationInsights(locationUuid));
+  Future<LocationInsightsModel> getLocationInsights(String locationId) async {
+    final response = await _httpService.get(_mobileAppApi.getLocationInsights(locationId));
 
     final jsonBody = jsonDecode(response.body);
-
-    print(jsonBody);
 
     switch (response.statusCode) {
       case HttpStatus.ok:

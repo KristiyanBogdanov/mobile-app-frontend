@@ -1,16 +1,24 @@
+import 'package:app/api/firebase/firebase_api.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:app/util/dependency_injection/index.dart';
 import 'package:app/util/http/index.dart';
 import 'package:app/util/route/index.dart';
 import 'package:app/util/stacked-services/index.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// TODO: expiriment with the order of statements in main (run app before splash screen is removed)
 Future main() async {
   await dotenv.load(fileName: '.env');
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   DependencyInjection.configure();
 
   setupBottomSheetUi();
@@ -20,6 +28,8 @@ Future main() async {
   FlutterNativeSplash.remove();
 
   runApp(MyApp(initialRoute: initialRoute));
+
+  await DependencyInjection.getIt<FirebaseApi>().initNotifications();
 }
 
 Future<RouteEnum> _getInitialRoute() async {
@@ -56,4 +66,8 @@ class MyApp extends StatelessWidget {
 }
 
 // TODO: fix error handling where snackbar is shown
-// TODO: change qr code scanner package
+// TODO: trim username and email
+// TODO: remove global state and use repositories instead
+// TODO: redisign and change app bar
+// TODO: rename all view files to _view.dart
+// TODO: finish notification design and fix delete issue

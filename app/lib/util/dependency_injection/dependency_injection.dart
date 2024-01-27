@@ -1,4 +1,6 @@
 import 'package:app/api/auth/index.dart';
+import 'package:app/api/firebase/firebase_api.dart';
+import 'package:app/api/hw-notification/index.dart';
 import 'package:app/api/location/index.dart';
 import 'package:app/api/user/index.dart';
 import 'package:app/feature/auth/auth_validator.dart';
@@ -22,6 +24,8 @@ class DependencyInjection {
     getIt.registerSingleton<NavigationService>(NavigationService());
     getIt.registerLazySingleton<AuthValidator>(() => AuthValidator());
 
+    getIt.registerSingleton<FirebaseApi>(FirebaseApi());
+
     getIt.registerSingleton<JwtStorage>(JwtStorage());
     getIt.registerSingleton<HttpService>(HttpService());
     getIt.registerSingleton<MobileAppApi>(MobileAppApi());
@@ -34,6 +38,9 @@ class DependencyInjection {
 
     getIt.registerLazySingleton<LocationService>(() => LocationService());
     getIt.registerLazySingleton<LocationRepository>(() => LocationRepository());
+
+    getIt.registerSingleton<HwNotificationService>(HwNotificationService());
+    getIt.registerSingleton<HwNotificationRepository>(HwNotificationRepository());
 
     getIt.registerSingleton<GlobalState>(GlobalState());
   }

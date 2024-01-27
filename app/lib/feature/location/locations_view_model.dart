@@ -12,7 +12,7 @@ class LocationsViewModel extends ChangeNotifier {
 
   void addNewLocation() async {
     final location = await _navigationService.navigateTo(RouteEnum.addLocation.name);
-    
+
     if (location != null) {
       _globalState.addLocation(location as LocationModel);
       notifyListeners();

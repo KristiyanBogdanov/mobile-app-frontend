@@ -6,10 +6,12 @@ part 'generated/signin_dto.g.dart';
 class SignInDto {
   final String email;
   final String password;
+  final String fcmToken;
 
   SignInDto(
     this.email,
     this.password,
+    this.fcmToken,
   );
 
   factory SignInDto.fromJson(Map<String, dynamic> json) => _$SignInDtoFromJson(json);

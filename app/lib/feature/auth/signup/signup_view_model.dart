@@ -1,4 +1,5 @@
 import 'package:app/api/auth/index.dart';
+import 'package:app/api/firebase/firebase_api.dart';
 import 'package:app/feature/auth/auth_validator.dart';
 import 'package:app/feature/global_state.dart';
 import 'package:app/shared/constant/index.dart';
@@ -21,6 +22,7 @@ class SignUpViewModel extends ChangeNotifier {
   final _authRepository = DependencyInjection.getIt<AuthRepository>();
   final _globalState = DependencyInjection.getIt<GlobalState>();
   final _authValidator = DependencyInjection.getIt<AuthValidator>();
+  final _firebaseApi = DependencyInjection.getIt<FirebaseApi>();
 
   Future<void> signUp() async {
     _clearErrors();
@@ -30,7 +32,14 @@ class SignUpViewModel extends ChangeNotifier {
     }
 
     try {
-      final userModel = await _authRepository.signUp(SignUpDto(_username, _email, _password));
+      final fcmToken = await _firebaseApi.getDeviceToken();
+
+      if (fcmToken == null) {
+        _snackbarService.showSnackbar(message: AppStrings.unknownError);
+        return;
+      }
+
+      final userModel = await _authRepository.signUp(SignUpDto(_username, _email, _password, fcmToken));
       _globalState.setUser(userModel);
       _navigationService.clearStackAndShow(RouteEnum.home.name);
     } on EmailAlreadyUsedException catch (e) {

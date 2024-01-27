@@ -1,6 +1,8 @@
 import 'package:app/api/auth/index.dart';
+import 'package:app/api/firebase/firebase_api.dart';
 import 'package:app/feature/auth/auth_validator.dart';
 import 'package:app/feature/global_state.dart';
+import 'package:app/shared/constant/index.dart';
 import 'package:app/util/dependency_injection/index.dart';
 import 'package:app/util/http/index.dart';
 import 'package:app/util/route/index.dart';
@@ -18,6 +20,7 @@ class SignInViewModel extends ChangeNotifier {
   final _authRepository = DependencyInjection.getIt<AuthRepository>();
   final _globalState = DependencyInjection.getIt<GlobalState>();
   final _authValidator = DependencyInjection.getIt<AuthValidator>();
+  final _firebaseApi = DependencyInjection.getIt<FirebaseApi>();
 
   Future<void> signIn() async {
     _clearErrors();
@@ -27,7 +30,15 @@ class SignInViewModel extends ChangeNotifier {
     }
 
     try {
-      final userModel = await _authRepository.signIn(SignInDto(_email, _password));
+      final fcmToken = await _firebaseApi.getDeviceToken();
+
+      // TODO: Reconsider this
+      if (fcmToken == null) {
+        _snackbarService.showSnackbar(message: AppStrings.unknownError);
+        return;
+      }
+
+      final userModel = await _authRepository.signIn(SignInDto(_email, _password, fcmToken));
       _globalState.setUser(userModel);
       _navigationService.clearStackAndShow(RouteEnum.home.name);
     } on InvalidEmailException catch (e) {
