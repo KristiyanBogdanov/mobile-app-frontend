@@ -18,7 +18,7 @@ class LocationInsightsViewModel extends ChangeNotifier {
 
   Future<void> _fetchLocationInsights() async {
     try {
-      _locationInsightsModel = await _locationRepository.getLocationInsights(locationModel.uuid);
+      _locationInsightsModel = await _locationRepository.getLocationInsights(locationModel.id);
       _isLoading = false;
       notifyListeners();
     } on UnauthorizedApiException {

@@ -5,6 +5,7 @@ part 'generated/location_model.g.dart';
 
 @JsonSerializable()
 class LocationModel {
+  final String id;
   final String uuid;
   final String name;
   final String location;
@@ -16,6 +17,7 @@ class LocationModel {
   final List<BriefUserInfoModel> sharedWith;
 
   LocationModel(
+    this.id,
     this.uuid,
     this.name,
     this.location,

@@ -26,8 +26,16 @@ class MobileAppApi {
     return _createApiEndpoint('$_user/add-location');
   }
 
-  String addExistingLocation(String locationId) {
-    return _createApiEndpoint('$_user/add-existing-location/$locationId');
+  String addExistingLocation(String locationUuid) {
+    return _createApiEndpoint('$_user/add-existing-location/$locationUuid');
+  }
+
+  String updateHwNotificationStatus(String notificationId) {
+    return _createApiEndpoint('$_user/hw-notification/$notificationId');
+  }
+
+  String deleteHwNotification(String notificationId) {
+    return _createApiEndpoint('$_user/hw-notification/$notificationId');
   }
 
   String validateSTSerialNumber(String serialNumber) {
@@ -38,7 +46,7 @@ class MobileAppApi {
     return _createApiEndpoint('$_location/validate/ws-serial-number/$serialNumber');
   }
 
-  String getLocationInsights(String locationUuid) {
-    return _createApiEndpoint('$_location/$locationUuid/insights');
+  String getLocationInsights(String locationId) {
+    return _createApiEndpoint('$_location/$locationId/insights');
   }
 }

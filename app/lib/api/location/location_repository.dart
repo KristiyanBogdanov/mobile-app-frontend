@@ -14,7 +14,7 @@ class LocationRepository {
     return await _locationService.validateWSSerialNumber(serialNumber);
   }
 
-  Future<LocationInsightsModel> getLocationInsights(String locationUuid) async {
-    return await _locationService.getLocationInsights(locationUuid);
+  Future<LocationInsightsModel> getLocationInsights(String locationId) async {
+    return await _locationService.getLocationInsights(locationId);
   }
 }

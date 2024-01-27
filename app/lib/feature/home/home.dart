@@ -1,18 +1,21 @@
-import 'package:app/feature/home/home_view_model.dart';
+import 'package:app/feature/home/index.dart';
 import 'package:app/feature/home/views/index.dart';
 import 'package:app/feature/location/locations_page.dart';
+import 'package:app/feature/notification/notifications_page.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class Home extends StatelessWidget {
+  final HomeViewModel viewModel;
+
+  const Home({super.key, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => HomeViewModel(),
+      create: (context) => viewModel,
       child: Consumer<HomeViewModel>(
         builder: (context, viewModel, child) {
           return Scaffold(
@@ -26,22 +29,18 @@ class HomePage extends StatelessWidget {
   }
 
   Widget? _buildBodyForIndex(int index) {
-    switch (index) {
-      case 0:
-        return LocationsPage();
-      case 1:
-        return const Scaffold(
-          body: Center(
-            child: Text(AppStrings.assistantPageTitle),
-          ),
-        );
-      case 2:
-        return const Scaffold(
-          body: Center(
-            child: Text(AppStrings.marketplacePageTitle),
-          ),
-        );
+    if (index == PageEnum.locations.value) {
+      return const LocationsPage();
+    } else if (index == PageEnum.notifications.value) {
+      return const NotificationsPage();
+    } else if (index == PageEnum.marketplace.value) {
+      return const Scaffold(
+        body: Center(
+          child: Text(AppStrings.marketplacePageTitle),
+        ),
+      );
     }
+
     return null;
   }
 }

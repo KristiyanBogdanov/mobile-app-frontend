@@ -39,4 +39,19 @@ class HttpService {
       headers: await _getHeaders(),
     );
   }
+
+  Future<http.Response> patch(String url, Object? body) async {
+    return await http.patch(
+      Uri.parse(url),
+      headers: await _getHeaders(),
+      body: jsonEncode(body),
+    );
+  }
+
+  Future<http.Response> delete(String url) async {
+    return await http.delete(
+      Uri.parse(url),
+      headers: await _getHeaders(),
+    );
+  }
 }

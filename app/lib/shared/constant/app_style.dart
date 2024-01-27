@@ -27,6 +27,7 @@ class AppStyle {
   static final double horizontalPadding30 = 30.w;
   static final double verticalPadding4 = 4.h;
   static final double verticalPadding8 = 8.h;
+  static final double verticalPadding10 = 10.h;
   static final double verticalPadding12 = 12.h;
   static final double verticalPadding16 = 16.h;
   static final double verticalPadding20 = 20.h;
@@ -82,6 +83,6 @@ class AppStyle {
   static final double qrScannerViewBorderWidth = 8.w;
   static final double qrScannerViewBorderLength = 16.w;
 
-  // NoLocationsView
-  static final double noLocationsViewImageSize = 280.w;
+  // NoContentView
+  static final double noContentViewImageSize = 280.w;
 }
