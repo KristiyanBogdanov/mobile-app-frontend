@@ -1,5 +1,6 @@
 import 'package:app/feature/home/index.dart';
 import 'package:app/feature/auth/index.dart';
+import 'package:app/feature/location/location-insights/root/location_insights_view_model.dart';
 import 'package:app/feature/location/index.dart';
 import 'package:app/util/route/index.dart';
 import 'package:flutter/material.dart';

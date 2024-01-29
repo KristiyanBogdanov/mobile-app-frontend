@@ -1,12 +1,12 @@
 import 'package:app/shared/constant/index.dart';
 import 'package:flutter/material.dart';
 
-class AssetAvailabilityIndicatorView extends StatelessWidget {
+class DeviceAvailabilityIndicatorView extends StatelessWidget {
   final String assetName;
   final String assetIcon;
   final bool isAvailable;
 
-  const AssetAvailabilityIndicatorView({
+  const DeviceAvailabilityIndicatorView({
     required this.assetName,
     required this.assetIcon,
     required this.isAvailable,
@@ -35,7 +35,7 @@ class AssetAvailabilityIndicatorView extends StatelessWidget {
             isAvailable ? 'assets/icons/available.png' : 'assets/icons/non-available.png',
           ),
           size: AppStyle.iconSize20,
-          color: isAvailable ? Colors.green : Colors.red,
+          color: isAvailable ? AppStyle.positiveColor : AppStyle.negativeColor,
         )
       ],
     );

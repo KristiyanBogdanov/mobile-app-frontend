@@ -26,7 +26,7 @@ class _QrScannerViewState extends State<QrScannerView> {
         });
       },
       overlay: QrScannerOverlayShape(
-        borderColor: AppStyle.contrastColor,
+        borderColor: AppStyle.contrastColor1,
         borderRadius: AppStyle.qrScannerViewBorderRadius,
         borderWidth: AppStyle.qrScannerViewBorderWidth,
         borderLength: AppStyle.qrScannerViewBorderLength,

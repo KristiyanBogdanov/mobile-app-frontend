@@ -29,5 +29,5 @@ class LocationInsightsViewModel extends ChangeNotifier {
   }
 
   bool get isLoading => _isLoading;
-  LocationInsightsModel? get locationInsightsModel => _locationInsightsModel;
+  LocationInsightsModel get locationInsightsModel => _locationInsightsModel!;
 }

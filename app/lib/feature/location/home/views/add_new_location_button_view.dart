@@ -18,7 +18,7 @@ class AddNewLocationButtonView extends StatelessWidget {
           horizontal: AppStyle.horizontalPadding16,
           vertical: AppStyle.verticalPadding8,
         ),
-        backgroundColor: AppStyle.contrastColor,
+        backgroundColor: AppStyle.contrastColor1,
       ),
       child: Row(
         children: [

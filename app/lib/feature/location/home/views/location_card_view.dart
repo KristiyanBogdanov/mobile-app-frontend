@@ -1,5 +1,5 @@
 import 'package:app/api/location/model/location_model.dart';
-import 'package:app/feature/location/views/index.dart';
+import 'package:app/feature/location/home/views/index.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:flutter/material.dart';
 
@@ -42,13 +42,13 @@ class LocationCardView extends StatelessWidget {
               SizedBox(height: AppStyle.verticalPadding20),
               Row(
                 children: [
-                  AssetAvailabilityIndicatorView(
+                  DeviceAvailabilityIndicatorView(
                     assetName: AppStrings.weatherStation,
                     assetIcon: 'assets/icons/weather-station.png',
                     isAvailable: locationModel.weatherStation != null ? true : false,
                   ),
                   SizedBox(width: AppStyle.horizontalPadding16),
-                  AssetAvailabilityIndicatorView(
+                  DeviceAvailabilityIndicatorView(
                     assetName: AppStrings.cctv,
                     assetIcon: 'assets/icons/cctv.png',
                     isAvailable: locationModel.cctv != null ? true : false,

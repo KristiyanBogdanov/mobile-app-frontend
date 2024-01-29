@@ -21,6 +21,8 @@ class SolarTrackerSensorsStatusModel {
       _$SolarTrackerSensorsStatusModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$SolarTrackerSensorsStatusModelToJson(this);
+
+  int get count => 4;
 }
 
 @JsonSerializable()

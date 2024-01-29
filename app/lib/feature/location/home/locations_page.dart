@@ -1,5 +1,5 @@
-import 'package:app/feature/location/locations_view_model.dart';
-import 'package:app/feature/location/views/index.dart';
+import 'package:app/feature/location/home/locations_view_model.dart';
+import 'package:app/feature/location/home/views/index.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';

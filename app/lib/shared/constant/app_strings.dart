@@ -53,11 +53,11 @@ class AppStrings {
       'Invalid add existing location data'; // TODO: I think this string is meaningless
 
   static const String addNewLocationPageTitle = 'Add new location';
-  static const String locationNameLabel = 'Location name';
-  static const String locationCoordinatesLabel = 'Location coordinates';
-  static const String capacityLabel = 'Capacity (kW)';
-  static const String solarTrackersLabel = 'Solar trackers';
-  static const String weatherStationLabel = 'Weather station';
+  static const String locationNameSectionTitle = 'Location name';
+  static const String locationCoordinatesSectionTitle = 'Location coordinates';
+  static const String capacitySectionTitle = 'Capacity (kW)';
+  static const String solarTrackersSectionTitle = 'Solar trackers';
+  static const String weatherStationSectionTitle = 'Weather station';
   static const String serialNumberLabel = 'Serial number';
   static const String inputFieldHint = 'Type here...';
   static const String addDeviceButton = 'Add device';
@@ -107,4 +107,36 @@ class AppStrings {
   static const String information = 'No action required';
   static const String warning = 'You should check your device';
   static const String critical = 'We recommend you to check your device immediately and contact support';
+
+  static const String overviewTabTitle = 'Overview';
+  static const String weatherStationTabTitle = 'Weather station';
+  static const String cctvTabTitle = 'CCTV';
+  static const String na = 'N/A';
+  static const String lastUpdate = 'Last update';
+  static const String temperature = 'Temperature';
+  static const String windSpeed = 'Wind speed';
+  static const String windDirection = 'Wind direction';
+  static String temperatureValue(num temperature, {bool merge = false}) => merge ? '$temperature°C' : '$temperature °C';
+  static String windSpeedValue(num windSpeed) => '$windSpeed m/s';
+  static String irradianceValue(num irradiance) => '${irradiance}W/m²';
+  static const String sensorsSectionTitle = 'Sensors';
+  static const String coordinatesSectionTitle = 'Coordinates';
+  static const String active = 'Active';
+  static const String inactive = 'Inactive';
+  static const String anemometer = 'Anemometer';
+  static const String temperatureSensor = 'Temp sensor';
+  static const String accelerometer = 'Accelerometer';
+  static const String irradianceSensor = 'Irradiance sensor';
+  static const String azimuthMotor = 'Azimuth motor';
+  static const String elevationMotor = 'Elevation motor';
+  static String hours(int hours) => '${hours}h';
+  static const String noData = 'No data available at the moment.';
+  static const String averageIrradiance = 'Average irradiance';
+  static const String averageTemperature = 'Average temperature';
+  static const String averageWindSpeed = 'Average wind speed';
+  static String deviation(num deviation) => deviation > 0 ? '+$deviation°σ' : '$deviation°σ';
+  static const String azimuthIndicatorLabel = 'Azimuth:';
+  static const String elevationIndicatorLabel = 'Elevation:';
+
+  static const String futureDevelopmentLabel = 'This feature is for future development.';
 }

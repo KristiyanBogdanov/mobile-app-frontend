@@ -87,7 +87,7 @@ class NotificationView extends StatelessWidget {
   Color get importanceColor {
     switch (notification.importance) {
       case HwNotificationImportance.information:
-        return AppStyle.contrastColor;
+        return AppStyle.contrastColor1;
       case HwNotificationImportance.warning:
         return Colors.yellow[900]!.withOpacity(0.85);
       case HwNotificationImportance.critical:
@@ -133,7 +133,7 @@ class NotificationView extends StatelessWidget {
             TextSpan(
               text: notification.serialNumber,
               style: const TextStyle(
-                color: AppStyle.contrastColor,
+                color: AppStyle.contrastColor1,
                 fontWeight: FontWeight.w500,
               ),
             ),
