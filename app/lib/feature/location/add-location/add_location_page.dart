@@ -1,5 +1,5 @@
 import 'package:app/feature/location/add-location/add_location_view_model.dart';
-import 'package:app/feature/location/views/index.dart';
+import 'package:app/feature/location/add-location/views/index.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
@@ -30,22 +30,22 @@ class AddLocationPage extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const LabelTextView(label: AppStrings.locationNameLabel),
+                      const ColumnSectionTitleView(title: AppStrings.locationNameSectionTitle),
                       TextFieldView(
                         onChanged: (value) => viewModel.setName(value),
                         errorText: viewModel.nameError,
                       ),
-                      SizedBox(height: AppStyle.verticalPadding24),
-                      const LabelTextView(label: AppStrings.capacityLabel),
+                      const ColumnSpacingView(),
+                      const ColumnSectionTitleView(title: AppStrings.capacitySectionTitle),
                       TextFieldView(
                         keyboardType: TextInputType.number,
                         onChanged: (value) => viewModel.setCapacity(value),
                         errorText: viewModel.capacityError,
                       ),
-                      SizedBox(height: AppStyle.verticalPadding24),
-                      const LabelTextView(label: AppStrings.locationCoordinatesLabel),
-                      SizedBox(height: AppStyle.verticalPadding24),
-                      const LabelTextView(label: AppStrings.solarTrackersLabel),
+                      const ColumnSpacingView(),
+                      const ColumnSectionTitleView(title: AppStrings.locationCoordinatesSectionTitle),
+                      const ColumnSpacingView(),
+                      const ColumnSectionTitleView(title: AppStrings.solarTrackersSectionTitle),
                       DevicesRowView(
                         onAddButtonPressed: viewModel.addSolarTracker,
                         devices: viewModel.solarTrackers.map((serialNumber) {
@@ -55,8 +55,8 @@ class AddLocationPage extends StatelessWidget {
                           );
                         }).toList(),
                       ),
-                      SizedBox(height: AppStyle.verticalPadding24),
-                      const LabelTextView(label: AppStrings.weatherStationLabel),
+                      const ColumnSpacingView(),
+                      const ColumnSectionTitleView(title: AppStrings.weatherStationSectionTitle),
                       DevicesRowView(
                         onAddButtonPressed:
                             viewModel.isAddWSButtonEnabled() ? () async => await viewModel.addWeatherStation() : null,

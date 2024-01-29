@@ -1,6 +1,6 @@
 import 'package:app/api/location/index.dart';
 import 'package:app/feature/global_state.dart';
-import 'package:app/feature/location/index.dart';
+import 'package:app/feature/location/location-insights/root/location_insights_view_model.dart';
 import 'package:app/util/dependency_injection/index.dart';
 import 'package:app/util/route/index.dart';
 import 'package:flutter/material.dart';

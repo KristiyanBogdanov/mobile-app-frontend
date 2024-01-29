@@ -21,7 +21,7 @@ class TextFieldView extends StatelessWidget {
       style: const TextStyle(
         color: AppStyle.textColor,
       ),
-      cursorColor: AppStyle.contrastColor,
+      cursorColor: AppStyle.contrastColor1,
       decoration: InputDecoration(
         hintText: AppStrings.inputFieldHint,
         errorText: errorText,
@@ -34,7 +34,7 @@ class TextFieldView extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppStyle.borderRadius12),
           borderSide: const BorderSide(
-            color: AppStyle.contrastColor,
+            color: AppStyle.contrastColor1,
           ),
         ),
       ),

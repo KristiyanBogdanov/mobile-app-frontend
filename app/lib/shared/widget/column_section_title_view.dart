@@ -1,17 +1,22 @@
 import 'package:app/shared/constant/index.dart';
 import 'package:flutter/material.dart';
 
-class LabelTextView extends StatelessWidget {
-  final String label;
+class ColumnSectionTitleView extends StatelessWidget {
+  final String title;
+  final bool padding;
 
-  const LabelTextView({required this.label, super.key});
+  const ColumnSectionTitleView({
+    super.key,
+    required this.title,
+    this.padding = true,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: AppStyle.verticalPadding12),
+      padding: EdgeInsets.only(bottom: padding ? AppStyle.verticalPadding12 : 0),
       child: Text(
-        label,
+        title,
         style: TextStyle(
           color: AppStyle.textColor,
           fontSize: AppStyle.fontSize16,

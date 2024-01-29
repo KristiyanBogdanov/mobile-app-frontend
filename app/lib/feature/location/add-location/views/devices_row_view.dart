@@ -1,4 +1,4 @@
-import 'package:app/feature/location/views/device_box.dart';
+import 'package:app/feature/location/add-location/views/device_box_view.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +29,7 @@ class DevicesRowView extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppStyle.borderRadius12),
                 side: BorderSide(
-                  color: onAddButtonPressed == null ? Colors.grey.withOpacity(0.5) : AppStyle.contrastColor,
+                  color: onAddButtonPressed == null ? Colors.grey.withOpacity(0.5) : AppStyle.contrastColor1,
                 ),
               ),
               padding: EdgeInsets.symmetric(horizontal: AppStyle.horizontalPadding12),

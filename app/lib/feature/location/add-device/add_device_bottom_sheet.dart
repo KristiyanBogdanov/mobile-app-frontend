@@ -1,5 +1,5 @@
 import 'package:app/feature/location/add-device/add_device_view_model.dart';
-import 'package:app/feature/location/views/index.dart';
+import 'package:app/feature/location/add-device/views/index.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -68,7 +68,9 @@ class AddDeviceBottomSheet extends StatelessWidget {
                       Text(
                         viewModel.serialNumberError ?? AppStrings.scanQRCodeDescription,
                         style: TextStyle(
-                          color: viewModel.serialNumberError != null ? Colors.red : AppStyle.textColor.withOpacity(0.7),
+                          color: viewModel.serialNumberError != null
+                              ? AppStyle.negativeColor
+                              : AppStyle.textColorWith05Opacity,
                           fontSize: AppStyle.fontSize16,
                         ),
                       ),

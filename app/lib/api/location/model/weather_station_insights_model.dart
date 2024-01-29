@@ -17,6 +17,8 @@ class WeatherStationSensorsStatusModel {
       _$WeatherStationSensorsStatusModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$WeatherStationSensorsStatusModelToJson(this);
+
+  int get count => 2;
 }
 
 @JsonSerializable()
