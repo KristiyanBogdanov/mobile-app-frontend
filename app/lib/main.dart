@@ -71,3 +71,5 @@ class MyApp extends StatelessWidget {
 // TODO: redisign and change app bar
 // TODO: rename all view files to _view.dart
 // TODO: finish notification design and fix delete issue
+// TODO: check all corner radiuses
+// TODO: add shared widget for the padding of every page

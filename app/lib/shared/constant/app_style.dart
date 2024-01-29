@@ -111,4 +111,8 @@ class AppStyle {
   static final double lineChartLeftTitlesReservedSize = 42.w;
   static final double lineChartLeftTitlesInterval = 1.w;
   static final double noDataLineChartHeight = 200.h;
+
+  // SolarTrackerView
+  static final double solarTrackerSketchWidth = 220.w;
+  static final double solarTrackerSketchHeight = 220.w;
 }

@@ -1,5 +1,5 @@
 import 'package:app/api/location/index.dart';
-import 'package:app/feature/location/location-insights/weather-station/views/index.dart';
+import 'package:app/feature/location/location-insights/solar-tracker/views/st_indicator_view.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class SolarTrackerView extends StatelessWidget {
           ),
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-              AppStyle.horizontalPadding8,
+              0,
               AppStyle.verticalPadding8,
               AppStyle.horizontalPadding8,
               AppStyle.verticalPadding16,
@@ -32,25 +32,10 @@ class SolarTrackerView extends StatelessWidget {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: AppStyle.horizontalPadding8),
-                  child: Row(
-                    children: [
-                      Text(
-                        '${AppStrings.lastUpdate}: 12:00 Jan',
-                        style: TextStyle(
-                          fontSize: AppStyle.fontSize12,
-                          color: AppStyle.textColor,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.refresh,
-                          size: AppStyle.iconSize20,
-                          color: AppStyle.textColor,
-                        ),
-                      ),
-                    ],
+                  padding: EdgeInsets.only(left: AppStyle.horizontalPadding16),
+                  child: LastUpdateView(
+                    date: solarTrackerInsightsModel.lastUpdate,
+                    onRefresh: () {},
                   ),
                 ),
                 SizedBox(height: AppStyle.verticalPadding4),
@@ -59,54 +44,22 @@ class SolarTrackerView extends StatelessWidget {
                   children: [
                     Image.asset(
                       'assets/images/solar-tracker-sketch.png',
-                      height: 230,
-                      width: 230,
+                      width: AppStyle.solarTrackerSketchWidth,
+                      height: AppStyle.solarTrackerSketchHeight,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Azimuth:',
-                              style: TextStyle(
-                                color: AppStyle.textColor.withOpacity(0.7),
-                                fontSize: AppStyle.fontSize14,
-                              ),
-                            ),
-                            SizedBox(height: AppStyle.verticalPadding4),
-                            Text(
-                              '${solarTrackerInsightsModel.currentAzimuth}° (+1°σ)',
-                              style: TextStyle(
-                                color: AppStyle.textColor,
-                                fontSize: AppStyle.fontSize14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
+                        STIndicatorView(
+                          title: AppStrings.azimuthIndicatorLabel,
+                          value: solarTrackerInsightsModel.currentAzimuth,
+                          deviation: solarTrackerInsightsModel.azimuthDeviation,
                         ),
                         SizedBox(height: AppStyle.verticalPadding12),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Elevation:',
-                              style: TextStyle(
-                                color: AppStyle.textColor.withOpacity(0.7),
-                                fontSize: AppStyle.fontSize14,
-                              ),
-                            ),
-                            SizedBox(height: AppStyle.verticalPadding4),
-                            Text(
-                              '${solarTrackerInsightsModel.currentElevation}° (+1°σ)',
-                              style: TextStyle(
-                                color: AppStyle.textColor,
-                                fontSize: AppStyle.fontSize14,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
+                        STIndicatorView(
+                          title: AppStrings.elevationIndicatorLabel,
+                          value: solarTrackerInsightsModel.currentElevation,
+                          deviation: solarTrackerInsightsModel.elevationDeviation,
                         ),
                       ],
                     ),
@@ -116,19 +69,11 @@ class SolarTrackerView extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: AppStyle.verticalPadding24),
+        const ColumnSpacingView(),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // TODO: reuse widget from location view
-            Text(
-              AppStrings.sensorsSectionTitle,
-              style: TextStyle(
-                color: AppStyle.textColor,
-                fontSize: AppStyle.fontSize16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
+            const ColumnSectionTitleView(title: AppStrings.sensorsSectionTitle, padding: false),
             SizedBox(width: AppStyle.horizontalPadding8),
             Container(
               height: AppStyle.iconSize24,
@@ -152,7 +97,7 @@ class SolarTrackerView extends StatelessWidget {
         SizedBox(height: AppStyle.verticalPadding12),
         GridView.count(
           shrinkWrap: true,
-          childAspectRatio: 1.4,
+          childAspectRatio: AppStyle.sensorsStatusGridAspectRatio,
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
           children: [
@@ -178,27 +123,14 @@ class SolarTrackerView extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: AppStyle.verticalPadding24),
-        Text(
-          'Average irradiance',
-          style: TextStyle(
-            color: AppStyle.textColor,
-            fontSize: AppStyle.fontSize16,
-            fontWeight: FontWeight.w500,
-          ),
+        const ColumnSpacingView(),
+        const ColumnSectionTitleView(
+          title: AppStrings.averageIrradiance,
         ),
-        SizedBox(height: AppStyle.verticalPadding12),
-        LineChartSample2(),
-        SizedBox(height: AppStyle.verticalPadding24),
-        Text(
-          'Coordinates',
-          style: TextStyle(
-            color: AppStyle.textColor,
-            fontSize: AppStyle.fontSize16,
-            fontWeight: FontWeight.w500,
-          ),
+        LineChartView(
+          avgSensorValues: solarTrackerInsightsModel.last24hAvgIrradiance,
+          leftTitleUnit: AppStrings.irradianceValue,
         ),
-        SizedBox(height: AppStyle.verticalPadding12),
       ],
     );
   }

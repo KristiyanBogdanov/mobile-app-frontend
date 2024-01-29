@@ -86,13 +86,13 @@ class WeatherStationView extends StatelessWidget {
                 items: [
                   DropdownMenuItem(
                     child: Text(
-                      'Average temperature',
+                      AppStrings.averageTemperature,
                     ),
                     value: 0,
                   ),
                   DropdownMenuItem(
                     child: Text(
-                      'Average wind speed',
+                      AppStrings.averageWindSpeed,
                     ),
                     value: 1,
                   ),

@@ -118,6 +118,7 @@ class AppStrings {
   static const String windDirection = 'Wind direction';
   static String temperatureValue(num temperature, {bool merge = false}) => merge ? '$temperature°C' : '$temperature °C';
   static String windSpeedValue(num windSpeed) => '$windSpeed m/s';
+  static String irradianceValue(num irradiance) => '${irradiance}W/m²';
   static const String sensorsSectionTitle = 'Sensors';
   static const String coordinatesSectionTitle = 'Coordinates';
   static const String active = 'Active';
@@ -130,6 +131,12 @@ class AppStrings {
   static const String elevationMotor = 'Elevation motor';
   static String hours(int hours) => '${hours}h';
   static const String noData = 'No data available at the moment.';
+  static const String averageIrradiance = 'Average irradiance';
+  static const String averageTemperature = 'Average temperature';
+  static const String averageWindSpeed = 'Average wind speed';
+  static String deviation(num deviation) => deviation > 0 ? '+$deviation°σ' : '$deviation°σ';
+  static const String azimuthIndicatorLabel = 'Azimuth:';
+  static const String elevationIndicatorLabel = 'Elevation:';
 
   static const String futureDevelopmentLabel = 'This feature is for future development.';
 }
