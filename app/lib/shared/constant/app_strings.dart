@@ -43,6 +43,7 @@ class AppStrings {
   static const String locationsPageNavBarLabel = 'Locations';
   static const String notificationsPageNavBarLabel = 'Notifications';
   static const String marketplacePageNavBarLabel = 'Marketplace';
+  static const String profilePageNavBarLabel = 'Profile';
 
   static const String locationsPageTitle = 'Locations';
   static const String notificationsPageTitle = 'Notifications';

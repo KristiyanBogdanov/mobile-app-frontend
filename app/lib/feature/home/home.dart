@@ -2,6 +2,7 @@ import 'package:app/feature/home/index.dart';
 import 'package:app/feature/home/views/index.dart';
 import 'package:app/feature/location/home/locations_page.dart';
 import 'package:app/feature/notification/notifications_page.dart';
+import 'package:app/feature/profile/profile_page.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +39,8 @@ class Home extends StatelessWidget {
           child: Text(AppStrings.marketplacePageTitle),
         ),
       );
+    } else if (index == PageEnum.profile.value) {
+      return ProfilePage();
     }
 
     return null;

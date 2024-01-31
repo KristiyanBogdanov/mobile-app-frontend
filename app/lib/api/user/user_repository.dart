@@ -4,7 +4,7 @@ import 'package:app/api/user/user_service.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
 
 class UserRepository {
-  late UserModel _userModel;
+  UserModel? _userModel;
   final _userService = DependencyInjection.getIt<UserService>();
 
   Future<void> fetchData() async {
@@ -19,9 +19,13 @@ class UserRepository {
     return await _userService.addExistingLocation(locationUuid);
   }
 
+  void clearData() {
+    _userModel = null;
+  }
+
   set setUser(UserModel userModel) {
     _userModel = userModel;
   }
 
-  UserModel get userModel => _userModel;
+  UserModel? get userModel => _userModel;
 }

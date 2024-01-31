@@ -72,4 +72,8 @@ class AuthService {
         throw UnknownApiException();
     }
   }
+
+  Future<void> signOut() async {
+    await _jwtStorage.deleteToken();
+  }
 }

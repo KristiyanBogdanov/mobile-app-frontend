@@ -20,5 +20,9 @@ class AuthRepository {
     return await _authService.signIn(data);
   }
 
+  Future<void> signOut() async {
+    return await _authService.signOut();
+  }
+
   AuthLimitsModel? get limits => _authLimits;
 }
