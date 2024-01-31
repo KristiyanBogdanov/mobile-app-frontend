@@ -1,23 +1,22 @@
 class AppStrings {
   AppStrings._();
 
-  static const String appName = 'Diploma project';
+  static const String appTitle = 'Diploma project';
+  static const String appName = 'PURPLE';
+  static const String appSlogan = 'Monitor your solar trackers systems in real time using our app';
 
-  static const String signInPageTitle = 'Sign in';
+  static const String signInPageTitle = 'Welcome back';
+  static const String signInSubtitle = 'Sign in to continue';
   static const String signInButton = 'Sign in';
-  static const String createAccountButton = 'Create account';
-
-  static const String signUpPageTitle = 'Sign up';
+  static const String signUpPageTitle = 'Create an account';
+  static const String signUpSubtitle = 'Sign up to continue';
   static const String signUpButton = 'Sign up';
+  static const String createAccountButton = 'Register';
 
-  static const String usernameLabel = 'Username';
-  static const String usernameHint = 'Enter your username';
-  static const String emailLabel = 'Email';
-  static const String emailHint = 'Enter your email';
-  static const String passwordLabel = 'Password';
-  static const String passwordHint = 'Enter your password';
-  static const String confirmPasswordLabel = 'Confirm password';
-  static const String confirmPasswordHint = 'Confirm your password';
+  static const String usernameHint = 'Username';
+  static const String emailHint = 'Email';
+  static const String passwordHint = 'Password';
+  static const String confirmPasswordHint = 'Confirm password';
   static const String requiredUsername = 'Username is required';
   static const String requiredEmail = 'Email is required';
   static const String invalidEmailFormat = 'Email format is invalid';
@@ -25,7 +24,7 @@ class AppStrings {
   static String invalidPasswordLength(int minLength, int maxLength) =>
       'Password length must be between $minLength and $maxLength characters';
   static String invalidPassword(int minNumbers, int minLowercase, int minUppercase) =>
-      'Password must contain at least $minNumbers ${minNumbers == 1 ? 'number' : 'numbers'}, $minLowercase a-z and $minUppercase A-Z letters';
+      'Password must contain at least $minNumbers ${minNumbers == 1 ? 'number' : 'numbers'}, $minLowercase lowercase and $minUppercase uppercase letters';
   static const String invalidConfirmPassword = 'Passwords do not match';
   static const String wrongCredentials = 'Password or email is incorrect';
   static String invalidUsernameLength(int minLength, int maxLength) =>

@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: AppStrings.appName,
+        title: AppStrings.appTitle,
         theme: ThemeData(
           fontFamily: 'Nunito',
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -75,4 +75,5 @@ class MyApp extends StatelessWidget {
 // TODO: rename all view files to _view.dart
 // TODO: finish notification design and fix delete issue
 // TODO: check all corner radiuses
-// TODO: add shared widget for the padding of every page
+// TODO: add shared widget for the padding of every page (rename padding16 in AppStyle to defaultAppPadding)
+// TODO: add AppImges class

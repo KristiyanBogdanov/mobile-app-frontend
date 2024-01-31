@@ -1,5 +1,4 @@
 import 'package:app/feature/auth/signin/signin_view_model.dart';
-import 'package:app/feature/auth/views/index.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
@@ -15,18 +14,75 @@ class SignInPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => _viewModel,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text(AppStrings.signInPageTitle),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SignInFormView(),
-            PrimaryButton(
-              text: AppStrings.signInButton,
-              onPressed: () async => await _viewModel.signIn(),
+        backgroundColor: AppStyle.bgColor,
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: AppStyle.horizontalPadding16,
+              vertical: AppStyle.verticalPadding16,
             ),
-          ],
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      AppStrings.signInPageTitle,
+                      style: TextStyle(
+                        fontSize: AppStyle.fontSize28,
+                        fontWeight: FontWeight.bold,
+                        color: AppStyle.textColor,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: AppStyle.horizontalPadding16,
+                        vertical: AppStyle.verticalPadding8,
+                      ),
+                      child: Text(
+                        AppStrings.signInSubtitle,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: AppStyle.fontSize16,
+                          color: AppStyle.textColorWith07Opacity,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Consumer<SignInViewModel>(
+                  builder: (context, viewModel, child) {
+                    return Form(
+                      key: viewModel.formKey,
+                      child: Column(
+                        children: [
+                          TextFormFieldView(
+                            onChanged: (value) => viewModel.setEmail(value),
+                            validator: (value) => viewModel.validateEmail(value),
+                            hintText: AppStrings.emailHint,
+                            errorText: viewModel.emailError,
+                          ),
+                          SizedBox(height: AppStyle.verticalPadding16),
+                          TextFormFieldView(
+                            controller: viewModel.passwordController,
+                            onChanged: (value) => viewModel.setPassword(value),
+                            validator: (value) => viewModel.validatePassword(value),
+                            isPassword: true,
+                            hintText: AppStrings.passwordHint,
+                            errorText: viewModel.passwordError,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                PrimaryButton(
+                  text: AppStrings.signInButton,
+                  onPressed: () async => await _viewModel.signIn(),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

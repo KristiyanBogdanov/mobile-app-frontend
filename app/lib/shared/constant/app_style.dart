@@ -39,6 +39,8 @@ class AppStyle {
   static final double verticalPadding20 = 20.h;
   static final double verticalPadding24 = 24.h;
   static final double verticalPadding28 = 28.h;
+  static final double verticalPadding32 = 32.h;
+  static final double verticalPadding40 = 40.h;
 
   // Border radius
   static final double borderRadius4 = 4.r;
@@ -47,6 +49,9 @@ class AppStyle {
   static final double borderRadius16 = 16.r;
   static final double borderRadius18 = 18.r;
   static final double borderRadius20 = 20.r;
+
+  // Border width
+  static final double borderWidth1 = 1.w;
 
   // Font sizes
   static final double fontSize8 = 8.sp;
@@ -68,6 +73,9 @@ class AppStyle {
   // Divider
   static final double dividerIndent = 4.h;
   static final double dividerThickness = 1.w;
+
+  // WelcomePage
+  static final double welcomePageImageSize = 250.w;
 
   // SilverAppBar
   static final double addinationHeight = 16.h;
