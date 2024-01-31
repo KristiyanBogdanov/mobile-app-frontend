@@ -1,4 +1,4 @@
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/stacked-services/dialog-service/dialog_type.dart';
 import 'package:stacked_services/stacked_services.dart';
 

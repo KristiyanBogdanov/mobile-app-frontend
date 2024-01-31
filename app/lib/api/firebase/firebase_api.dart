@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/feature/home/index.dart';
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/route/index.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';

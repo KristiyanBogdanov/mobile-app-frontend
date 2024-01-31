@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:app/api/hw-notification/index.dart';
 import 'package:app/util/api/index.dart';
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';
 
 class HwNotificationService {

@@ -1,7 +1,7 @@
 import 'package:app/api/firebase/firebase_api.dart';
+import 'package:app/api/user/user_repository.dart';
 import 'package:app/shared/constant/index.dart';
-import 'package:app/util/dependency_injection/index.dart';
-import 'package:app/util/http/index.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/route/index.dart';
 import 'package:app/util/stacked-services/index.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,10 +33,13 @@ Future main() async {
 }
 
 Future<RouteEnum> _getInitialRoute() async {
-  final jwtStorage = DependencyInjection.getIt<JwtStorage>();
-  final jwt = await jwtStorage.getToken();
-
-  return jwt.isNotEmpty ? RouteEnum.home : RouteEnum.welcome;
+  try {
+    final userRepository = DependencyInjection.getIt<UserRepository>();
+    await userRepository.fetchData();
+    return RouteEnum.home;
+  } catch (_) {
+    return RouteEnum.welcome;
+  }
 }
 
 class MyApp extends StatelessWidget {

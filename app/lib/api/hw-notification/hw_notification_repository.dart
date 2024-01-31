@@ -1,5 +1,5 @@
 import 'package:app/api/hw-notification/hw_notification_service.dart';
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 
 class HwNotificationRepository {
   final _hwNotificationService = DependencyInjection.getIt<HwNotificationService>();

@@ -25,6 +25,7 @@ class SignInFormView extends StatelessWidget {
                 ),
               ),
               TextFormField(
+                controller: viewModel.passwordController,
                 onChanged: (value) => viewModel.setPassword(value),
                 validator: (value) => viewModel.validatePassword(value),
                 decoration: InputDecoration(

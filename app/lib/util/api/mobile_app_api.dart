@@ -10,6 +10,10 @@ class MobileAppApi {
     return '$_baseUrl/$apiPath';
   }
 
+  String getAuthLimits() {
+    return _createApiEndpoint('$_auth/limits');
+  }
+
   String signUp() {
     return _createApiEndpoint('$_auth/signup');
   }

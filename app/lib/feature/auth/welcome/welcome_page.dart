@@ -24,11 +24,11 @@ class WelcomePage extends StatelessWidget {
                 children: [
                   PrimaryButton(
                     text: AppStrings.signInButton,
-                    onPressed: _viewModel.navigateToSignIn,
+                    onPressed: () async => await _viewModel.navigateToSignIn(),
                   ),
                   PrimaryButton(
                     text: AppStrings.signUpButton,
-                    onPressed: _viewModel.navigateToSignUp,
+                    onPressed: () async => await _viewModel.navigateToSignUp(),
                   ),
                 ],
               )

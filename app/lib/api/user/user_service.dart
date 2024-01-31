@@ -6,7 +6,7 @@ import 'package:app/api/user/exception/index.dart';
 import 'package:app/api/user/model/index.dart';
 import 'package:app/shared/constant/app_strings.dart';
 import 'package:app/util/api/index.dart';
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';
 
 class UserService {
@@ -44,7 +44,7 @@ class UserService {
       case HttpStatus.conflict:
         throw STSerialNumberAlreadyUsedException();
       case HttpStatus.badRequest:
-        throw BadRequestApiException(jsonBody, AppStrings.addNewLocationBadRequest);
+        // throw BadRequestApiException(jsonBody, AppStrings.addNewLocationBadRequest);
       default:
         throw UnknownApiException();
     }
@@ -66,7 +66,7 @@ class UserService {
       case HttpStatus.conflict:
         throw LocationAlreadyAddedException();
       case HttpStatus.badRequest:
-        throw BadRequestApiException(jsonBody, AppStrings.addExistingLocationBadRequest);
+        // throw BadRequestApiException(jsonBody, AppStrings.addExistingLocationBadRequest);
       default:
         throw UnknownApiException();
     }

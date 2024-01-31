@@ -1,15 +1,11 @@
 import 'dart:convert';
 
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/jwt_storage.dart';
 import 'package:http/http.dart' as http;
 
 class HttpService {
   final _jwtStorage = DependencyInjection.getIt<JwtStorage>();
-
-  void setAccessToken(String accessToken) {
-    _jwtStorage.saveToken(accessToken);
-  }
 
   Future<Map<String, String>> _getHeaders() async {
     Map<String, String> headers = {

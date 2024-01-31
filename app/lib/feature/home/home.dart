@@ -3,7 +3,6 @@ import 'package:app/feature/home/views/index.dart';
 import 'package:app/feature/location/home/locations_page.dart';
 import 'package:app/feature/notification/notifications_page.dart';
 import 'package:app/shared/constant/index.dart';
-import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +19,7 @@ class Home extends StatelessWidget {
         builder: (context, viewModel, child) {
           return Scaffold(
             backgroundColor: AppStyle.bgColor,
-            body: viewModel.isLoading ? const LoadingView() : _buildBodyForIndex(viewModel.currentPageIndex),
+            body: _buildBodyForIndex(viewModel.currentPageIndex),
             bottomNavigationBar: BottomNavigationBarView(viewModel: viewModel),
           );
         },

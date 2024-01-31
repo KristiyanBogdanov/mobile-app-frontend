@@ -21,16 +21,18 @@ class AppStrings {
   static const String requiredUsername = 'Username is required';
   static const String requiredEmail = 'Email is required';
   static const String invalidEmailFormat = 'Email format is invalid';
-  static const String invalidEmail = 'Email is invalid';
   static const String requiredPassword = 'Password is required';
-  static const String invalidPassword = 'Password is invalid';
+  static String invalidPasswordLength(int minLength, int maxLength) =>
+      'Password length must be between $minLength and $maxLength characters';
+  static String invalidPassword(int minNumbers, int minLowercase, int minUppercase) =>
+      'Password must contain at least $minNumbers ${minNumbers == 1 ? 'number' : 'numbers'}, $minLowercase a-z and $minUppercase A-Z letters';
   static const String invalidConfirmPassword = 'Passwords do not match';
-  static const String tooShortUsername = 'Username is too short';
-  static const String weakPassword = 'Password is too weak';
+  static const String wrongCredentials = 'Password or email is incorrect';
+  static String invalidUsernameLength(int minLength, int maxLength) =>
+      'Username length must be between $minLength and $maxLength characters';
   static const String emailAlreadyUsed = 'Email is already used';
-  static const String signInBadRequest = 'Invalid sign in data';
-  static const String signUpBadRequest = 'Invalid sign up data';
 
+  static const String badRequestError = 'Invalid data. Please check your input.';
   static const String unauthorizedError = 'Unauthorized';
   static const String anauthorizedDialogDescription = 'You are not authorized. Please sign in or sign up';
   static const String anauthorizedDialogButton = 'OK';

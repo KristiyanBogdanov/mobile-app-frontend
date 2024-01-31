@@ -3,7 +3,6 @@ import 'package:app/api/firebase/firebase_api.dart';
 import 'package:app/api/hw-notification/index.dart';
 import 'package:app/api/location/index.dart';
 import 'package:app/api/user/index.dart';
-import 'package:app/feature/auth/auth_validator.dart';
 import 'package:app/feature/global_state.dart';
 import 'package:app/util/api/index.dart';
 import 'package:app/util/http/index.dart';
@@ -22,7 +21,6 @@ class DependencyInjection {
     getIt.registerLazySingleton<DialogService>(() => DialogService());
     getIt.registerLazySingleton<BottomSheetService>(() => BottomSheetService());
     getIt.registerSingleton<NavigationService>(NavigationService());
-    getIt.registerLazySingleton<AuthValidator>(() => AuthValidator());
 
     getIt.registerSingleton<FirebaseApi>(FirebaseApi());
 
