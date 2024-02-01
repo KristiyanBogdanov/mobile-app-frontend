@@ -2,7 +2,7 @@ import 'package:app/api/location/index.dart';
 import 'package:app/api/user/index.dart';
 import 'package:app/feature/location/add-device/index.dart';
 import 'package:app/shared/constant/index.dart';
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';
 import 'package:app/util/stacked-services/index.dart';
 import 'package:flutter/material.dart';
@@ -51,22 +51,22 @@ class AddLocationViewModel extends ChangeNotifier {
     } on STSerialNumberAlreadyUsedException catch (e) {
       _snackbarService.showSnackbar(message: e.message);
     } on BadRequestApiException catch (e) {
-      for (final errorCode in e.errorCodes) {
-        switch (errorCode) {
-          case ErrorCode.invalidLocationNameLength:
-            _nameError = AppStrings.invalidLocationNameLength;
-            notifyListeners();
-            break;
-          case ErrorCode.solarTrackersArrayMustContainAtLeastOneSerialNumber:
-            _snackbarService.showSnackbar(message: AppStrings.invalidSTArraySize);
-            break;
-          case ErrorCode.invalidSTSerialNumber:
-          case ErrorCode.invalidWSSerialNumber:
-          default:
-            _snackbarService.showSnackbar(message: e.message);
-            break;
-        }
-      }
+      // for (final errorCode in e.errorCodes) {
+      //   switch (errorCode) {
+      //     case ErrorCode.invalidLocationNameLength:
+      //       _nameError = AppStrings.invalidLocationNameLength;
+      //       notifyListeners();
+      //       break;
+      //     case ErrorCode.solarTrackersArrayMustContainAtLeastOneSerialNumber:
+      //       _snackbarService.showSnackbar(message: AppStrings.invalidSTArraySize);
+      //       break;
+      //     case ErrorCode.invalidSTSerialNumber:
+      //     case ErrorCode.invalidWSSerialNumber:
+      //     default:
+      //       _snackbarService.showSnackbar(message: e.message);
+      //       break;
+      //   }
+      // }
     } on UnknownApiException catch (e) {
       _snackbarService.showSnackbar(message: e.message);
     }

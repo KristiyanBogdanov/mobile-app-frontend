@@ -1,9 +1,9 @@
 import 'package:app/api/auth/index.dart';
 import 'package:app/api/firebase/firebase_api.dart';
+import 'package:app/api/user/user_repository.dart';
 import 'package:app/feature/auth/auth_validator.dart';
-import 'package:app/feature/global_state.dart';
-import 'package:app/shared/constant/index.dart';
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/shared/constant/app_strings.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';
 import 'package:app/util/route/index.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +14,18 @@ class SignInViewModel extends ChangeNotifier {
   String _password = '';
   String? _emailError;
   String? _passwordError;
+  final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  late final AuthValidator _authValidator;
   final _navigationService = DependencyInjection.getIt<NavigationService>();
   final _snackbarService = DependencyInjection.getIt<SnackbarService>();
   final _authRepository = DependencyInjection.getIt<AuthRepository>();
-  final _globalState = DependencyInjection.getIt<GlobalState>();
-  final _authValidator = DependencyInjection.getIt<AuthValidator>();
+  final _userRepository = DependencyInjection.getIt<UserRepository>();
   final _firebaseApi = DependencyInjection.getIt<FirebaseApi>();
+
+  SignInViewModel() {
+    _authValidator = AuthValidator(_authRepository.limits!);
+  }
 
   Future<void> signIn() async {
     _clearErrors();
@@ -32,20 +37,16 @@ class SignInViewModel extends ChangeNotifier {
     try {
       final fcmToken = await _firebaseApi.getDeviceToken();
 
-      // TODO: Reconsider this
       if (fcmToken == null) {
         _snackbarService.showSnackbar(message: AppStrings.unknownError);
         return;
       }
 
-      final userModel = await _authRepository.signIn(SignInDto(_email, _password, fcmToken));
-      _globalState.setUser(userModel);
+      _userRepository.setUser = await _authRepository.signIn(SignInDto(_email, _password, fcmToken));
       _navigationService.clearStackAndShow(RouteEnum.home.name);
-    } on InvalidEmailException catch (e) {
-      _emailError = e.message;
-      notifyListeners();
-    } on InvalidPasswordException catch (e) {
+    } on WrongCredentials catch (e) {
       _passwordError = e.message;
+      _passwordController.clear();
       notifyListeners();
     } on BadRequestApiException catch (e) {
       _snackbarService.showSnackbar(message: e.message);
@@ -80,4 +81,5 @@ class SignInViewModel extends ChangeNotifier {
   String? get passwordError => _passwordError;
 
   GlobalKey<FormState> get formKey => _formKey;
+  TextEditingController get passwordController => _passwordController;
 }

@@ -1,52 +1,57 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 class MobileAppApi {
-  final _auth = 'auth';
-  final _user = 'user';
-  final _location = 'location';
-  final _baseUrl = dotenv.env['MOBILE_APP_API_URL'] ?? '';
+  final _auth = '/auth';
+  final _user = '/user';
+  final _location = '/location';
 
-  String _createApiEndpoint(String apiPath) {
-    return '$_baseUrl/$apiPath';
+  String getAuthLimits() {
+    return '$_auth/limits';
   }
 
   String signUp() {
-    return _createApiEndpoint('$_auth/signup');
+    return '$_auth/signup';
   }
 
   String signIn() {
-    return _createApiEndpoint('$_auth/signin');
+    return '$_auth/signin';
+  }
+
+  String signOut() {
+    return '$_auth/signout';
+  }
+
+  String refreshTokens() {
+    return '$_auth/refresh';
   }
 
   String fetchUserData() {
-    return _createApiEndpoint('$_user/');
+    return '$_user/';
   }
 
   String addNewLocation() {
-    return _createApiEndpoint('$_user/add-location');
+    return '$_user/add-location';
   }
 
   String addExistingLocation(String locationUuid) {
-    return _createApiEndpoint('$_user/add-existing-location/$locationUuid');
+    return '$_user/add-existing-location/$locationUuid';
   }
 
   String updateHwNotificationStatus(String notificationId) {
-    return _createApiEndpoint('$_user/hw-notification/$notificationId');
+    return '$_user/hw-notification/$notificationId';
   }
 
   String deleteHwNotification(String notificationId) {
-    return _createApiEndpoint('$_user/hw-notification/$notificationId');
+    return '$_user/hw-notification/$notificationId';
   }
 
   String validateSTSerialNumber(String serialNumber) {
-    return _createApiEndpoint('$_location/validate/st-serial-number/$serialNumber');
+    return '$_location/validate/st-serial-number/$serialNumber';
   }
 
   String validateWSSerialNumber(String serialNumber) {
-    return _createApiEndpoint('$_location/validate/ws-serial-number/$serialNumber');
+    return '$_location/validate/ws-serial-number/$serialNumber';
   }
 
   String getLocationInsights(String locationId) {
-    return _createApiEndpoint('$_location/$locationId/insights');
+    return '$_location/$locationId/insights';
   }
 }

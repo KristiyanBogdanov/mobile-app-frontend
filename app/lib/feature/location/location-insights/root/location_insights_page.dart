@@ -9,7 +9,10 @@ import 'package:provider/provider.dart';
 class LocationInsightsPage extends StatelessWidget {
   final LocationInsightsViewModel viewModel;
 
-  const LocationInsightsPage({required this.viewModel, super.key});
+  const LocationInsightsPage({
+    super.key,
+    required this.viewModel,
+  });
 
   @override
   Widget build(BuildContext context) {

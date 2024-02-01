@@ -1,7 +1,7 @@
 import 'package:app/api/location/dto/index.dart';
 import 'package:app/api/location/location_service.dart';
 import 'package:app/api/location/model/index.dart';
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 
 class LocationRepository {
   final _locationService = DependencyInjection.getIt<LocationService>();

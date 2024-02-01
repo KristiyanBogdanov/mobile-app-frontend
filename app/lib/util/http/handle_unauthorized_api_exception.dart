@@ -1,5 +1,5 @@
 import 'package:app/feature/global_state.dart';
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/route/index.dart';
 import 'package:app/util/stacked-services/dialog-service/index.dart';
 import 'package:stacked_services/stacked_services.dart';

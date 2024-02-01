@@ -1,13 +1,14 @@
 import 'package:app/api/location/index.dart';
 import 'package:app/api/user/model/index.dart';
 import 'package:app/api/user/user_service.dart';
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 
 class UserRepository {
+  UserModel? _userModel;
   final _userService = DependencyInjection.getIt<UserService>();
 
-  Future<UserModel> fetchData() async {
-    return await _userService.fetchData();
+  Future<void> fetchData() async {
+    setUser = await _userService.fetchData();
   }
 
   Future<LocationModel> addNewLocation(NewLocationDto data) async {
@@ -17,4 +18,14 @@ class UserRepository {
   Future<LocationModel> addExistingLocation(String locationUuid) async {
     return await _userService.addExistingLocation(locationUuid);
   }
+
+  void clearData() {
+    _userModel = null;
+  }
+
+  set setUser(UserModel userModel) {
+    _userModel = userModel;
+  }
+
+  UserModel? get userModel => _userModel;
 }

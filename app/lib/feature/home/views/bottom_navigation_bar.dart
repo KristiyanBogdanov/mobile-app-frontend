@@ -46,6 +46,10 @@ class BottomNavigationBarView extends StatelessWidget {
                 icon: Icons.shopping_cart_rounded,
                 text: AppStrings.marketplacePageNavBarLabel,
               ),
+              GButton(
+                icon: Icons.person_rounded,
+                text: AppStrings.profilePageNavBarLabel,
+              ),
             ],
             selectedIndex: viewModel.currentPageIndex,
             onTabChange: (index) => viewModel.changePage(index),

@@ -1,9 +1,9 @@
 import 'package:app/api/auth/index.dart';
 import 'package:app/api/firebase/firebase_api.dart';
+import 'package:app/api/user/user_repository.dart';
 import 'package:app/feature/auth/auth_validator.dart';
-import 'package:app/feature/global_state.dart';
-import 'package:app/shared/constant/index.dart';
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/shared/constant/app_strings.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';
 import 'package:app/util/route/index.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +17,16 @@ class SignUpViewModel extends ChangeNotifier {
   String? _emailError;
   String? _passwordError;
   final _formKey = GlobalKey<FormState>();
+  late final AuthValidator _authValidator;
   final _navigationService = DependencyInjection.getIt<NavigationService>();
   final _snackbarService = DependencyInjection.getIt<SnackbarService>();
   final _authRepository = DependencyInjection.getIt<AuthRepository>();
-  final _globalState = DependencyInjection.getIt<GlobalState>();
-  final _authValidator = DependencyInjection.getIt<AuthValidator>();
+  final _userRepository = DependencyInjection.getIt<UserRepository>();
   final _firebaseApi = DependencyInjection.getIt<FirebaseApi>();
+
+  SignUpViewModel() {
+    _authValidator = AuthValidator(_authRepository.limits!);
+  }
 
   Future<void> signUp() async {
     _clearErrors();
@@ -39,28 +43,13 @@ class SignUpViewModel extends ChangeNotifier {
         return;
       }
 
-      final userModel = await _authRepository.signUp(SignUpDto(_username, _email, _password, fcmToken));
-      _globalState.setUser(userModel);
+      _userRepository.setUser = await _authRepository.signUp(SignUpDto(_username, _email, _password, fcmToken));
       _navigationService.clearStackAndShow(RouteEnum.home.name);
     } on EmailAlreadyUsedException catch (e) {
       _emailError = e.message;
       notifyListeners();
     } on BadRequestApiException catch (e) {
-      for (final errorCode in e.errorCodes) {
-        switch (errorCode) {
-          case ErrorCode.tooShortUsername:
-            _usernameError = AppStrings.tooShortUsername;
-            notifyListeners();
-            break;
-          case ErrorCode.weakPassword:
-            _passwordError = AppStrings.weakPassword;
-            notifyListeners();
-            break;
-          default:
-            _snackbarService.showSnackbar(message: e.message);
-            break;
-        }
-      }
+      _snackbarService.showSnackbar(message: e.message);
     } on UnknownApiException catch (e) {
       _snackbarService.showSnackbar(message: e.message);
     }

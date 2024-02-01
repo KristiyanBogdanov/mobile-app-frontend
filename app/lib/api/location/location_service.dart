@@ -1,28 +1,22 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/api/location/dto/index.dart';
 import 'package:app/api/location/model/index.dart';
 import 'package:app/util/api/index.dart';
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';
 
 class LocationService {
-  final _httpService = DependencyInjection.getIt<HttpService>();
+  final _httpService = DependencyInjection.getIt<HttpService>().instance;
   final _mobileAppApi = DependencyInjection.getIt<MobileAppApi>();
 
   Future<ValidateSerialNumberDto> _validateSerialNumber(String serialNumber, String endpoint) async {
     final response = await _httpService.get(endpoint);
 
-    final jsonBody = jsonDecode(response.body);
-
     switch (response.statusCode) {
       case HttpStatus.ok:
-        return ValidateSerialNumberDto.fromJson(jsonBody);
-      case HttpStatus.unauthorized:
-        throw UnauthorizedApiException();
+        return ValidateSerialNumberDto.fromJson(response.data);
       default:
-        print(jsonBody);
         throw UnknownApiException();
     }
   }
@@ -38,13 +32,9 @@ class LocationService {
   Future<LocationInsightsModel> getLocationInsights(String locationId) async {
     final response = await _httpService.get(_mobileAppApi.getLocationInsights(locationId));
 
-    final jsonBody = jsonDecode(response.body);
-
     switch (response.statusCode) {
       case HttpStatus.ok:
-        return LocationInsightsModel.fromJson(jsonBody);
-      case HttpStatus.unauthorized:
-        throw UnauthorizedApiException();
+        return LocationInsightsModel.fromJson(response.data);
       default:
         throw UnknownApiException();
     }

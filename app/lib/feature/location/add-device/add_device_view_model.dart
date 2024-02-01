@@ -1,7 +1,7 @@
 import 'package:app/api/location/index.dart';
 import 'package:app/feature/location/add-device/device_type.dart';
 import 'package:app/shared/constant/index.dart';
-import 'package:app/util/dependency_injection/index.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:flutter/material.dart';
 
 class AddDeviceViewModel extends ChangeNotifier {
