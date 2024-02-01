@@ -1,6 +1,12 @@
 import 'package:app/shared/constant/app_strings.dart';
-import 'package:app/util/http/exception/api_exception.dart';
 
-class EmailAlreadyUsedException extends ApiException {
-  EmailAlreadyUsedException() : super(AppStrings.emailAlreadyUsed);
+class EmailAlreadyUsedException implements Exception {
+  final String message;
+
+  EmailAlreadyUsedException() : message = AppStrings.emailAlreadyUsedError;
+
+  @override
+  String toString() {
+    return message;
+  }
 }

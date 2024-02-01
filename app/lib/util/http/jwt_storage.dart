@@ -1,29 +1,58 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class JwtStorage {
-  static const _tokenKey = 'jwt_token';
-  String _token = '';
+  static const _accessTokenKey = 'access_token';
+  static const _refreshTokenKey = 'refresh_token';
+  String _accessToken = '';
+  String _refreshToken = '';
 
-  Future<void> saveToken(String token) async {
-    _token = token;
+  Future<void> saveTokens(String accessToken, String refreshToken) async {
+    _accessToken = accessToken;
+    _refreshToken = refreshToken;
+
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString(_tokenKey, token);
+    prefs.setString(_accessTokenKey, accessToken);
+    prefs.setString(_refreshTokenKey, refreshToken);
   }
 
-  Future<String> getToken() async {
-    if (_token.isNotEmpty) {
-      return _token;
+  Future<String> getAccessToken() async {
+    if (_accessToken.isNotEmpty) {
+      return _accessToken;
     }
 
     final prefs = await SharedPreferences.getInstance();
-    _token = prefs.getString(_tokenKey) ?? '';
+    _accessToken = prefs.getString(_accessTokenKey) ?? '';
 
-    return _token;
+    return _accessToken;
   }
 
-  Future<void> deleteToken() async {
-    _token = '';
+  Future<String> getRefreshToken() async {
+    if (_refreshToken.isNotEmpty) {
+      return _refreshToken;
+    }
+
     final prefs = await SharedPreferences.getInstance();
-    prefs.remove(_tokenKey);
+    _refreshToken = prefs.getString(_refreshTokenKey) ?? '';
+
+    return _refreshToken;
+  }
+
+  // TODO: test for potential bug due to async nature of this method
+  Future<bool> hasTokens() async {
+    final [accessToken, refreshToken] = await Future.wait([
+      getAccessToken(),
+      getRefreshToken(),
+    ]);
+
+    return accessToken.isNotEmpty && refreshToken.isNotEmpty;
+  }
+
+  Future<void> deleteTokens() async {
+    _accessToken = '';
+    _refreshToken = '';
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove(_accessTokenKey);
+    prefs.remove(_refreshTokenKey);
   }
 }

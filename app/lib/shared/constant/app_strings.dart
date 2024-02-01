@@ -26,10 +26,10 @@ class AppStrings {
   static String invalidPassword(int minNumbers, int minLowercase, int minUppercase) =>
       'Password must contain at least $minNumbers ${minNumbers == 1 ? 'number' : 'numbers'}, $minLowercase lowercase and $minUppercase uppercase letters';
   static const String invalidConfirmPassword = 'Passwords do not match';
-  static const String wrongCredentials = 'Password or email is incorrect';
+  static const String wrongCredentialsError = 'Password or email is incorrect';
   static String invalidUsernameLength(int minLength, int maxLength) =>
       'Username length must be between $minLength and $maxLength characters';
-  static const String emailAlreadyUsed = 'Email is already used';
+  static const String emailAlreadyUsedError = 'Email is already used';
 
   static const String badRequestError = 'Invalid data. Please check your input.';
   static const String unauthorizedError = 'Unauthorized';

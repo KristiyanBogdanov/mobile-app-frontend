@@ -16,7 +16,7 @@ class ApiExceptionBody {
   factory ApiExceptionBody.fromJson(Map<String, dynamic> json) {
     final dynamic errorBody = json['error'];
     final List<dynamic> errors = errorBody is List ? errorBody : [errorBody];
-    
+
     return ApiExceptionBody(errors.map((error) {
       return ApiExceptionRecord(
         error['type'],
@@ -25,10 +25,4 @@ class ApiExceptionBody {
       );
     }).toList());
   }
-}
-
-abstract class ApiException implements Exception {
-  final String message;
-
-  ApiException(this.message);
 }

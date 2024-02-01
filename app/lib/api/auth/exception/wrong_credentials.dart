@@ -1,6 +1,12 @@
 import 'package:app/shared/constant/app_strings.dart';
-import 'package:app/util/http/exception/api_exception.dart';
 
-class WrongCredentials extends ApiException {
-  WrongCredentials() : super(AppStrings.wrongCredentials);
+class WrongCredentials implements Exception {
+  final String message;
+
+  WrongCredentials() : message = AppStrings.wrongCredentialsError;
+
+  @override
+  String toString() {
+    return message;
+  }
 }

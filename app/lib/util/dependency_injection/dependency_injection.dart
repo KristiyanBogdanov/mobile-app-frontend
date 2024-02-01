@@ -24,9 +24,9 @@ class DependencyInjection {
 
     getIt.registerSingleton<FirebaseApi>(FirebaseApi());
 
+    getIt.registerSingleton<MobileAppApi>(MobileAppApi());
     getIt.registerSingleton<JwtStorage>(JwtStorage());
     getIt.registerSingleton<HttpService>(HttpService());
-    getIt.registerSingleton<MobileAppApi>(MobileAppApi());
 
     getIt.registerLazySingleton<AuthService>(() => AuthService());
     getIt.registerLazySingleton<AuthRepository>(() => AuthRepository());
