@@ -91,7 +91,7 @@ class AppStyle {
   static final double primaryButtonHeight = 50.h;
 
   // DeviceRow
-  static final double deviceRowHeight = 50.h;
+  static final double deviceBoxHeight = 50.h;
 
   // AddDeviceBottomSheet
   static final double addDeviceBottomSheetHeight = 550.h;

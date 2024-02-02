@@ -11,7 +11,9 @@ class WelcomeViewModel extends ChangeNotifier {
   final _navigationService = DependencyInjection.getIt<NavigationService>();
 
   WelcomeViewModel() {
-    _authRepository.fetchLimits();
+    if (_authRepository.limits == null) {
+      _authRepository.fetchLimits();
+    }
   }
 
   Future<bool> checkAuthLimits() async {
@@ -23,7 +25,7 @@ class WelcomeViewModel extends ChangeNotifier {
       await _authRepository.fetchLimits();
       return true;
     } catch (_) {
-      _snackbarService.showSnackbar(message: AppStrings.unknownError);
+      _snackbarService.showSnackbar(message: AppStrings.serverError);
       return false;
     }
   }

@@ -2,13 +2,24 @@ import 'dart:io';
 
 import 'package:app/api/location/dto/index.dart';
 import 'package:app/api/location/model/index.dart';
-import 'package:app/util/api/index.dart';
+import 'package:app/util/api/mobile_app_api.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';
 
 class LocationService {
   final _httpService = DependencyInjection.getIt<HttpService>().instance;
   final _mobileAppApi = DependencyInjection.getIt<MobileAppApi>();
+
+  Future<LocationLimitsModel> getLimits() async {
+    final response = await _httpService.get(_mobileAppApi.getLocationLimits());
+
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return LocationLimitsModel.fromJson(response.data);
+      default:
+        throw UnknownApiException();
+    }
+  }
 
   Future<ValidateSerialNumberDto> _validateSerialNumber(String serialNumber, String endpoint) async {
     final response = await _httpService.get(endpoint);

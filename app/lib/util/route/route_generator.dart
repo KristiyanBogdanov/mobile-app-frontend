@@ -18,7 +18,7 @@ class RouteGenerator {
     } else if (settings.name == RouteEnum.home.name) {
       return MaterialPageRoute(builder: (_) {
         final currentPageIndex = (args as int?) ?? PageEnum.locations.value;
-        return Home(viewModel: HomeViewModel(currentPageIndex: currentPageIndex));
+        return HomeView(viewModel: HomeViewModel(currentPageIndex: currentPageIndex));
       });
     } else if (settings.name == RouteEnum.addLocation.name) {
       return MaterialPageRoute(builder: (_) => const AddLocationPage());

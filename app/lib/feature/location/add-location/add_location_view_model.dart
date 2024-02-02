@@ -22,8 +22,33 @@ class AddLocationViewModel extends ChangeNotifier {
   final _bottomSheetService = DependencyInjection.getIt<BottomSheetService>();
   final _navigationService = DependencyInjection.getIt<NavigationService>();
   final _userRepotitory = DependencyInjection.getIt<UserRepository>();
+  final _locationRepository = DependencyInjection.getIt<LocationRepository>();
+
+  AddLocationViewModel() {
+    if (_locationRepository.limits == null) {
+      _locationRepository.fetchLimits();
+    }
+  }
+
+  Future<bool> checkLocationLimits() async {
+    if (_locationRepository.limits != null) {
+      return true;
+    }
+
+    try {
+      await _locationRepository.fetchLimits();
+      return true;
+    } catch (_) {
+      _snackbarService.showSnackbar(message: AppStrings.serverError);
+      return false;
+    }
+  }
 
   Future<void> addNewLocation() async {
+    if (!await checkLocationLimits()) {
+      return;
+    }
+
     _clearErrors();
 
     _nameError = _validateName();
@@ -46,42 +71,35 @@ class AddLocationViewModel extends ChangeNotifier {
     try {
       final location = await _userRepotitory.addNewLocation(newLocationDto);
       _navigationService.back(result: location);
-    } on UnauthorizedApiException {
-      handleUnauthorizedApiException();
+    } on (InvalidTokenApiException, TokenExpiredApiException) {
+      handleUnauthorized();
     } on STSerialNumberAlreadyUsedException catch (e) {
       _snackbarService.showSnackbar(message: e.message);
     } on BadRequestApiException catch (e) {
-      // for (final errorCode in e.errorCodes) {
-      //   switch (errorCode) {
-      //     case ErrorCode.invalidLocationNameLength:
-      //       _nameError = AppStrings.invalidLocationNameLength;
-      //       notifyListeners();
-      //       break;
-      //     case ErrorCode.solarTrackersArrayMustContainAtLeastOneSerialNumber:
-      //       _snackbarService.showSnackbar(message: AppStrings.invalidSTArraySize);
-      //       break;
-      //     case ErrorCode.invalidSTSerialNumber:
-      //     case ErrorCode.invalidWSSerialNumber:
-      //     default:
-      //       _snackbarService.showSnackbar(message: e.message);
-      //       break;
-      //   }
-      // }
+      _snackbarService.showSnackbar(message: e.message);
     } on UnknownApiException catch (e) {
       _snackbarService.showSnackbar(message: e.message);
     }
   }
 
-  String? _validateField(String? field, String errorMessage) {
-    if (field == null || field.isEmpty) {
-      return errorMessage;
-    }
-
-    return null;
+  bool _fieldIsEmpty(String? field) {
+    return field == null || field.isEmpty;
   }
 
   String? _validateName() {
-    return _validateField(_name, AppStrings.requiredLocationName);
+    if (_fieldIsEmpty(_name)) {
+      return AppStrings.requiredLocationName;
+    }
+
+    if (_name.length < _locationRepository.limits!.nameMinLength ||
+        _name.length > _locationRepository.limits!.nameMaxLength) {
+      return AppStrings.invalidLocationNameLength(
+        _locationRepository.limits!.nameMinLength,
+        _locationRepository.limits!.nameMaxLength,
+      );
+    }
+
+    return null;
   }
 
   // String? validateLocation(String? location) {
@@ -89,10 +107,8 @@ class AddLocationViewModel extends ChangeNotifier {
   // }
 
   String? _validateCapacity() {
-    final result = _validateField(_capacity, AppStrings.requiredCapacity);
-
-    if (result != null) {
-      return result;
+    if (_fieldIsEmpty(_capacity)) {
+      return AppStrings.requiredCapacity;
     }
 
     if (int.tryParse(_capacity) == null || int.parse(_capacity) <= 0) {
@@ -131,10 +147,7 @@ class AddLocationViewModel extends ChangeNotifier {
 
   Future<void> addSolarTracker() async {
     final response = await _showAddDeviceSheet(
-      AddDeviceViewModel(
-        deviceType: DeviceType.solarTracker,
-        solarTrackerSerialNumbers: _solarTrackers,
-      ),
+      AddDeviceViewModel(deviceType: DeviceType.solarTracker, solarTrackerSerialNumbers: _solarTrackers),
     );
 
     if (response != null && response.confirmed) {
@@ -148,16 +161,9 @@ class AddLocationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool isAddWSButtonEnabled() {
-    return _weatherStation == null;
-  }
-
   Future<void> addWeatherStation() async {
     final response = await _showAddDeviceSheet(
-      AddDeviceViewModel(
-        deviceType: DeviceType.weatherStation,
-        solarTrackerSerialNumbers: _solarTrackers,
-      ),
+      AddDeviceViewModel(deviceType: DeviceType.weatherStation),
     );
 
     if (response != null && response.confirmed) {
@@ -170,6 +176,9 @@ class AddLocationViewModel extends ChangeNotifier {
     _weatherStation = null;
     notifyListeners();
   }
+
+  bool get isAddWSButtonEnabled => _weatherStation == null;
+  bool get isAddLocationButtonDisabled => solarTrackers.isEmpty;
 
   List<String> get solarTrackers => _solarTrackers;
   String? get weatherStation => _weatherStation;

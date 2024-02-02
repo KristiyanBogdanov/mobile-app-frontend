@@ -45,7 +45,7 @@ class HwNotificationModel {
       return AppStrings.justNow;
     }
   }
-  
+
   String get parseNotificationType {
     switch (notificationType) {
       case HwNotificationType.deviceState:

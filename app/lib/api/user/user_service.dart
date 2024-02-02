@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:app/api/location/index.dart';
 import 'package:app/api/user/exception/index.dart';
 import 'package:app/api/user/model/index.dart';
-import 'package:app/util/api/index.dart';
+import 'package:app/util/api/mobile_app_api.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';
 

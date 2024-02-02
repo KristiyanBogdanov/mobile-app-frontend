@@ -58,8 +58,8 @@ class AddLocationPage extends StatelessWidget {
                       const ColumnSpacingView(),
                       const ColumnSectionTitleView(title: AppStrings.weatherStationSectionTitle),
                       DevicesRowView(
-                        onAddButtonPressed:
-                            viewModel.isAddWSButtonEnabled() ? () async => await viewModel.addWeatherStation() : null,
+                        isAddButtonVisible: viewModel.isAddWSButtonEnabled,
+                        onAddButtonPressed: () async => await viewModel.addWeatherStation(),
                         devices: viewModel.weatherStation != null
                             ? [
                                 DeviceBoxView(
@@ -74,6 +74,7 @@ class AddLocationPage extends StatelessWidget {
                   PrimaryButton(
                     text: AppStrings.addLocationButton,
                     onPressed: () async => await viewModel.addNewLocation(),
+                    isDisabled: viewModel.isAddLocationButtonDisabled,
                   ),
                 ],
               ),

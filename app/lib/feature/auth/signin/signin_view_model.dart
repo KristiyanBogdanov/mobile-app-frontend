@@ -38,7 +38,7 @@ class SignInViewModel extends ChangeNotifier {
       final fcmToken = await _firebaseApi.getDeviceToken();
 
       if (fcmToken == null) {
-        _snackbarService.showSnackbar(message: AppStrings.unknownError);
+        _snackbarService.showSnackbar(message: AppStrings.serverError);
         return;
       }
 

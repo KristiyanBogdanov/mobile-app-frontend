@@ -39,11 +39,11 @@ class SignUpViewModel extends ChangeNotifier {
       final fcmToken = await _firebaseApi.getDeviceToken();
 
       if (fcmToken == null) {
-        _snackbarService.showSnackbar(message: AppStrings.unknownError);
+        _snackbarService.showSnackbar(message: AppStrings.serverError);
         return;
       }
 
-      _userRepository.setUser = await _authRepository.signUp(SignUpDto(_username, _email, _password, fcmToken));
+      _userRepository.setUser = await _authRepository.signUp(SignUpDto(_username.trim(), _email, _password, fcmToken));
       _navigationService.clearStackAndShow(RouteEnum.home.name);
     } on EmailAlreadyUsedException catch (e) {
       _emailError = e.message;

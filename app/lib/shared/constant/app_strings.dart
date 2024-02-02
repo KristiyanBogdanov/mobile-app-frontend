@@ -35,9 +35,7 @@ class AppStrings {
   static const String unauthorizedError = 'Unauthorized';
   static const String anauthorizedDialogDescription = 'You are not authorized. Please sign in or sign up';
   static const String anauthorizedDialogButton = 'OK';
-  static const String unknownError = 'Unknown error';
-  static const String unknownErrorDialogDescription = 'Something went wrong. Please try again later';
-  static const String unknownErrorDialogButton = 'OK';
+  static const String serverError = 'Server error. Please try again later';
 
   static const String locationsPageNavBarLabel = 'Locations';
   static const String notificationsPageNavBarLabel = 'Notifications';
@@ -78,7 +76,8 @@ class AppStrings {
       'You have already added location with this solar tracker';
   static const String locationWithThisSTSerialNumberAlreadExists = 'Location with this solar tracker already exists';
   static const String invalidWSSerialNumber = 'Invalid weather station serial number';
-  static const String invalidLocationNameLength = 'Location name length is out of range';
+  static String invalidLocationNameLength(int minLength, int maxLength) =>
+      'Location name length must be between $minLength and $maxLength characters';
   static const String invalidCapacity = 'Capacity must be positive integer';
   static const String invalidSTArraySize = 'Solar trackers array must contain at least one serial number';
 

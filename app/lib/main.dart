@@ -77,7 +77,6 @@ class MyApp extends StatelessWidget {
 }
 
 // TODO: fix error handling where snackbar is shown
-// TODO: trim username and email
 // TODO: remove global state and use repositories instead
 // TODO: redisign and change app bar
 // TODO: rename all view files to _view.dart

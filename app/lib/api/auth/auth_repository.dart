@@ -1,7 +1,7 @@
 import 'package:app/api/auth/auth_service.dart';
 import 'package:app/api/auth/dto/index.dart';
 import 'package:app/api/auth/model/index.dart';
-import 'package:app/api/user/index.dart';
+import 'package:app/api/user/model/index.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
 
 class AuthRepository {

@@ -19,6 +19,10 @@ class UserRepository {
     return await _userService.addExistingLocation(locationUuid);
   }
 
+  void addLocation(LocationModel locationModel) {
+    _userModel!.locations.add(locationModel);
+  }
+
   void clearData() {
     _userModel = null;
   }

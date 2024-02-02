@@ -6,8 +6,7 @@ part of '../auth_limits_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AuthLimitsModel _$AuthLimitsModelFromJson(Map<String, dynamic> json) =>
-    AuthLimitsModel(
+AuthLimitsModel _$AuthLimitsModelFromJson(Map<String, dynamic> json) => AuthLimitsModel(
       json['usernameMinLength'] as int,
       json['usernameMaxLength'] as int,
       json['passwordMinLength'] as int,
@@ -17,8 +16,7 @@ AuthLimitsModel _$AuthLimitsModelFromJson(Map<String, dynamic> json) =>
       json['passwordMinUppercase'] as int,
     );
 
-Map<String, dynamic> _$AuthLimitsModelToJson(AuthLimitsModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AuthLimitsModelToJson(AuthLimitsModel instance) => <String, dynamic>{
       'usernameMinLength': instance.usernameMinLength,
       'usernameMaxLength': instance.usernameMaxLength,
       'passwordMinLength': instance.passwordMinLength,

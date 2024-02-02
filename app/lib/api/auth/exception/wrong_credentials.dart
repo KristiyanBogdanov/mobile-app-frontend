@@ -6,7 +6,5 @@ class WrongCredentials implements Exception {
   WrongCredentials() : message = AppStrings.wrongCredentialsError;
 
   @override
-  String toString() {
-    return message;
-  }
+  String toString() => message;
 }

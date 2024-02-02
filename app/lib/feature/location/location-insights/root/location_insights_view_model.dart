@@ -21,10 +21,10 @@ class LocationInsightsViewModel extends ChangeNotifier {
       _locationInsightsModel = await _locationRepository.getLocationInsights(locationModel.id);
       _isLoading = false;
       notifyListeners();
-    } on UnauthorizedApiException {
-      handleUnauthorizedApiException();
+    } on InvalidTokenApiException {
+      handleUnauthorized();
     } on UnknownApiException {
-      await _dialogService.showUnknownErrorDialog();
+      // await _dialogService.showUnknownErrorDialog();
     }
   }
 

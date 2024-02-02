@@ -18,8 +18,6 @@ class AuthInterceptor implements Interceptor {
   final _mobileAppApi = DependencyInjection.getIt<MobileAppApi>();
   final _jwtStorage = DependencyInjection.getIt<JwtStorage>();
 
-  AuthInterceptor();
-
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     options.headers['Authorization'] = 'Bearer ${await _jwtStorage.getAccessToken()}';

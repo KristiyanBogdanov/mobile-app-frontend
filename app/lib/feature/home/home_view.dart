@@ -7,10 +7,10 @@ import 'package:app/shared/constant/index.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Home extends StatelessWidget {
+class HomeView extends StatelessWidget {
   final HomeViewModel viewModel;
 
-  const Home({super.key, required this.viewModel});
+  const HomeView({super.key, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {

@@ -13,14 +13,12 @@ class QrScannerView extends StatefulWidget {
 
 class _QrScannerViewState extends State<QrScannerView> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  QRViewController? controller;
 
   @override
   Widget build(BuildContext context) {
     return QRView(
       key: qrKey,
       onQRViewCreated: (controller) {
-        this.controller = controller;
         controller.scannedDataStream.listen((scanData) {
           widget.onDetect(scanData.code);
         });

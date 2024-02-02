@@ -43,6 +43,10 @@ class MobileAppApi {
     return '$_user/hw-notification/$notificationId';
   }
 
+  String getLocationLimits() {
+    return '$_location/limits';
+  }
+
   String validateSTSerialNumber(String serialNumber) {
     return '$_location/validate/st-serial-number/$serialNumber';
   }
