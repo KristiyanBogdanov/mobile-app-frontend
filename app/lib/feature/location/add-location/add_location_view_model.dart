@@ -10,7 +10,6 @@ import 'package:stacked_services/stacked_services.dart';
 
 class AddLocationViewModel extends ChangeNotifier {
   String _name = '';
-  String _location = 'nqma';
   String _capacity = '';
   final List<String> _solarTrackers = [];
   String? _weatherStation;
@@ -61,7 +60,6 @@ class AddLocationViewModel extends ChangeNotifier {
 
     final newLocationDto = NewLocationDto(
       _name,
-      _location,
       int.parse(_capacity),
       _solarTrackers,
       _weatherStation,
@@ -127,10 +125,6 @@ class AddLocationViewModel extends ChangeNotifier {
 
   void setName(String name) {
     _name = name;
-  }
-
-  void setLocation(String location) {
-    _location = location;
   }
 
   void setCapacity(String capacity) {

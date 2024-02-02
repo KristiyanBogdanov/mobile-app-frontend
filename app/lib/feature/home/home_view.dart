@@ -30,7 +30,7 @@ class HomeView extends StatelessWidget {
 
   Widget? _buildBodyForIndex(int index) {
     if (index == PageEnum.locations.value) {
-      return const LocationsPage();
+      return LocationsPage();
     } else if (index == PageEnum.notifications.value) {
       return const NotificationsPage();
     } else if (index == PageEnum.marketplace.value) {

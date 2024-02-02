@@ -77,8 +77,8 @@ class AppStyle {
   // WelcomePage
   static final double welcomePageImageSize = 250.w;
 
-  // SilverAppBar
-  static final double addinationHeight = 16.h;
+  // CustomAppBar
+  static final double customAppBarHeight = 40.h;
 
   // SharedWithRow
   static const int maxSharedWith = 2;

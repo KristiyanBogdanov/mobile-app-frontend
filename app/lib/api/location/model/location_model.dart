@@ -8,7 +8,6 @@ class LocationModel {
   final String id;
   final String uuid;
   final String name;
-  final String location;
   final int capacity;
   final List<String> solarTrackers;
   final String? weatherStation;
@@ -20,7 +19,6 @@ class LocationModel {
     this.id,
     this.uuid,
     this.name,
-    this.location,
     this.capacity,
     this.solarTrackers,
     this.weatherStation,

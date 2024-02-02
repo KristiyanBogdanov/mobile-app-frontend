@@ -43,8 +43,6 @@ class AddLocationPage extends StatelessWidget {
                         errorText: viewModel.capacityError,
                       ),
                       const ColumnSpacingView(),
-                      const ColumnSectionTitleView(title: AppStrings.locationCoordinatesSectionTitle),
-                      const ColumnSpacingView(),
                       const ColumnSectionTitleView(title: AppStrings.solarTrackersSectionTitle),
                       DevicesRowView(
                         onAddButtonPressed: viewModel.addSolarTracker,
