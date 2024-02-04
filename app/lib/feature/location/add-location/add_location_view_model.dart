@@ -2,6 +2,7 @@ import 'package:app/api/location/index.dart';
 import 'package:app/api/user/index.dart';
 import 'package:app/feature/location/add-device/index.dart';
 import 'package:app/shared/constant/index.dart';
+import 'package:app/util/common/handle_unauthorized.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';
 import 'package:app/util/stacked-services/index.dart';
@@ -11,12 +12,12 @@ import 'package:stacked_services/stacked_services.dart';
 class AddLocationViewModel extends ChangeNotifier {
   String _name = '';
   String _capacity = '';
-  final List<String> _solarTrackers = [];
-  String? _weatherStation;
-  String? _cctv;
-  String? _nameError;
-  String? _capacityError;
-  String? _weatherStationError;
+  final List<String> solarTrackers = [];
+  String? weatherStation;
+  String? cctv;
+  String? nameError;
+  String? capacityError;
+  String? weatherStationError;
   final _snackbarService = DependencyInjection.getIt<SnackbarService>();
   final _bottomSheetService = DependencyInjection.getIt<BottomSheetService>();
   final _navigationService = DependencyInjection.getIt<NavigationService>();
@@ -50,10 +51,10 @@ class AddLocationViewModel extends ChangeNotifier {
 
     _clearErrors();
 
-    _nameError = _validateName();
-    _capacityError = _validateCapacity();
+    nameError = _validateName();
+    capacityError = _validateCapacity();
 
-    if (_nameError != null || _capacityError != null) {
+    if (nameError != null || capacityError != null) {
       notifyListeners();
       return;
     }
@@ -61,14 +62,14 @@ class AddLocationViewModel extends ChangeNotifier {
     final newLocationDto = NewLocationDto(
       _name,
       int.parse(_capacity),
-      _solarTrackers,
-      _weatherStation,
-      _cctv,
+      solarTrackers,
+      weatherStation,
+      cctv,
     );
 
     try {
-      final location = await _userRepotitory.addNewLocation(newLocationDto);
-      _navigationService.back(result: location);
+      await _userRepotitory.addNewLocation(newLocationDto);
+      _navigationService.back(result: true);
     } on (InvalidTokenApiException, TokenExpiredApiException) {
       handleUnauthorized();
     } on STSerialNumberAlreadyUsedException catch (e) {
@@ -100,10 +101,6 @@ class AddLocationViewModel extends ChangeNotifier {
     return null;
   }
 
-  // String? validateLocation(String? location) {
-  //   return _validateField(location, AppStrings.requiredLocationCoordinates);
-  // }
-
   String? _validateCapacity() {
     if (_fieldIsEmpty(_capacity)) {
       return AppStrings.requiredCapacity;
@@ -117,9 +114,9 @@ class AddLocationViewModel extends ChangeNotifier {
   }
 
   void _clearErrors() {
-    _nameError = null;
-    _capacityError = null;
-    _weatherStationError = null;
+    nameError = null;
+    capacityError = null;
+    weatherStationError = null;
     notifyListeners();
   }
 
@@ -141,17 +138,17 @@ class AddLocationViewModel extends ChangeNotifier {
 
   Future<void> addSolarTracker() async {
     final response = await _showAddDeviceSheet(
-      AddDeviceViewModel(deviceType: DeviceType.solarTracker, solarTrackerSerialNumbers: _solarTrackers),
+      AddDeviceViewModel(deviceType: DeviceType.solarTracker, solarTrackerSerialNumbers: solarTrackers),
     );
 
     if (response != null && response.confirmed) {
-      _solarTrackers.add(response.data as String);
+      solarTrackers.add(response.data as String);
       notifyListeners();
     }
   }
 
   void removeSolarTracker(String serialNumber) {
-    _solarTrackers.remove(serialNumber);
+    solarTrackers.remove(serialNumber);
     notifyListeners();
   }
 
@@ -161,23 +158,16 @@ class AddLocationViewModel extends ChangeNotifier {
     );
 
     if (response != null && response.confirmed) {
-      _weatherStation = response.data as String;
+      weatherStation = response.data;
       notifyListeners();
     }
   }
 
   void removeWeatherStation() {
-    _weatherStation = null;
+    weatherStation = null;
     notifyListeners();
   }
 
-  bool get isAddWSButtonEnabled => _weatherStation == null;
+  bool get isAddWSButtonEnabled => weatherStation == null;
   bool get isAddLocationButtonDisabled => solarTrackers.isEmpty;
-
-  List<String> get solarTrackers => _solarTrackers;
-  String? get weatherStation => _weatherStation;
-
-  String? get nameError => _nameError;
-  String? get capacityError => _capacityError;
-  String? get weatherStationError => _weatherStationError;
 }

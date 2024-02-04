@@ -10,17 +10,19 @@ class LocationsViewModel extends ChangeNotifier {
   final _navigationService = DependencyInjection.getIt<NavigationService>();
   final _userRepository = DependencyInjection.getIt<UserRepository>();
 
-  void addNewLocation() async {
-    final location = await _navigationService.navigateTo(RouteEnum.addLocation.name);
+  Future<void> addNewLocation() async {
+    final result = await _navigationService.navigateTo(RouteEnum.addLocation.name);
 
-    if (location != null) {
-      _userRepository.addLocation(location);
+    if (result != null && result) {
       notifyListeners();
     }
   }
 
-  void navigateToLocation(LocationModel locationModel) {
-    _navigationService.navigateTo(RouteEnum.locationInsights.name, arguments: LocationInsightsViewModel(locationModel));
+  Future<void> navigateToLocation(LocationModel locationModel) async {
+    await _navigationService.navigateTo(RouteEnum.locationInsights.name,
+        arguments: LocationInsightsViewModel(locationModel));
+
+    notifyListeners();
   }
 
   List<LocationModel> get locations => _userRepository.userModel!.locations;

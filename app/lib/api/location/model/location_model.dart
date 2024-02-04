@@ -10,7 +10,7 @@ class LocationModel {
   final String name;
   final int capacity;
   final List<String> solarTrackers;
-  final String? weatherStation;
+  String? weatherStation;
   final String? cctv;
   final bool amIOwner;
   final List<BriefUserInfoModel> sharedWith;

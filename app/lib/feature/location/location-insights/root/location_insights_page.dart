@@ -10,8 +10,8 @@ class LocationInsightsPage extends StatelessWidget {
   final LocationInsightsViewModel viewModel;
 
   const LocationInsightsPage({
-    super.key,
     required this.viewModel,
+    super.key,
   });
 
   @override
@@ -35,6 +35,35 @@ class LocationInsightsPage extends StatelessWidget {
                 color: AppStyle.textColor,
               ),
             ),
+            actions: [
+              if (viewModel.locationModel.amIOwner)
+                PopupMenuButton(
+                  onSelected: (value) async {
+                    if (value == 0) {
+                      await viewModel.deleteWeatherStation();
+                    } else if (value == 1) {
+                      await viewModel.deleteLocation();
+                    }
+                  },
+                  color: AppStyle.secondaryColor2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppStyle.borderRadius16),
+                  ),
+                  itemBuilder: (context) {
+                    return [
+                      if (viewModel.weatherStationInsightsModel != null)
+                        PopupMenuItemView(
+                          value: 0,
+                          text: AppStrings.deleteWeatherStation,
+                        ),
+                      PopupMenuItemView(
+                        value: 1,
+                        text: AppStrings.deleteLocation,
+                      ),
+                    ];
+                  },
+                ),
+            ],
             bottom: TabBar(
               indicatorColor: AppStyle.contrastColor1,
               labelColor: AppStyle.textColor,
@@ -69,11 +98,7 @@ class LocationInsightsPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SingleChildScrollView(
-                            child: WeatherStationView(
-                              weatherStationInsightsModel: viewModel.locationInsightsModel.weatherStation,
-                            ),
-                          ),
+                          const WeatherStationView(),
                           Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,

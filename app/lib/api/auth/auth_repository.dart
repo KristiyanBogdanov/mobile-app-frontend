@@ -5,11 +5,11 @@ import 'package:app/api/user/model/index.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
 
 class AuthRepository {
-  AuthLimitsModel? _authLimits;
+  AuthLimitsModel? limits;
   final _authService = DependencyInjection.getIt<AuthService>();
 
   Future<void> fetchLimits() async {
-    _authLimits = await _authService.getLimits();
+    limits = await _authService.getLimits();
   }
 
   Future<UserModel> signUp(SignUpDto data) async {
@@ -23,6 +23,4 @@ class AuthRepository {
   Future<void> signOut() async {
     return await _authService.signOut();
   }
-
-  AuthLimitsModel? get limits => _authLimits;
 }

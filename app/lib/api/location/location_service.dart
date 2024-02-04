@@ -50,4 +50,37 @@ class LocationService {
         throw UnknownApiException();
     }
   }
+
+  Future<WeatherStationInsightsModel> getWeatherStationInsights(String wsSerialNumber) async {
+    final response = await _httpService.get(_mobileAppApi.getWeatherStationInsights(wsSerialNumber));
+
+    switch (response.statusCode) {
+      case HttpStatus.ok:
+        return WeatherStationInsightsModel.fromJson(response.data);
+      default:
+        throw UnknownApiException();
+    }
+  }
+
+  Future<void> addWeatherStation(String locationId, String wsSerialNumber) async {
+    final response = await _httpService.post(_mobileAppApi.addWeatherStation(locationId, wsSerialNumber));
+
+    switch (response.statusCode) {
+      case HttpStatus.created:
+        return;
+      default:
+        throw UnknownApiException();
+    }
+  }
+
+  Future<void> removeWeatherStation(String locationId) async {
+    final response = await _httpService.delete(_mobileAppApi.removeWeatherStation(locationId));
+
+    switch (response.statusCode) {
+      case HttpStatus.noContent:
+        return;
+      default:
+        throw UnknownApiException();
+    }
+  }
 }

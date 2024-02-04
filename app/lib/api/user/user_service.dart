@@ -57,4 +57,17 @@ class UserService {
         throw UnknownApiException();
     }
   }
+
+  Future<void> removeLocation(String locationUuid) async {
+    final response = await _httpService.delete(_mobileAppApi.removeLocation(locationUuid));
+
+    switch (response.statusCode) {
+      case HttpStatus.noContent:
+        return;
+      case HttpStatus.notFound:
+        throw InvalidTokenApiException();
+      default:
+        throw UnknownApiException();
+    }
+  }
 }

@@ -103,7 +103,7 @@ class AppStyle {
   static final double qrScannerViewBorderLength = 16.w;
 
   // NoContentView
-  static final double noContentViewImageSize = 280.w;
+  static final double noContentViewImageSize = 200.w;
 
   // SensorStatusCardView & grid
   static final double sensorStatusCardViewWidth = 175.w;

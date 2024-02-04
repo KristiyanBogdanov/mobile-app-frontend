@@ -13,10 +13,10 @@ class SignUpViewModel extends ChangeNotifier {
   String _username = '';
   String _email = '';
   String _password = '';
-  String? _usernameError;
-  String? _emailError;
-  String? _passwordError;
-  final _formKey = GlobalKey<FormState>();
+  String? usernameError;
+  String? emailError;
+  String? passwordError;
+  final formKey = GlobalKey<FormState>();
   late final AuthValidator _authValidator;
   final _navigationService = DependencyInjection.getIt<NavigationService>();
   final _snackbarService = DependencyInjection.getIt<SnackbarService>();
@@ -31,7 +31,7 @@ class SignUpViewModel extends ChangeNotifier {
   Future<void> signUp() async {
     _clearErrors();
 
-    if (!_formKey.currentState!.validate()) {
+    if (!formKey.currentState!.validate()) {
       return;
     }
 
@@ -43,10 +43,11 @@ class SignUpViewModel extends ChangeNotifier {
         return;
       }
 
-      _userRepository.setUser = await _authRepository.signUp(SignUpDto(_username.trim(), _email, _password, fcmToken));
+      _userRepository.userModel =
+          await _authRepository.signUp(SignUpDto(_username.trim(), _email, _password, fcmToken));
       _navigationService.clearStackAndShow(RouteEnum.home.name);
     } on EmailAlreadyUsedException catch (e) {
-      _emailError = e.message;
+      emailError = e.message;
       notifyListeners();
     } on BadRequestApiException catch (e) {
       _snackbarService.showSnackbar(message: e.message);
@@ -72,9 +73,9 @@ class SignUpViewModel extends ChangeNotifier {
   }
 
   void _clearErrors() {
-    _usernameError = null;
-    _emailError = null;
-    _passwordError = null;
+    usernameError = null;
+    emailError = null;
+    passwordError = null;
     notifyListeners();
   }
 
@@ -89,10 +90,4 @@ class SignUpViewModel extends ChangeNotifier {
   void setPassword(String password) {
     _password = password;
   }
-
-  String? get usernameError => _usernameError;
-  String? get emailError => _emailError;
-  String? get passwordError => _passwordError;
-
-  GlobalKey<FormState> get formKey => _formKey;
 }

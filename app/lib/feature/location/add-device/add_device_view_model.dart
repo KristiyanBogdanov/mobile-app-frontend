@@ -5,30 +5,30 @@ import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:flutter/material.dart';
 
 class AddDeviceViewModel extends ChangeNotifier {
-  final DeviceType deviceType;
+  final DeviceType _deviceType;
   final List<String> solarTrackerSerialNumbers;
-  bool _isScanSuccessful = false;
-  String _serialNumber = '';
-  String? _serialNumberError;
+  bool isScanSuccessful = false;
+  String serialNumber = '';
+  String? serialNumberError;
   final _locationRepository = DependencyInjection.getIt<LocationRepository>();
 
   AddDeviceViewModel({
-    required this.deviceType,
+    required DeviceType deviceType,
     this.solarTrackerSerialNumbers = const [],
-  });
+  }) : _deviceType = deviceType;
 
-  Future<void> addDevice(String? serialNumber) async {
-    if (serialNumber == null || serialNumber.isEmpty) {
+  Future<void> addDevice(String? code) async {
+    if (code == null || code.isEmpty) {
       return;
     }
 
-    _serialNumberError = deviceType == DeviceType.solarTracker
-        ? await _validateSTSerialNumber(serialNumber)
-        : await _validateWSSerialNumber(serialNumber);
+    serialNumberError = _deviceType == DeviceType.solarTracker
+        ? await _validateSTSerialNumber(code)
+        : await _validateWSSerialNumber(code);
 
-    if (_serialNumberError == null) {
-      _isScanSuccessful = true;
-      _serialNumber = serialNumber;
+    if (serialNumberError == null) {
+      isScanSuccessful = true;
+      serialNumber = code;
     }
 
     notifyListeners();
@@ -61,10 +61,6 @@ class AddDeviceViewModel extends ChangeNotifier {
       return null;
     }
   }
-
-  bool get isScanSuccessful => _isScanSuccessful;
-  String get serialNumber => _serialNumber;
-  String? get serialNumberError => _serialNumberError;
 }
 
 // TODO: scan laptop qr code and check the exception

@@ -47,6 +47,9 @@ class NotificationsPage extends StatelessWidget {
                             description: AppStrings.noNotificationsDescription,
                           )
                         : ListView.builder(
+                            padding: EdgeInsets.symmetric(
+                              vertical: AppStyle.verticalPadding12,
+                            ),
                             itemCount: viewModel.notifications.length,
                             itemBuilder: (context, index) {
                               final notification = viewModel.notifications[index];

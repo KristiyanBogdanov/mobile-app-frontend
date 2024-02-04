@@ -35,6 +35,10 @@ class MobileAppApi {
     return '$_user/add-existing-location/$locationUuid';
   }
 
+  String removeLocation(String locationUuid) {
+    return '$_user/location/$locationUuid';
+  }
+
   String updateHwNotificationStatus(String notificationId) {
     return '$_user/hw-notification/$notificationId';
   }
@@ -57,5 +61,17 @@ class MobileAppApi {
 
   String getLocationInsights(String locationId) {
     return '$_location/$locationId/insights';
+  }
+
+  String getWeatherStationInsights(String wsSerialNumber) {
+    return '$_location/insights/weather-stations/$wsSerialNumber';
+  }
+
+  String addWeatherStation(String locationId, String wsSerialNumber) {
+    return '$_location/$locationId/weather-stations/$wsSerialNumber';
+  }
+
+  String removeWeatherStation(String locationId) {
+    return '$_location/$locationId/weather-stations';
   }
 }

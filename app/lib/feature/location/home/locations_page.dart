@@ -42,16 +42,16 @@ class LocationsPage extends StatelessWidget {
                           ),
                         ),
                         AddNewLocationButtonView(
-                          onPressed: _viewModel.addNewLocation,
+                          onPressed: () async => await _viewModel.addNewLocation(),
                         ),
                       ],
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Consumer<LocationsViewModel>(
-                    builder: (context, viewModel, child) {
-                      return viewModel.locations.isEmpty
+                Consumer<LocationsViewModel>(
+                  builder: (context, viewModel, child) {
+                    return Expanded(
+                      child: viewModel.locations.isEmpty
                           ? const NoContentView(
                               svgAsset: 'assets/images/no-locations.svg',
                               title: AppStrings.noLocationsTitle,
@@ -66,12 +66,12 @@ class LocationsPage extends StatelessWidget {
                                 final locationModel = viewModel.locations[index];
                                 return LocationCardView(
                                   locationModel: locationModel,
-                                  callback: () => viewModel.navigateToLocation(locationModel),
+                                  callback: () async => await viewModel.navigateToLocation(locationModel),
                                 );
                               },
-                            );
-                    },
-                  ),
+                            ),
+                    );
+                  },
                 ),
               ],
             ),

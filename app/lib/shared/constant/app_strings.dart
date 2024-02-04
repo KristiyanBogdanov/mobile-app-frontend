@@ -35,6 +35,7 @@ class AppStrings {
   static const String unauthorizedError = 'Unauthorized';
   static const String anauthorizedDialogDescription = 'You are not authorized. Please sign in or sign up';
   static const String anauthorizedDialogButton = 'OK';
+  static const String unknownError = 'Unknown error. You can try again later';
   static const String serverError = 'Server error. Please try again later';
 
   static const String locationsPageNavBarLabel = 'Locations';
@@ -62,8 +63,6 @@ class AppStrings {
   static const String inputFieldHint = 'Type here...';
   static const String addDeviceButton = 'Add device';
   static const String cancelButton = 'Cancel';
-  static const String addSolarTrackerButton = 'Add Solar Tracker';
-  static const String addWeatherStationButton = 'Add Weather Station';
   static const String addLocationButton = 'Add location';
 
   static const String requiredLocationName = 'Location name is required';
@@ -118,7 +117,7 @@ class AppStrings {
   static const String windSpeed = 'Wind speed';
   static const String windDirection = 'Wind direction';
   static String temperatureValue(num temperature, {bool merge = false}) => merge ? '$temperature°C' : '$temperature °C';
-  static String windSpeedValue(num windSpeed) => '$windSpeed m/s';
+  static String windSpeedValue(num windSpeed, {bool merge = false}) => merge ? '${windSpeed}m/s' : '${windSpeed} m/s';
   static String irradianceValue(num irradiance) => '${irradiance}W/m²';
   static const String sensorsSectionTitle = 'Sensors';
   static const String coordinatesSectionTitle = 'Coordinates';
@@ -126,6 +125,7 @@ class AppStrings {
   static const String inactive = 'Inactive';
   static const String anemometer = 'Anemometer';
   static const String temperatureSensor = 'Temp sensor';
+  static String installedOn(String date) => 'Installed on $date';
   static const String accelerometer = 'Accelerometer';
   static const String irradianceSensor = 'Irradiance sensor';
   static const String azimuthMotor = 'Azimuth motor';
@@ -138,6 +138,11 @@ class AppStrings {
   static String deviation(num deviation) => deviation > 0 ? '+$deviation°σ' : '$deviation°σ';
   static const String azimuthIndicatorLabel = 'Azimuth:';
   static const String elevationIndicatorLabel = 'Elevation:';
+  static const String noWeatherStationInstalledTitle = 'No weather station installed';
+  static const String noWeatherStationInstalledDescription = 'Only the owner of the location can install one.';
+  static const String addWeatherStationButtonLabel = 'Add weather station';
+  static const String deleteLocation = 'Delete location';
+  static const String deleteWeatherStation = 'Delete weather station';
 
   static const String futureDevelopmentLabel = 'This feature is for future development.';
 }

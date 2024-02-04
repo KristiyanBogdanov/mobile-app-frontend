@@ -5,19 +5,22 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 class QrScannerView extends StatefulWidget {
   final Function onDetect;
 
-  const QrScannerView({required this.onDetect, super.key});
+  const QrScannerView({
+    required this.onDetect,
+    super.key,
+  });
 
   @override
   State<QrScannerView> createState() => _QrScannerViewState();
 }
 
 class _QrScannerViewState extends State<QrScannerView> {
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  final GlobalKey _qrKey = GlobalKey(debugLabel: 'QR');
 
   @override
   Widget build(BuildContext context) {
     return QRView(
-      key: qrKey,
+      key: _qrKey,
       onQRViewCreated: (controller) {
         controller.scannedDataStream.listen((scanData) {
           widget.onDetect(scanData.code);
