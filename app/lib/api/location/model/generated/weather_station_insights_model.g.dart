@@ -6,26 +6,22 @@ part of '../weather_station_insights_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-WeatherStationSensorsStatusModel _$WeatherStationSensorsStatusModelFromJson(
-        Map<String, dynamic> json) =>
+WeatherStationSensorsStatusModel _$WeatherStationSensorsStatusModelFromJson(Map<String, dynamic> json) =>
     WeatherStationSensorsStatusModel(
       json['anemometer'] as bool,
       json['temperatureSensor'] as bool,
     );
 
-Map<String, dynamic> _$WeatherStationSensorsStatusModelToJson(
-        WeatherStationSensorsStatusModel instance) =>
+Map<String, dynamic> _$WeatherStationSensorsStatusModelToJson(WeatherStationSensorsStatusModel instance) =>
     <String, dynamic>{
       'anemometer': instance.anemometer,
       'temperatureSensor': instance.temperatureSensor,
     };
 
-WeatherStationInsightsModel _$WeatherStationInsightsModelFromJson(
-        Map<String, dynamic> json) =>
+WeatherStationInsightsModel _$WeatherStationInsightsModelFromJson(Map<String, dynamic> json) =>
     WeatherStationInsightsModel(
       json['installationDate'] as String,
-      WeatherStationSensorsStatusModel.fromJson(
-          json['sensorsStatus'] as Map<String, dynamic>),
+      WeatherStationSensorsStatusModel.fromJson(json['sensorsStatus'] as Map<String, dynamic>),
       json['isActive'] as bool,
       json['lastUpdate'] as String,
       CoordinatesModel.fromJson(json['coordinates'] as Map<String, dynamic>),
@@ -33,18 +29,14 @@ WeatherStationInsightsModel _$WeatherStationInsightsModelFromJson(
       (json['currentWindSpeed'] as num?)?.toDouble(),
       json['currentWindDirection'] as String?,
       (json['last24hAvgTemperature'] as List<dynamic>?)
-          ?.map((e) =>
-              AverageSensorValueModel.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => AverageSensorValueModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       (json['last24hAvgWindSpeed'] as List<dynamic>?)
-          ?.map((e) =>
-              AverageSensorValueModel.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => AverageSensorValueModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$WeatherStationInsightsModelToJson(
-        WeatherStationInsightsModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$WeatherStationInsightsModelToJson(WeatherStationInsightsModel instance) => <String, dynamic>{
       'installationDate': instance.installationDate,
       'sensorsStatus': instance.sensorsStatus,
       'isActive': instance.isActive,

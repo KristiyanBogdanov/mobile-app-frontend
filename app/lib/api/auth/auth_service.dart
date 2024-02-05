@@ -4,7 +4,7 @@ import 'package:app/api/auth/dto/index.dart';
 import 'package:app/api/auth/exception/index.dart';
 import 'package:app/api/auth/model/index.dart';
 import 'package:app/api/user/index.dart';
-import 'package:app/util/api/index.dart';
+import 'package:app/util/api/mobile_app_api.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';
 import 'package:dio/dio.dart';

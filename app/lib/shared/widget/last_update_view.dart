@@ -1,6 +1,6 @@
 import 'package:app/shared/constant/index.dart';
+import 'package:app/util/extension/string_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class LastUpdateView extends StatelessWidget {
   final String date;
@@ -17,7 +17,7 @@ class LastUpdateView extends StatelessWidget {
     return Row(
       children: [
         Text(
-          '${AppStrings.lastUpdate}: ${_parseLastUpdate()}',
+          '${AppStrings.lastUpdate}: ${date.parseWithDateFormat('HH:mm dd MMM')}',
           style: TextStyle(
             fontSize: AppStyle.fontSize12,
             color: AppStyle.textColor,
@@ -33,12 +33,5 @@ class LastUpdateView extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String _parseLastUpdate() {
-    final dateTime = DateTime.parse(date);
-    final dateFormat = DateFormat('HH:mm dd MMM');
-
-    return dateFormat.format(dateTime);
   }
 }

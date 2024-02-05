@@ -1,3 +1,4 @@
+import 'package:app/feature/location/location-insights/overview/overview_view.dart';
 import 'package:app/feature/location/location-insights/root/location_insights_view_model.dart';
 import 'package:app/feature/location/location-insights/root/views/index.dart';
 import 'package:app/feature/location/location-insights/weather-station/weather_station_view.dart';
@@ -10,8 +11,8 @@ class LocationInsightsPage extends StatelessWidget {
   final LocationInsightsViewModel viewModel;
 
   const LocationInsightsPage({
-    super.key,
     required this.viewModel,
+    super.key,
   });
 
   @override
@@ -35,6 +36,35 @@ class LocationInsightsPage extends StatelessWidget {
                 color: AppStyle.textColor,
               ),
             ),
+            actions: [
+              if (viewModel.locationModel.amIOwner)
+                PopupMenuButton(
+                  onSelected: (value) async {
+                    if (value == 0) {
+                      await viewModel.deleteWeatherStation();
+                    } else if (value == 1) {
+                      await viewModel.deleteLocation();
+                    }
+                  },
+                  color: AppStyle.secondaryColor2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppStyle.borderRadius16),
+                  ),
+                  itemBuilder: (context) {
+                    return [
+                      if (viewModel.weatherStationInsightsModel != null)
+                        PopupMenuItemView(
+                          value: 0,
+                          text: AppStrings.deleteWeatherStation,
+                        ),
+                      PopupMenuItemView(
+                        value: 1,
+                        text: AppStrings.deleteLocation,
+                      ),
+                    ];
+                  },
+                ),
+            ],
             bottom: TabBar(
               indicatorColor: AppStyle.contrastColor1,
               labelColor: AppStyle.textColor,
@@ -59,21 +89,8 @@ class LocationInsightsPage extends StatelessWidget {
                       ),
                       child: TabBarView(
                         children: [
-                          Center(
-                            child: Text(
-                              'TODO: Overview tab', // TODO: implement overview tab
-                              style: TextStyle(
-                                color: AppStyle.textColor,
-                                fontSize: AppStyle.fontSize28,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          SingleChildScrollView(
-                            child: WeatherStationView(
-                              weatherStationInsightsModel: viewModel.locationInsightsModel.weatherStation,
-                            ),
-                          ),
+                          const OverviewView(),
+                          const WeatherStationView(),
                           Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,

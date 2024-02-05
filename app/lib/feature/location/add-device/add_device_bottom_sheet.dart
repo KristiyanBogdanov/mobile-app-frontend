@@ -65,13 +65,19 @@ class AddDeviceBottomSheet extends StatelessWidget {
                         width: AppStyle.qrScannerViewWidth,
                         child: QrScannerView(onDetect: (value) => viewModel.addDevice(value)),
                       ),
-                      Text(
-                        viewModel.serialNumberError ?? AppStrings.scanQRCodeDescription,
-                        style: TextStyle(
-                          color: viewModel.serialNumberError != null
-                              ? AppStyle.negativeColor
-                              : AppStyle.textColorWith05Opacity,
-                          fontSize: AppStyle.fontSize16,
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: AppStyle.horizontalPadding16,
+                        ),
+                        child: Text(
+                          viewModel.serialNumberError ?? AppStrings.scanQRCodeDescription,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: viewModel.serialNumberError != null
+                                ? AppStyle.negativeColor
+                                : AppStyle.textColorWith05Opacity,
+                            fontSize: AppStyle.fontSize16,
+                          ),
                         ),
                       ),
                     ],

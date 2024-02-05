@@ -6,7 +6,5 @@ class EmailAlreadyUsedException implements Exception {
   EmailAlreadyUsedException() : message = AppStrings.emailAlreadyUsedError;
 
   @override
-  String toString() {
-    return message;
-  }
+  String toString() => message;
 }

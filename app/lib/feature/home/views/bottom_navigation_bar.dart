@@ -39,7 +39,7 @@ class BottomNavigationBarView extends StatelessWidget {
                 text: AppStrings.locationsPageNavBarLabel,
               ),
               GButton(
-                icon: Icons.assistant_rounded,
+                icon: Icons.notifications_rounded,
                 text: AppStrings.notificationsPageNavBarLabel,
               ),
               GButton(

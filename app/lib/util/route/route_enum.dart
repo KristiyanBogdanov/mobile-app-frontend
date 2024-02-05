@@ -5,4 +5,5 @@ enum RouteEnum {
   home,
   addLocation,
   locationInsights,
+  solarTracker,
 }

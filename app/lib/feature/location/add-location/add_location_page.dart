@@ -36,15 +36,6 @@ class AddLocationPage extends StatelessWidget {
                         errorText: viewModel.nameError,
                       ),
                       const ColumnSpacingView(),
-                      const ColumnSectionTitleView(title: AppStrings.capacitySectionTitle),
-                      TextFieldView(
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) => viewModel.setCapacity(value),
-                        errorText: viewModel.capacityError,
-                      ),
-                      const ColumnSpacingView(),
-                      const ColumnSectionTitleView(title: AppStrings.locationCoordinatesSectionTitle),
-                      const ColumnSpacingView(),
                       const ColumnSectionTitleView(title: AppStrings.solarTrackersSectionTitle),
                       DevicesRowView(
                         onAddButtonPressed: viewModel.addSolarTracker,
@@ -58,8 +49,8 @@ class AddLocationPage extends StatelessWidget {
                       const ColumnSpacingView(),
                       const ColumnSectionTitleView(title: AppStrings.weatherStationSectionTitle),
                       DevicesRowView(
-                        onAddButtonPressed:
-                            viewModel.isAddWSButtonEnabled() ? () async => await viewModel.addWeatherStation() : null,
+                        isAddButtonVisible: viewModel.isAddWSButtonEnabled,
+                        onAddButtonPressed: () async => await viewModel.addWeatherStation(),
                         devices: viewModel.weatherStation != null
                             ? [
                                 DeviceBoxView(
@@ -74,6 +65,7 @@ class AddLocationPage extends StatelessWidget {
                   PrimaryButton(
                     text: AppStrings.addLocationButton,
                     onPressed: () async => await viewModel.addNewLocation(),
+                    isDisabled: viewModel.isAddLocationButtonDisabled,
                   ),
                 ],
               ),

@@ -14,7 +14,7 @@ class DeviceBoxView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: AppStyle.horizontalPadding8),
+      height: AppStyle.deviceBoxHeight,
       padding: EdgeInsets.only(left: AppStyle.horizontalPadding12),
       decoration: BoxDecoration(
         color: Colors.transparent,
@@ -24,6 +24,7 @@ class DeviceBoxView extends StatelessWidget {
         ),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             label,

@@ -1,6 +1,7 @@
 import 'package:app/api/location/model/location_model.dart';
 import 'package:app/feature/location/home/views/index.dart';
 import 'package:app/shared/constant/index.dart';
+import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
 
 class LocationCardView extends StatelessWidget {
@@ -62,8 +63,9 @@ class LocationCardView extends StatelessWidget {
                   children: [
                     PVSystemIndicatorView(
                       indicatorName: AppStrings.capacity,
-                      indicatorValue: '${locationModel.capacity.toString()} ${AppStrings.kwh}',
-                      assetIcon: 'assets/icons/capacity.png',
+                      indicatorValue: '${locationModel.capacity.toString()} ${AppStrings.slots}',
+                      assetIcon: 'assets/icons/capacity-avatar.png',
+                      iconSize: AppStyle.iconSize40,
                     ),
                     SizedBox(width: AppStyle.horizontalPadding30),
                     VerticalDivider(
@@ -76,7 +78,8 @@ class LocationCardView extends StatelessWidget {
                     PVSystemIndicatorView(
                       indicatorName: AppStrings.installedSolarTrackers(locationModel.solarTrackers.length),
                       indicatorValue: '${locationModel.solarTrackers.length} ${AppStrings.installed}',
-                      assetIcon: 'assets/icons/solar-trackers.png',
+                      assetIcon: 'assets/icons/solar-tracker-avatar.png',
+                      iconSize: AppStyle.iconSize40,
                     ),
                   ],
                 ),
@@ -85,7 +88,7 @@ class LocationCardView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SharedWithRowView(sharedWith: locationModel.sharedWith),
+                  SharedWithCardView(sharedWith: locationModel.sharedWith),
                   Icon(
                     Icons.arrow_forward_ios,
                     color: AppStyle.iconColor,

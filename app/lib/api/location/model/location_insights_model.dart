@@ -5,12 +5,10 @@ part 'generated/location_insights_model.g.dart';
 
 @JsonSerializable()
 class LocationInsightsModel {
-  final CoordinatesModel? coordinates; // TODO: Remove nullable!!!!
   final Map<String, SolarTrackerInsightsModel> solarTrackers;
-  final WeatherStationInsightsModel? weatherStation;
+  WeatherStationInsightsModel? weatherStation;
 
   LocationInsightsModel(
-    this.coordinates,
     this.solarTrackers,
     this.weatherStation,
   );

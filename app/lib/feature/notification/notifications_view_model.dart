@@ -1,4 +1,5 @@
 import 'package:app/api/hw-notification/index.dart';
+import 'package:app/api/user/user_repository.dart';
 import 'package:app/feature/global_state.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:flutter/widgets.dart';
@@ -8,6 +9,7 @@ class NotificationsViewModel extends ChangeNotifier {
   final _navigationService = DependencyInjection.getIt<NavigationService>();
   final _hwNotificationRepository = DependencyInjection.getIt<HwNotificationRepository>();
   final _globalState = DependencyInjection.getIt<GlobalState>();
+  final _userRepository = DependencyInjection.getIt<UserRepository>();
 
   void markAsSeen(String notificationId) {
     _globalState.markNotificationAsSeen(notificationId);
@@ -34,5 +36,5 @@ class NotificationsViewModel extends ChangeNotifier {
     _hwNotificationRepository.delete(notification.id);
   }
 
-  List<HwNotificationModel> get notifications => _globalState.userModel!.hwNotifications;
+  List<HwNotificationModel> get notifications => _userRepository.userModel!.hwNotifications;
 }

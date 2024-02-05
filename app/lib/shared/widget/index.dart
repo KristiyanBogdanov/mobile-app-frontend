@@ -8,3 +8,6 @@ export './line_chart_view.dart';
 export './column_section_title_view.dart';
 export './column_spacing_view.dart';
 export './text_form_field_view.dart';
+export './pv_system_indicator_view.dart';
+export './is_active_view.dart';
+export './user_avatar_view.dart';

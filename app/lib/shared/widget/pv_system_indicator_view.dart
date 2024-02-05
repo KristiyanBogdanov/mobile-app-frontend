@@ -5,11 +5,13 @@ class PVSystemIndicatorView extends StatelessWidget {
   final String indicatorName;
   final String indicatorValue;
   final String assetIcon;
+  final double iconSize;
 
   const PVSystemIndicatorView({
     required this.indicatorName,
     required this.indicatorValue,
     required this.assetIcon,
+    required this.iconSize,
     super.key,
   });
 
@@ -19,8 +21,8 @@ class PVSystemIndicatorView extends StatelessWidget {
       children: [
         Image.asset(
           assetIcon,
-          width: AppStyle.iconSize40,
-          height: AppStyle.iconSize40,
+          width: iconSize,
+          height: iconSize,
         ),
         SizedBox(width: AppStyle.horizontalPadding8),
         Column(

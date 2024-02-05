@@ -11,12 +11,12 @@ extension DialogServiceExtension on DialogService {
     );
   }
 
-  Future<DialogResponse?> showUnknownErrorDialog() {
-    return showDialog(
-      title: AppStrings.unknownError,
-      description: AppStrings.unknownErrorDialogDescription,
-      buttonTitle: AppStrings.unknownErrorDialogButton,
-      barrierDismissible: false,
-    );
-  }
+  // Future<DialogResponse?> showUnknownErrorDialog() {
+  //   return showDialog(
+  //     title: AppStrings.unknownError,
+  //     description: AppStrings.unknownErrorDialogDescription,
+  //     buttonTitle: AppStrings.unknownErrorDialogButton,
+  //     barrierDismissible: false,
+  //   );
+  // }
 }

@@ -6,10 +6,12 @@ part 'generated/brief_user_info_model.g.dart';
 class BriefUserInfoModel {
   final String id;
   final String username;
+  final String email;
 
   BriefUserInfoModel(
     this.id,
     this.username,
+    this.email,
   );
 
   factory BriefUserInfoModel.fromJson(Map<String, dynamic> json) => _$BriefUserInfoModelFromJson(json);

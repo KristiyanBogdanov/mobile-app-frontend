@@ -9,7 +9,8 @@ class UpdateHwNotificationStatusDto {
 
   UpdateHwNotificationStatusDto(this.status);
 
-  factory UpdateHwNotificationStatusDto.fromJson(Map<String, dynamic> json) => _$UpdateHwNotificationStatusDtoFromJson(json);
+  factory UpdateHwNotificationStatusDto.fromJson(Map<String, dynamic> json) =>
+      _$UpdateHwNotificationStatusDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$UpdateHwNotificationStatusDtoToJson(this);
 }

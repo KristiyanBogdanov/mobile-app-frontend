@@ -4,4 +4,7 @@ class BadRequestApiException implements Exception {
   final String message;
 
   BadRequestApiException() : message = AppStrings.badRequestError;
+
+  @override
+  String toString() => message;
 }

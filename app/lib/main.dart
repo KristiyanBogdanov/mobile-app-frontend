@@ -45,7 +45,7 @@ Future<RouteEnum> _getInitialRoute() async {
     final userRepository = DependencyInjection.getIt<UserRepository>();
     await userRepository.fetchData();
     return RouteEnum.home;
-  } catch (_) {
+  } catch (e) {
     return RouteEnum.welcome;
   }
 }
@@ -77,11 +77,13 @@ class MyApp extends StatelessWidget {
 }
 
 // TODO: fix error handling where snackbar is shown
-// TODO: trim username and email
 // TODO: remove global state and use repositories instead
-// TODO: redisign and change app bar
 // TODO: rename all view files to _view.dart
 // TODO: finish notification design and fix delete issue
 // TODO: check all corner radiuses
 // TODO: add shared widget for the padding of every page (rename padding16 in AppStyle to defaultAppPadding)
 // TODO: add AppImges class
+// TODO: add getters and setters on all models
+// TODO: test with two different phones (remove, add, update, delete) and update
+
+// TODO: case: delete db and try to fetch; fix dio error handling: https://stackoverflow.com/questions/72667780/dio-wont-catch-errors-and-get-stuck-on-throwing-custom-exception

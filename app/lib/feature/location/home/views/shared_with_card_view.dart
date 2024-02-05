@@ -1,27 +1,14 @@
-import 'dart:math';
-
 import 'package:app/api/user/model/brief_user_info_model.dart';
 import 'package:app/shared/constant/index.dart';
+import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
 
-class SharedWithRowView extends StatelessWidget {
+class SharedWithCardView extends StatelessWidget {
   final List<BriefUserInfoModel> sharedWith;
   final List<BriefUserInfoModel> _firstFewSharedWith = [];
   late final bool _isSharedWithMoreThanTwo;
-  final List _colors = [
-    Colors.red,
-    Colors.green,
-    Colors.blue,
-    Colors.purple,
-    Colors.pink,
-    Colors.orange,
-    Colors.indigoAccent,
-    Colors.teal,
-    Colors.brown,
-    Colors.blueGrey
-  ];
 
-  SharedWithRowView({
+  SharedWithCardView({
     required this.sharedWith,
     super.key,
   }) {
@@ -45,10 +32,13 @@ class SharedWithRowView extends StatelessWidget {
         : Row(
             children: [
               ..._firstFewSharedWith.map((user) {
-                return _buildAvatar(user.username[0].toUpperCase(), null);
+                return UserAvatarView(initial: user.username[0].toUpperCase());
               }),
               _isSharedWithMoreThanTwo
-                  ? _buildAvatar('+${sharedWith.length - AppStyle.maxSharedWith}', AppStyle.textColor)
+                  ? UserAvatarView(
+                      initial: '+${sharedWith.length - AppStyle.maxSharedWith}',
+                      color: AppStyle.textColor,
+                    )
                   : const SizedBox(),
               SizedBox(width: AppStyle.horizontalPadding20),
               Text(
@@ -60,23 +50,5 @@ class SharedWithRowView extends StatelessWidget {
               ),
             ],
           );
-  }
-
-  Widget _buildAvatar(String initial, Color? color) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      widthFactor: AppStyle.avatarWidthFactor,
-      child: CircleAvatar(
-        radius: AppStyle.borderRadius18,
-        backgroundColor: color ?? _colors[Random().nextInt(_colors.length)],
-        child: Text(
-          initial,
-          style: TextStyle(
-            color: color != null ? Colors.black : Colors.white,
-            fontSize: AppStyle.fontSize12,
-          ),
-        ),
-      ),
-    );
   }
 }
