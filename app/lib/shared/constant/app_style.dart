@@ -68,6 +68,7 @@ class AppStyle {
   static final double iconSize12 = 12.w;
   static final double iconSize20 = 20.w;
   static final double iconSize24 = 24.w;
+  static final double iconSize28 = 28.w;
   static final double iconSize40 = 40.w;
 
   // Divider
@@ -118,9 +119,14 @@ class AppStyle {
   static final double lineChartBottomTitlesInterval = 1.w;
   static final double lineChartLeftTitlesReservedSize = 42.w;
   static final double lineChartLeftTitlesInterval = 1.w;
-  static final double noDataLineChartHeight = 200.h;
 
   // SolarTrackerView
   static final double solarTrackerSketchWidth = 220.w;
   static final double solarTrackerSketchHeight = 220.w;
+
+  // OverviewView
+  static final double mapHeight = 300.h;
+  static const double mapInitialZoom = 19.5;
+  static final double solarTrackerCardHeight = 120.h;
+  static final double noDataCardHeight = 150.h;
 }

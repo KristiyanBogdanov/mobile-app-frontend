@@ -30,6 +30,7 @@ class SolarTrackerInsightsModel {
   final String installationDate;
   final SolarTrackerSensorsStatusModel sensorsStatus;
   final bool isActive;
+  final int capacity;
   final String lastUpdate;
   final CoordinatesModel coordinates;
   final double? currentAzimuth;
@@ -42,6 +43,7 @@ class SolarTrackerInsightsModel {
     this.installationDate,
     this.sensorsStatus,
     this.isActive,
+    this.capacity,
     this.lastUpdate,
     this.coordinates,
     this.currentAzimuth,

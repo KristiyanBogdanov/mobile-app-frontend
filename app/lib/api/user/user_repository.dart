@@ -8,7 +8,12 @@ class UserRepository {
   final _userService = DependencyInjection.getIt<UserService>();
 
   Future<void> fetchData() async {
-    userModel = await _userService.fetchData();
+    try {
+      userModel = await _userService.fetchData();
+    } catch (e) {
+      print('aaaaaaa');
+      rethrow;
+    }
   }
 
   Future<LocationModel> addNewLocation(NewLocationDto data) async {

@@ -4,6 +4,7 @@ import 'package:app/feature/location/add-device/index.dart';
 import 'package:app/util/common/handle_unauthorized.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';
+import 'package:app/util/route/route_enum.dart';
 import 'package:app/util/stacked-services/index.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -104,6 +105,16 @@ class LocationInsightsViewModel extends ChangeNotifier {
     }
   }
 
+  void navigateToSolarTracker(String serialNumber, SolarTrackerInsightsModel solarTrackerInsightsModel) {
+    _navigationService.navigateTo(
+      RouteEnum.solarTracker.name,
+      arguments: [
+        serialNumber,
+        solarTrackerInsightsModel,
+      ],
+    );
+  }
+
   // TODO: change ui and strings
   Future<void> deleteLocation() async {
     final response = await _dialogService.showConfirmationDialog(
@@ -126,7 +137,6 @@ class LocationInsightsViewModel extends ChangeNotifier {
       handleUnauthorized();
     } on UnknownApiException catch (e) {
       _snackbarService.showSnackbar(message: e.message);
-    } finally {
       _isLoading = false;
       notifyListeners();
     }

@@ -1,3 +1,4 @@
+import 'package:app/feature/location/location-insights/overview/overview_view.dart';
 import 'package:app/feature/location/location-insights/root/location_insights_view_model.dart';
 import 'package:app/feature/location/location-insights/root/views/index.dart';
 import 'package:app/feature/location/location-insights/weather-station/weather_station_view.dart';
@@ -88,16 +89,7 @@ class LocationInsightsPage extends StatelessWidget {
                       ),
                       child: TabBarView(
                         children: [
-                          Center(
-                            child: Text(
-                              'TODO: Overview tab', // TODO: implement overview tab
-                              style: TextStyle(
-                                color: AppStyle.textColor,
-                                fontSize: AppStyle.fontSize28,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
+                          const OverviewView(),
                           const WeatherStationView(),
                           Center(
                             child: Column(

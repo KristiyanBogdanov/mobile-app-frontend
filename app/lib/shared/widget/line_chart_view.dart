@@ -29,7 +29,7 @@ class _LineChartViewState extends State<LineChartView> {
   Widget build(BuildContext context) {
     return widget.avgSensorValues == null
         ? SizedBox(
-            height: AppStyle.noDataLineChartHeight,
+            height: AppStyle.noDataCardHeight,
             child: Card(
               color: AppStyle.secondaryColor1,
               shape: RoundedRectangleBorder(

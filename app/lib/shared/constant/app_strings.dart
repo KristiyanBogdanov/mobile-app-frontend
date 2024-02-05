@@ -56,7 +56,6 @@ class AppStrings {
   static const String addNewLocationPageTitle = 'Add new location';
   static const String locationNameSectionTitle = 'Location name';
   static const String locationCoordinatesSectionTitle = 'Location coordinates';
-  static const String capacitySectionTitle = 'Capacity (kW)';
   static const String solarTrackersSectionTitle = 'Solar trackers';
   static const String weatherStationSectionTitle = 'Weather station';
   static const String serialNumberLabel = 'Serial number';
@@ -83,7 +82,7 @@ class AppStrings {
   static const String weatherStation = 'Weather station';
   static const String cctv = 'CCTV';
   static const String capacity = 'Capacity';
-  static const String kwh = 'kWh';
+  static const String slots = 'slots';
   static String installedSolarTrackers(int count) => count == 1 ? 'Solar tracker' : 'Solar trackers';
   static const String installed = 'installed';
   static String sharedWith(int count) => count == 1 ? 'Shared with $count person' : 'Shared with $count people';
@@ -143,6 +142,8 @@ class AppStrings {
   static const String addWeatherStationButtonLabel = 'Add weather station';
   static const String deleteLocation = 'Delete location';
   static const String deleteWeatherStation = 'Delete weather station';
+
+  static const String sharedWithSectionTitle = 'Shared with';
 
   static const String futureDevelopmentLabel = 'This feature is for future development.';
 }

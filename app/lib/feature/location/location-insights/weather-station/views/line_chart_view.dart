@@ -161,7 +161,7 @@ class _LineChartView extends StatelessWidget {
       final sensorValue = avgSensorValues![i];
 
       if (sensorValue.average != null) {
-        spots.add(FlSpot(i.toDouble() + minX, sensorValue.average!));
+        spots.add(FlSpot(maxX - (i.toDouble() + minX), sensorValue.average!));
       }
     }
 

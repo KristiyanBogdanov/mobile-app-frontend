@@ -11,7 +11,6 @@ import 'package:stacked_services/stacked_services.dart';
 
 class AddLocationViewModel extends ChangeNotifier {
   String _name = '';
-  String _capacity = '';
   final List<String> solarTrackers = [];
   String? weatherStation;
   String? cctv;
@@ -52,7 +51,6 @@ class AddLocationViewModel extends ChangeNotifier {
     _clearErrors();
 
     nameError = _validateName();
-    capacityError = _validateCapacity();
 
     if (nameError != null || capacityError != null) {
       notifyListeners();
@@ -61,7 +59,6 @@ class AddLocationViewModel extends ChangeNotifier {
 
     final newLocationDto = NewLocationDto(
       _name,
-      int.parse(_capacity),
       solarTrackers,
       weatherStation,
       cctv,
@@ -101,18 +98,6 @@ class AddLocationViewModel extends ChangeNotifier {
     return null;
   }
 
-  String? _validateCapacity() {
-    if (_fieldIsEmpty(_capacity)) {
-      return AppStrings.requiredCapacity;
-    }
-
-    if (int.tryParse(_capacity) == null || int.parse(_capacity) <= 0) {
-      return AppStrings.invalidCapacity;
-    }
-
-    return null;
-  }
-
   void _clearErrors() {
     nameError = null;
     capacityError = null;
@@ -122,10 +107,6 @@ class AddLocationViewModel extends ChangeNotifier {
 
   void setName(String name) {
     _name = name;
-  }
-
-  void setCapacity(String capacity) {
-    _capacity = capacity;
   }
 
   Future<SheetResponse?> _showAddDeviceSheet(AddDeviceViewModel viewModel) async {
