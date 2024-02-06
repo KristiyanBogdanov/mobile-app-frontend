@@ -16,6 +16,7 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: AppStyle.bgColor,
       foregroundColor: AppStyle.iconColor,
+      surfaceTintColor: Colors.transparent,
       shape: const Border(
         bottom: BorderSide(color: AppStyle.secondaryColor2),
       ),

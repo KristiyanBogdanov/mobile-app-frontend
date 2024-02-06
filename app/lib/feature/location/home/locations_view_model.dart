@@ -19,8 +19,10 @@ class LocationsViewModel extends ChangeNotifier {
   }
 
   Future<void> navigateToLocation(LocationModel locationModel) async {
-    await _navigationService.navigateTo(RouteEnum.locationInsights.name,
-        arguments: LocationInsightsViewModel(locationModel));
+    await _navigationService.navigateTo(
+      RouteEnum.locationInsights.name,
+      arguments: LocationInsightsViewModel(locationModel),
+    );
 
     notifyListeners();
   }

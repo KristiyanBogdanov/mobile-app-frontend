@@ -112,7 +112,7 @@ class AppStyle {
   static const double sensorsStatusGridAspectRatio = 1.4;
 
   // LineChartView
-  static const double lineChartAspectRatio = 1.7;
+  static const double lineChartAspectRatio = 1.85;
   static final double lineChartMainGridLineStrokeWidth = 1.w;
   static final double lineChartBarWidth = 4.w;
   static final double lineChartBottomTitlesReservedSize = 30.h;
@@ -127,6 +127,7 @@ class AppStyle {
   // OverviewView
   static final double mapHeight = 300.h;
   static const double mapInitialZoom = 19.5;
-  static final double solarTrackerCardHeight = 120.h;
-  static final double noDataCardHeight = 150.h;
+  static final double solarTrackerCardHeight = 116.h;
+  static final double noLineChartDataCardHeight = 200.h;
+  static final double notSharedCardHeight = 130.h;
 }

@@ -8,7 +8,7 @@ class LocationModel {
   final String id;
   final String uuid;
   final String name;
-  final int capacity;
+  int capacity;
   final List<String> solarTrackers;
   String? weatherStation;
   final String? cctv;

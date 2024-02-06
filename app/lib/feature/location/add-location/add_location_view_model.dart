@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class AddLocationViewModel extends ChangeNotifier {
+  bool _isLoading = false;
   String _name = '';
   final List<String> solarTrackers = [];
   String? weatherStation;
@@ -17,7 +18,6 @@ class AddLocationViewModel extends ChangeNotifier {
   String? nameError;
   String? capacityError;
   String? weatherStationError;
-  final _snackbarService = DependencyInjection.getIt<SnackbarService>();
   final _bottomSheetService = DependencyInjection.getIt<BottomSheetService>();
   final _navigationService = DependencyInjection.getIt<NavigationService>();
   final _userRepotitory = DependencyInjection.getIt<UserRepository>();
@@ -37,8 +37,11 @@ class AddLocationViewModel extends ChangeNotifier {
     try {
       await _locationRepository.fetchLimits();
       return true;
-    } catch (_) {
-      _snackbarService.showSnackbar(message: AppStrings.serverError);
+    } on UnauthorizedApiException {
+      handleUnauthorized();
+      return false;
+    } on UnknownApiException catch (e) {
+      showSnackbar(e.message);
       return false;
     }
   }
@@ -64,18 +67,25 @@ class AddLocationViewModel extends ChangeNotifier {
       cctv,
     );
 
+    _isLoading = true;
+    notifyListeners();
+
     try {
       await _userRepotitory.addNewLocation(newLocationDto);
       _navigationService.back(result: true);
-    } on (InvalidTokenApiException, TokenExpiredApiException) {
+      return;
+    } on UnauthorizedApiException {
       handleUnauthorized();
     } on STSerialNumberAlreadyUsedException catch (e) {
-      _snackbarService.showSnackbar(message: e.message);
+      showSnackbar(e.message);
     } on BadRequestApiException catch (e) {
-      _snackbarService.showSnackbar(message: e.message);
+      showSnackbar(e.message);
     } on UnknownApiException catch (e) {
-      _snackbarService.showSnackbar(message: e.message);
+      showSnackbar(e.message);
     }
+
+    _isLoading = false;
+    notifyListeners();
   }
 
   bool _fieldIsEmpty(String? field) {
@@ -107,6 +117,7 @@ class AddLocationViewModel extends ChangeNotifier {
 
   void setName(String name) {
     _name = name;
+    notifyListeners();
   }
 
   Future<SheetResponse?> _showAddDeviceSheet(AddDeviceViewModel viewModel) async {
@@ -150,5 +161,5 @@ class AddLocationViewModel extends ChangeNotifier {
   }
 
   bool get isAddWSButtonEnabled => weatherStation == null;
-  bool get isAddLocationButtonDisabled => solarTrackers.isEmpty;
+  bool get isAddLocationButtonDisabled => solarTrackers.isEmpty || _isLoading || _name.isEmpty;
 }

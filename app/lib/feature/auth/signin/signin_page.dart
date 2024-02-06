@@ -21,38 +21,38 @@ class SignInPage extends StatelessWidget {
               horizontal: AppStyle.horizontalPadding16,
               vertical: AppStyle.verticalPadding16,
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
+            child: Consumer<SignInViewModel>(
+              builder: (context, viewModel, child) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(
-                      AppStrings.signInPageTitle,
-                      style: TextStyle(
-                        fontSize: AppStyle.fontSize28,
-                        fontWeight: FontWeight.bold,
-                        color: AppStyle.textColor,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppStyle.horizontalPadding16,
-                        vertical: AppStyle.verticalPadding8,
-                      ),
-                      child: Text(
-                        AppStrings.signInSubtitle,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: AppStyle.fontSize16,
-                          color: AppStyle.textColorWith07Opacity,
+                    Column(
+                      children: [
+                        Text(
+                          AppStrings.signInPageTitle,
+                          style: TextStyle(
+                            fontSize: AppStyle.fontSize28,
+                            fontWeight: FontWeight.bold,
+                            color: AppStyle.textColor,
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: AppStyle.horizontalPadding16,
+                            vertical: AppStyle.verticalPadding8,
+                          ),
+                          child: Text(
+                            AppStrings.signInSubtitle,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: AppStyle.fontSize16,
+                              color: AppStyle.textColorWith07Opacity,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                Consumer<SignInViewModel>(
-                  builder: (context, viewModel, child) {
-                    return Form(
+                    Form(
                       key: viewModel.formKey,
                       child: Column(
                         children: [
@@ -73,14 +73,15 @@ class SignInPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                    );
-                  },
-                ),
-                PrimaryButton(
-                  text: AppStrings.signInButton,
-                  onPressed: () async => await _viewModel.signIn(),
-                ),
-              ],
+                    ),
+                    PrimaryButton(
+                      isDisabled: !viewModel.isButtonEnabled,
+                      text: AppStrings.signInButton,
+                      onPressed: () async => await _viewModel.signIn(),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),

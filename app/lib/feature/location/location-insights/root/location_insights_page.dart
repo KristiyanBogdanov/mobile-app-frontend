@@ -1,3 +1,4 @@
+import 'package:app/feature/location/location-insights/cctv/cctv_view.dart';
 import 'package:app/feature/location/location-insights/overview/overview_view.dart';
 import 'package:app/feature/location/location-insights/root/location_insights_view_model.dart';
 import 'package:app/feature/location/location-insights/root/views/index.dart';
@@ -46,9 +47,9 @@ class LocationInsightsPage extends StatelessWidget {
                       await viewModel.deleteLocation();
                     }
                   },
-                  color: AppStyle.secondaryColor2,
+                  color: AppStyle.secondaryColor1,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppStyle.borderRadius16),
+                    borderRadius: BorderRadius.circular(AppStyle.borderRadius20),
                   ),
                   itemBuilder: (context) {
                     return [
@@ -82,39 +83,12 @@ class LocationInsightsPage extends StatelessWidget {
             builder: (context, viewModel, child) {
               return viewModel.isLoading
                   ? const LoadingView()
-                  : Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppStyle.horizontalPadding16,
-                        vertical: AppStyle.verticalPadding16,
-                      ),
-                      child: TabBarView(
-                        children: [
-                          const OverviewView(),
-                          const WeatherStationView(),
-                          Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.code_off_rounded,
-                                  size: AppStyle.iconSize40,
-                                  color: AppStyle.iconColor,
-                                ),
-                                SizedBox(height: AppStyle.verticalPadding12),
-                                Text(
-                                  AppStrings.futureDevelopmentLabel,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: AppStyle.textColor,
-                                    fontSize: AppStyle.fontSize24,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                  : const TabBarView(
+                      children: [
+                        OverviewView(),
+                        WeatherStationView(),
+                        CCTVView(),
+                      ],
                     );
             },
           ),

@@ -33,32 +33,55 @@ class AuthInterceptor implements Interceptor {
   @override
   void onError(DioException error, ErrorInterceptorHandler handler) async {
     if (error.response?.statusCode == HttpStatus.unauthorized) {
-      final response = await _dio.get(
-        _mobileAppApi.refreshTokens(),
-        options: Options(
-          headers: {
-            'Authorization': 'Bearer ${await _jwtStorage.getRefreshToken()}',
-          },
-          validateStatus: (_) => true,
-        ),
-      );
+      try {
+        final response = await _dio.get(
+          _mobileAppApi.refreshTokens(),
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer ${await _jwtStorage.getRefreshToken()}',
+            },
+          ),
+        );
 
-      switch (response.statusCode) {
-        case HttpStatus.ok:
-          final accessToken = readAccessTokenFromJsonBody(response.data);
-          final refreshToken = readRefreshTokenFromJsonBody(response.data);
+        final accessToken = readAccessTokenFromJsonBody(response.data);
+        final refreshToken = readRefreshTokenFromJsonBody(response.data);
 
-          await _jwtStorage.saveTokens(accessToken, refreshToken);
-          error.requestOptions.headers['Authorization'] = 'Bearer ${await _jwtStorage.getAccessToken()}';
+        await _jwtStorage.saveTokens(accessToken, refreshToken);
+        error.requestOptions.headers['Authorization'] = 'Bearer ${await _jwtStorage.getAccessToken()}';
 
-          return handler.resolve(await _dio.fetch(error.requestOptions));
-        case HttpStatus.unauthorized:
-          throw TokenExpiredApiException();
-        case HttpStatus.forbidden:
-          throw InvalidTokenApiException();
-        default:
-          throw UnknownApiException();
+        return handler.resolve(await _dio.fetch(error.requestOptions));
+      } on DioException catch (e) {
+        switch (e.response?.statusCode) {
+          case HttpStatus.unauthorized:
+          case HttpStatus.forbidden:
+            return handler.reject(UnauthorizedDioException(requestOptions: error.requestOptions));
+          default:
+            return handler.reject(DioException(requestOptions: error.requestOptions));
+        }
       }
+
+      // final response = await _dio.get(
+      //   _mobileAppApi.refreshTokens(),
+      //   options: Options(
+      //     headers: {
+      //       'Authorization': 'Bearer ${await _jwtStorage.getRefreshToken()}',
+      //     },
+      //     validateStatus: (_) => true,
+      //   ),
+      // );
+
+      // switch (response.statusCode) {
+      //   case HttpStatus.ok:
+      //     final accessToken = readAccessTokenFromJsonBody(response.data);
+      //     final refreshToken = readRefreshTokenFromJsonBody(response.data);
+
+      //     await _jwtStorage.saveTokens(accessToken, refreshToken);
+      //     error.requestOptions.headers['Authorization'] = 'Bearer ${await _jwtStorage.getAccessToken()}';
+
+      //     return handler.resolve(await _dio.fetch(error.requestOptions));
+      //   default:
+      //     handler.reject(DioException(requestOptions: error.requestOptions));
+      // }
     }
 
     return handler.next(error);

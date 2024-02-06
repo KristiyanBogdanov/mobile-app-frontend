@@ -23,7 +23,7 @@ Future main() async {
   DependencyInjection.configure();
 
   setupBottomSheetUi();
-  setupDialogUi();
+  setupSnackbarUi();
 
   final initialRoute = await _getInitialRoute();
   FlutterNativeSplash.remove();
@@ -65,8 +65,8 @@ class MyApp extends StatelessWidget {
         title: AppStrings.appTitle,
         theme: ThemeData(
           fontFamily: 'Nunito',
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+          brightness: Brightness.dark,
+          dialogBackgroundColor: AppStyle.secondaryColor1,
         ),
         navigatorKey: StackedService.navigatorKey,
         initialRoute: initialRoute.name,
@@ -85,5 +85,4 @@ class MyApp extends StatelessWidget {
 // TODO: add AppImges class
 // TODO: add getters and setters on all models
 // TODO: test with two different phones (remove, add, update, delete) and update
-
-// TODO: case: delete db and try to fetch; fix dio error handling: https://stackoverflow.com/questions/72667780/dio-wont-catch-errors-and-get-stuck-on-throwing-custom-exception
+// TODO: change the theme

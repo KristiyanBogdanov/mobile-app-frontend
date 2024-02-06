@@ -33,111 +33,122 @@ class _WeatherStationViewState extends State<WeatherStationView> {
                 viewModel.locationModel.amIOwner ? () async => await viewModel.addWeatherStation() : null,
           );
         } else {
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                LastUpdateCardView(
-                  lastUpdate: viewModel.weatherStationInsightsModel!.lastUpdate,
-                  temperature: viewModel.weatherStationInsightsModel!.currentTemperature,
-                  windSpeed: viewModel.weatherStationInsightsModel!.currentWindSpeed,
-                  windDirection: viewModel.weatherStationInsightsModel!.currentWindDirection,
-                  onRefresh: () async => await viewModel.refreshWeatherStationInsights(),
+          return RefreshIndicator(
+            color: AppStyle.contrastColor1,
+            onRefresh: () async => await viewModel.refreshWeatherStationInsights(),
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppStyle.horizontalPadding16,
+                  vertical: AppStyle.verticalPadding16,
                 ),
-                const ColumnSpacingView(),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const ColumnSectionTitleView(title: AppStrings.sensorsSectionTitle, padding: false),
-                    SizedBox(width: AppStyle.horizontalPadding8),
-                    Container(
-                      height: AppStyle.iconSize24,
-                      width: AppStyle.iconSize24,
-                      decoration: BoxDecoration(
-                        color: AppStyle.contrastColor1,
-                        borderRadius: BorderRadius.circular(AppStyle.borderRadius8),
+                    LastUpdateCardView(
+                      lastUpdate: viewModel.weatherStationInsightsModel!.lastUpdate,
+                      temperature: viewModel.weatherStationInsightsModel!.currentTemperature,
+                      windSpeed: viewModel.weatherStationInsightsModel!.currentWindSpeed,
+                      windDirection: viewModel.weatherStationInsightsModel!.currentWindDirection,
+                      onRefresh: () async => await viewModel.refreshWeatherStationInsights(),
+                    ),
+                    const ColumnSpacingView(),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const ColumnSectionTitleView(title: AppStrings.sensorsSectionTitle, padding: false),
+                        SizedBox(width: AppStyle.horizontalPadding8),
+                        Container(
+                          height: AppStyle.iconSize24,
+                          width: AppStyle.iconSize24,
+                          decoration: BoxDecoration(
+                            color: AppStyle.contrastColor1,
+                            borderRadius: BorderRadius.circular(AppStyle.borderRadius8),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '${viewModel.weatherStationInsightsModel!.sensorsStatus.count}',
+                              style: TextStyle(
+                                color: AppStyle.textColor,
+                                fontSize: AppStyle.fontSize14,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: AppStyle.verticalPadding12),
+                    GridView.count(
+                      shrinkWrap: true,
+                      childAspectRatio: AppStyle.sensorsStatusGridAspectRatio,
+                      physics: const NeverScrollableScrollPhysics(),
+                      crossAxisCount: 2,
+                      children: [
+                        SensorStatusCardView(
+                          assetName: 'assets/icons/solar-tracker-avatar.png',
+                          sensorName: AppStrings.temperatureSensor,
+                          isActive: viewModel.isWsTempSensorActive,
+                        ),
+                        SensorStatusCardView(
+                          assetName: 'assets/icons/solar-tracker-avatar.png',
+                          sensorName: AppStrings.anemometer,
+                          isActive: viewModel.isWsAnemometerActive,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: AppStyle.verticalPadding12),
+                    DropdownButton(
+                      value: _currentLineChart,
+                      onChanged: (value) => _onLineChartChanged(value),
+                      dropdownColor: AppStyle.secondaryColor2,
+                      style: TextStyle(
+                        color: AppStyle.textColor,
+                        fontFamily: 'Nunito',
+                        fontSize: AppStyle.fontSize16,
+                        fontWeight: FontWeight.w500,
                       ),
-                      child: Center(
-                        child: Text(
-                          '${viewModel.weatherStationInsightsModel!.sensorsStatus.count}',
-                          style: TextStyle(
-                            color: AppStyle.textColor,
-                            fontSize: AppStyle.fontSize14,
+                      borderRadius: BorderRadius.circular(AppStyle.borderRadius16),
+                      items: const [
+                        DropdownMenuItem(
+                          value: 0,
+                          child: Text(
+                            AppStrings.averageTemperature,
                           ),
                         ),
+                        DropdownMenuItem(
+                          value: 1,
+                          child: Text(
+                            AppStrings.averageWindSpeed,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: AppStyle.verticalPadding12),
+                    if (_currentLineChart == 0)
+                      LineChartView(
+                        avgSensorValues: viewModel.weatherStationInsightsModel!.last24hAvgTemperature,
+                        leftTitleUnit: (value) => AppStrings.temperatureValue(value, merge: true),
+                      )
+                    else if (_currentLineChart == 1)
+                      LineChartView(
+                        avgSensorValues: viewModel.weatherStationInsightsModel!.last24hAvgWindSpeed,
+                        leftTitleUnit: (value) => AppStrings.windSpeedValue(value, merge: true),
                       ),
-                    )
-                  ],
-                ),
-                SizedBox(height: AppStyle.verticalPadding12),
-                GridView.count(
-                  shrinkWrap: true,
-                  childAspectRatio: AppStyle.sensorsStatusGridAspectRatio,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  children: [
-                    SensorStatusCardView(
-                      assetName: 'assets/icons/solar-tracker-avatar.png',
-                      sensorName: AppStrings.temperatureSensor,
-                      isActive: viewModel.isWsTempSensorActive,
-                    ),
-                    SensorStatusCardView(
-                      assetName: 'assets/icons/solar-tracker-avatar.png',
-                      sensorName: AppStrings.anemometer,
-                      isActive: viewModel.isWsAnemometerActive,
-                    ),
-                  ],
-                ),
-                SizedBox(height: AppStyle.verticalPadding12),
-                DropdownButton(
-                  value: _currentLineChart,
-                  onChanged: (value) => _onLineChartChanged(value),
-                  dropdownColor: AppStyle.secondaryColor2,
-                  style: TextStyle(
-                    color: AppStyle.textColor,
-                    fontFamily: 'Nunito',
-                    fontSize: AppStyle.fontSize16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  borderRadius: BorderRadius.circular(AppStyle.borderRadius16),
-                  items: const [
-                    DropdownMenuItem(
-                      value: 0,
-                      child: Text(
-                        AppStrings.averageTemperature,
+                    const ColumnSpacingView(),
+                    Text(
+                      AppStrings.installedOn(
+                        viewModel.weatherStationInsightsModel!.installationDate.parseWithDateFormat('dd MMM yyyy'),
                       ),
-                    ),
-                    DropdownMenuItem(
-                      value: 1,
-                      child: Text(
-                        AppStrings.averageWindSpeed,
+                      style: TextStyle(
+                        color: AppStyle.textColorWith07Opacity,
+                        fontSize: AppStyle.fontSize14,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: AppStyle.verticalPadding12),
-                if (_currentLineChart == 0)
-                  LineChartView(
-                    avgSensorValues: viewModel.weatherStationInsightsModel!.last24hAvgTemperature,
-                    leftTitleUnit: (value) => AppStrings.temperatureValue(value, merge: true),
-                  )
-                else if (_currentLineChart == 1)
-                  LineChartView(
-                    avgSensorValues: viewModel.weatherStationInsightsModel!.last24hAvgWindSpeed,
-                    leftTitleUnit: (value) => AppStrings.windSpeedValue(value, merge: true),
-                  ),
-                const ColumnSpacingView(),
-                Text(
-                  AppStrings.installedOn(
-                    viewModel.weatherStationInsightsModel!.installationDate.parseWithDateFormat('dd MMM yyyy'),
-                  ),
-                  style: TextStyle(
-                    color: AppStyle.textColorWith07Opacity,
-                    fontSize: AppStyle.fontSize14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
+              ),
             ),
           );
         }

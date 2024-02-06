@@ -39,6 +39,22 @@ class LocationRepository {
     await _locationService.removeWeatherStation(locationId);
   }
 
+  Future<SolarTrackerInsightsModel> fetchSolarTrackerInsights(String locationId, String serialNumber) async {
+    final insights = await _locationService.getSolarTrackerInsights(locationId, serialNumber);
+    _locationInsights[locationId]!.solarTrackers[serialNumber] = insights;
+
+    return insights;
+  }
+
+  Future<void> addSolarTracker(String locationId, String serialNumber) async {
+    await _locationService.addSolarTracker(locationId, serialNumber);
+  }
+
+  Future<void> removeSolarTracker(String locationId, String serialNumber) async {
+    await _locationService.removeSolarTracker(locationId, serialNumber);
+    _locationInsights[locationId]!.solarTrackers.remove(serialNumber);
+  }
+
   void removeLocationInsights(String locationId) {
     _locationInsights.remove(locationId);
   }

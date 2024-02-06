@@ -1,34 +1,39 @@
-import 'dart:io';
-
 import 'package:app/api/location/dto/index.dart';
 import 'package:app/api/location/model/index.dart';
 import 'package:app/util/api/mobile_app_api.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';
+import 'package:dio/dio.dart';
 
 class LocationService {
-  final _httpService = DependencyInjection.getIt<HttpService>().instance;
+  final _httpService = DependencyInjection.getIt<HttpService>().authRequiredInstance;
   final _mobileAppApi = DependencyInjection.getIt<MobileAppApi>();
 
   Future<LocationLimitsModel> getLimits() async {
-    final response = await _httpService.get(_mobileAppApi.getLocationLimits());
-
-    switch (response.statusCode) {
-      case HttpStatus.ok:
-        return LocationLimitsModel.fromJson(response.data);
-      default:
-        throw UnknownApiException();
+    try {
+      final response = await _httpService.get(_mobileAppApi.getLocationLimits());
+      return LocationLimitsModel.fromJson(response.data);
+    } on UnauthorizedDioException {
+      throw UnauthorizedApiException();
+    } on DioException catch (e) {
+      switch (e.response?.statusCode) {
+        default:
+          throw UnknownApiException();
+      }
     }
   }
 
   Future<ValidateSerialNumberDto> _validateSerialNumber(String serialNumber, String endpoint) async {
-    final response = await _httpService.get(endpoint);
-
-    switch (response.statusCode) {
-      case HttpStatus.ok:
-        return ValidateSerialNumberDto.fromJson(response.data);
-      default:
-        throw UnknownApiException();
+    try {
+      final response = await _httpService.get(endpoint);
+      return ValidateSerialNumberDto.fromJson(response.data);
+    } on UnauthorizedDioException {
+      throw UnauthorizedApiException();
+    } on DioException catch (e) {
+      switch (e.response?.statusCode) {
+        default:
+          throw UnknownApiException();
+      }
     }
   }
 
@@ -41,46 +46,96 @@ class LocationService {
   }
 
   Future<LocationInsightsModel> getLocationInsights(String locationId) async {
-    final response = await _httpService.get(_mobileAppApi.getLocationInsights(locationId));
-
-    switch (response.statusCode) {
-      case HttpStatus.ok:
-        return LocationInsightsModel.fromJson(response.data);
-      default:
-        throw UnknownApiException();
+    try {
+      final response = await _httpService.get(_mobileAppApi.getLocationInsights(locationId));
+      return LocationInsightsModel.fromJson(response.data);
+    } on UnauthorizedDioException {
+      throw UnauthorizedApiException();
+    } on DioException catch (e) {
+      switch (e.response?.statusCode) {
+        default:
+          throw UnknownApiException();
+      }
     }
   }
 
   Future<WeatherStationInsightsModel> getWeatherStationInsights(String wsSerialNumber) async {
-    final response = await _httpService.get(_mobileAppApi.getWeatherStationInsights(wsSerialNumber));
-
-    switch (response.statusCode) {
-      case HttpStatus.ok:
-        return WeatherStationInsightsModel.fromJson(response.data);
-      default:
-        throw UnknownApiException();
+    try {
+      final response = await _httpService.get(_mobileAppApi.getWeatherStationInsights(wsSerialNumber));
+      return WeatherStationInsightsModel.fromJson(response.data);
+    } on UnauthorizedDioException {
+      throw UnauthorizedApiException();
+    } on DioException catch (e) {
+      switch (e.response?.statusCode) {
+        default:
+          throw UnknownApiException();
+      }
     }
   }
 
   Future<void> addWeatherStation(String locationId, String wsSerialNumber) async {
-    final response = await _httpService.post(_mobileAppApi.addWeatherStation(locationId, wsSerialNumber));
-
-    switch (response.statusCode) {
-      case HttpStatus.created:
-        return;
-      default:
-        throw UnknownApiException();
+    try {
+      await _httpService.post(_mobileAppApi.addWeatherStation(locationId, wsSerialNumber));
+    } on UnauthorizedDioException {
+      throw UnauthorizedApiException();
+    } on DioException catch (e) {
+      switch (e.response?.statusCode) {
+        default:
+          throw UnknownApiException();
+      }
     }
   }
 
   Future<void> removeWeatherStation(String locationId) async {
-    final response = await _httpService.delete(_mobileAppApi.removeWeatherStation(locationId));
+    try {
+      await _httpService.delete(_mobileAppApi.removeWeatherStation(locationId));
+    } on UnauthorizedDioException {
+      throw UnauthorizedApiException();
+    } on DioException catch (e) {
+      switch (e.response?.statusCode) {
+        default:
+          throw UnknownApiException();
+      }
+    }
+  }
 
-    switch (response.statusCode) {
-      case HttpStatus.noContent:
-        return;
-      default:
-        throw UnknownApiException();
+  Future<SolarTrackerInsightsModel> getSolarTrackerInsights(String locationId, String serialNumber) async {
+    try {
+      final response = await _httpService.get(_mobileAppApi.getSolarTrackerInsights(locationId, serialNumber));
+      return SolarTrackerInsightsModel.fromJson(response.data);
+    } on UnauthorizedDioException {
+      throw UnauthorizedApiException();
+    } on DioException catch (e) {
+      switch (e.response?.statusCode) {
+        default:
+          throw UnknownApiException();
+      }
+    }
+  }
+
+  Future<void> addSolarTracker(String locationId, String serialNumber) async {
+    try {
+      await _httpService.post(_mobileAppApi.addSolarTracker(locationId, serialNumber));
+    } on UnauthorizedDioException {
+      throw UnauthorizedApiException();
+    } on DioException catch (e) {
+      switch (e.response?.statusCode) {
+        default:
+          throw UnknownApiException();
+      }
+    }
+  }
+
+  Future<void> removeSolarTracker(String locationId, String serialNumber) async {
+    try {
+      await _httpService.delete(_mobileAppApi.removeSolarTracker(locationId, serialNumber));
+    } on UnauthorizedDioException {
+      throw UnauthorizedApiException();
+    } on DioException catch (e) {
+      switch (e.response?.statusCode) {
+        default:
+          throw UnknownApiException();
+      }
     }
   }
 }

@@ -11,7 +11,7 @@ import 'package:dio/dio.dart';
 
 class AuthService {
   final _jwtStorage = DependencyInjection.getIt<JwtStorage>();
-  final _httpService = DependencyInjection.getIt<HttpService>().instance;
+  final _httpService = DependencyInjection.getIt<HttpService>();
   final _mobileAppApi = DependencyInjection.getIt<MobileAppApi>();
 
   void _saveTokensFromJsonBody(Map<String, dynamic> jsonBody) {
@@ -22,63 +22,63 @@ class AuthService {
   }
 
   Future<AuthLimitsModel> getLimits() async {
-    final response = await _httpService.get(_mobileAppApi.getAuthLimits());
-
-    switch (response.statusCode) {
-      case HttpStatus.ok:
-        return AuthLimitsModel.fromJson(response.data);
-      default:
-        throw UnknownApiException();
+    try {
+      final response = await _httpService.baseInstance.get(_mobileAppApi.getAuthLimits());
+      return AuthLimitsModel.fromJson(response.data);
+    } on DioException catch (e) {
+      switch (e.response?.statusCode) {
+        default:
+          throw UnknownApiException();
+      }
     }
   }
 
   Future<UserModel> signUp(SignUpDto data) async {
-    final response = await _httpService.post(_mobileAppApi.signUp(), data: data);
-
-    switch (response.statusCode) {
-      case HttpStatus.created:
-        _saveTokensFromJsonBody(response.data);
-        return UserModel.fromJson(response.data);
-      case HttpStatus.badRequest:
-        throw BadRequestApiException();
-      case HttpStatus.conflict:
-        throw EmailAlreadyUsedException();
-      default:
-        throw UnknownApiException();
+    try {
+      final response = await _httpService.baseInstance.post(_mobileAppApi.signUp(), data: data);
+      _saveTokensFromJsonBody(response.data);
+      return UserModel.fromJson(response.data);
+    } on DioException catch (e) {
+      switch (e.response?.statusCode) {
+        case HttpStatus.badRequest:
+          throw BadRequestApiException();
+        case HttpStatus.conflict:
+          throw EmailAlreadyUsedException();
+        default:
+          throw UnknownApiException();
+      }
     }
   }
 
   Future<UserModel> signIn(SignInDto data) async {
-    final response = await _httpService.post(
-      _mobileAppApi.signIn(),
-      data: data,
-      options: Options(
-        validateStatus: (_) => true,
-      ),
-    );
-
-    switch (response.statusCode) {
-      case HttpStatus.ok:
-        _saveTokensFromJsonBody(response.data);
-        return UserModel.fromJson(response.data);
-      case HttpStatus.badRequest:
-        throw BadRequestApiException();
-      case HttpStatus.unauthorized:
-        throw WrongCredentials();
-      default:
-        throw UnknownApiException();
+    try {
+      final response = await _httpService.baseInstance.post(_mobileAppApi.signIn(), data: data);
+      _saveTokensFromJsonBody(response.data);
+      return UserModel.fromJson(response.data);
+    } on DioException catch (e) {
+      switch (e.response?.statusCode) {
+        case HttpStatus.badRequest:
+          throw BadRequestApiException();
+        case HttpStatus.unauthorized:
+          throw WrongCredentials();
+        default:
+          throw UnknownApiException();
+      }
     }
   }
 
   Future<void> signOut() async {
-    final response = await _httpService.get(_mobileAppApi.signOut());
-
-    switch (response.statusCode) {
-      case HttpStatus.ok:
-        _jwtStorage.deleteTokens();
-        return;
-      default:
-        throw UnknownApiException();
+    try {
+      await _httpService.authRequiredInstance.get(_mobileAppApi.signOut());
+      _jwtStorage.deleteTokens();
+      return;
+    } on UnauthorizedDioException {
+      throw UnauthorizedApiException();
+    } on DioException catch (e) {
+      switch (e.response?.statusCode) {
+        default:
+          throw UnknownApiException();
+      }
     }
   }
 }

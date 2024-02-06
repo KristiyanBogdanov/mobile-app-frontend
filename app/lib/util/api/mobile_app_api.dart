@@ -74,4 +74,16 @@ class MobileAppApi {
   String removeWeatherStation(String locationId) {
     return '$_location/$locationId/weather-stations';
   }
+
+  String getSolarTrackerInsights(String locationId, String serialNumber) {
+    return '$_location/$locationId/insights/solar-trackers/$serialNumber';
+  }
+
+  String addSolarTracker(String locationId, String serialNumber) {
+    return '$_location/$locationId/solar-trackers/$serialNumber';
+  }
+
+  String removeSolarTracker(String locationId, String serialNumber) {
+    return '$_location/$locationId/solar-trackers/$serialNumber';
+  }
 }

@@ -6,10 +6,12 @@ import 'package:app/shared/constant/app_strings.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';
 import 'package:app/util/route/index.dart';
+import 'package:app/util/stacked-services/index.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class SignUpViewModel extends ChangeNotifier {
+  bool isButtonEnabled = true;
   String _username = '';
   String _email = '';
   String _password = '';
@@ -19,7 +21,6 @@ class SignUpViewModel extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
   late final AuthValidator _authValidator;
   final _navigationService = DependencyInjection.getIt<NavigationService>();
-  final _snackbarService = DependencyInjection.getIt<SnackbarService>();
   final _authRepository = DependencyInjection.getIt<AuthRepository>();
   final _userRepository = DependencyInjection.getIt<UserRepository>();
   final _firebaseApi = DependencyInjection.getIt<FirebaseApi>();
@@ -39,21 +40,28 @@ class SignUpViewModel extends ChangeNotifier {
       final fcmToken = await _firebaseApi.getDeviceToken();
 
       if (fcmToken == null) {
-        _snackbarService.showSnackbar(message: AppStrings.serverError);
+        showSnackbar(AppStrings.firebaseError);
         return;
       }
+
+      isButtonEnabled = false;
+      notifyListeners();
 
       _userRepository.userModel =
           await _authRepository.signUp(SignUpDto(_username.trim(), _email, _password, fcmToken));
       _navigationService.clearStackAndShow(RouteEnum.home.name);
+
+      return;
     } on EmailAlreadyUsedException catch (e) {
       emailError = e.message;
-      notifyListeners();
     } on BadRequestApiException catch (e) {
-      _snackbarService.showSnackbar(message: e.message);
+      showSnackbar(e.message);
     } on UnknownApiException catch (e) {
-      _snackbarService.showSnackbar(message: e.message);
+      showSnackbar(e.message);
     }
+
+    isButtonEnabled = true;
+    notifyListeners();
   }
 
   String? validateUsername(String? username) {

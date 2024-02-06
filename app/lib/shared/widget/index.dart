@@ -11,3 +11,6 @@ export './text_form_field_view.dart';
 export './pv_system_indicator_view.dart';
 export './is_active_view.dart';
 export './user_avatar_view.dart';
+export './unauthorized_dialog_view.dart';
+export './popup_menu_item_view.dart';
+export './add_text_button_view.dart';

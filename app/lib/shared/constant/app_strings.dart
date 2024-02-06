@@ -33,10 +33,12 @@ class AppStrings {
 
   static const String badRequestError = 'Invalid data. Please check your input.';
   static const String unauthorizedError = 'Unauthorized';
-  static const String anauthorizedDialogDescription = 'You are not authorized. Please sign in or sign up';
-  static const String anauthorizedDialogButton = 'OK';
+  static const String unauthorizedDialogTitle = 'Unauthorized';
+  static const String unauthorizedDialogDescription = 'You are not authorized. Please sign in or sign up';
+  static const String unauthorizedDialogButton = 'Ok';
   static const String unknownError = 'Unknown error. You can try again later';
   static const String serverError = 'Server error. Please try again later';
+  static const String firebaseError = 'Firebase error. Please try again later';
 
   static const String locationsPageNavBarLabel = 'Locations';
   static const String notificationsPageNavBarLabel = 'Notifications';
@@ -89,6 +91,8 @@ class AppStrings {
   static const String notShared = 'Not shared with anyone';
 
   static const String addNewLocationButton = 'new';
+  static const String add = 'add';
+  static const String share = 'share';
 
   static const String scanQRCodeTitle = 'Scan QR Code';
   static const String scanQRCodeDescription = 'Align the QR Code within the frame';
@@ -144,6 +148,18 @@ class AppStrings {
   static const String deleteWeatherStation = 'Delete weather station';
 
   static const String sharedWithSectionTitle = 'Shared with';
+  static const String notSharedWithAnyoneYet = 'Not shared with anyone yet.';
+  static const String deleteLocationConfirmationTitle = 'Delete location';
+  static const String deleteLocationConfirmationDescription = 'Are you sure you want to delete the location?';
+  static const String deleteLocationConfirmationButton = 'Yes';
+  static const String deleteWeatherStationConfirmationTitle = 'Delete weather station';
+  static const String deleteWeatherStationConfirmationDescription =
+      'Are you sure you want to delete the weather station?';
+  static const String deleteWeatherStationConfirmationButton = 'Yes';
+  static const String deleteSolarTrackerConfirmationTitle = 'Delete solar tracker';
+  static const String deleteSolarTrackerConfirmationDescription = 'Are you sure you want to delete this solar tracker?';
+  static const String deleteSolarTrackerConfirmationButton = 'Yes';
+  static const String deleteSolarTracker = 'Delete solar tracker';
 
   static const String futureDevelopmentLabel = 'This feature is for future development.';
 }
