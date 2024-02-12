@@ -1,6 +1,7 @@
 import 'package:app/api/location/index.dart';
 import 'package:app/api/user/user_repository.dart';
 import 'package:app/feature/location/add-device/index.dart';
+import 'package:app/feature/location/location-insights/invite-user/invite_user_view_model.dart';
 import 'package:app/feature/location/location-insights/solar-tracker/solar_tracker_view_model.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:app/util/common/handle_unauthorized.dart';
@@ -13,29 +14,26 @@ import 'package:stacked_services/stacked_services.dart';
 
 class LocationInsightsViewModel extends ChangeNotifier {
   final LocationModel locationModel;
-  LocationInsightsModel? _locationInsightsModel;
   bool _isLoading = false;
   bool isWeatherStationLoading = false;
   final _bottomSheetService = DependencyInjection.getIt<BottomSheetService>();
-  final _snackbarService = DependencyInjection.getIt<SnackbarService>();
   final _dialogService = DependencyInjection.getIt<DialogService>();
   final _navigationService = DependencyInjection.getIt<NavigationService>();
   final _userRepository = DependencyInjection.getIt<UserRepository>();
   final _locationRepository = DependencyInjection.getIt<LocationRepository>();
 
   LocationInsightsViewModel(this.locationModel) {
-    _locationInsightsModel = _locationRepository.getLocationInsightsByLocationId(locationModel.id);
     _fetchLocationInsights();
   }
 
   Future<void> _fetchLocationInsights() async {
     try {
-      _locationInsightsModel = await _locationRepository.fetchLocationInsights(locationModel.id);
+      await _locationRepository.fetchLocationInsights(locationModel.id);
       notifyListeners();
     } on UnauthorizedApiException {
       handleUnauthorized();
     } on UnknownApiException catch (e) {
-      if (_locationInsightsModel == null) {
+      if (locationInsightsModel == null) {
         showSnackbar(e.message);
       }
     }
@@ -43,10 +41,7 @@ class LocationInsightsViewModel extends ChangeNotifier {
 
   Future<void> refreshWeatherStationInsights() async {
     try {
-      _locationInsightsModel!.weatherStation = await _locationRepository.getWeatherStationInsights(
-        locationModel.id,
-        locationModel.weatherStation!,
-      );
+      locationInsightsModel!.weatherStation = await _locationRepository.getWeatherStationInsights(locationModel.id);
       notifyListeners();
     } on UnauthorizedApiException {
       handleUnauthorized();
@@ -71,16 +66,13 @@ class LocationInsightsViewModel extends ChangeNotifier {
 
     try {
       await _locationRepository.addWeatherStation(locationModel.id, response.data);
-      _locationInsightsModel!.weatherStation = await _locationRepository.getWeatherStationInsights(
-        locationModel.id,
-        response.data,
-      );
+      locationInsightsModel!.weatherStation = await _locationRepository.getWeatherStationInsights(locationModel.id);
       locationModel.weatherStation = response.data;
     } on UnauthorizedDioException {
       handleUnauthorized();
       return;
     } on UnknownApiException catch (e) {
-      _snackbarService.showSnackbar(message: e.message);
+      showSnackbar(e.message);
     }
 
     isWeatherStationLoading = false;
@@ -103,7 +95,7 @@ class LocationInsightsViewModel extends ChangeNotifier {
 
     try {
       await _locationRepository.removeWeatherStation(locationModel.id);
-      _locationInsightsModel!.weatherStation = null;
+      locationInsightsModel!.weatherStation = null;
       locationModel.weatherStation = null;
     } on UnauthorizedApiException {
       handleUnauthorized();
@@ -116,13 +108,13 @@ class LocationInsightsViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> navigateToSolarTracker(String serialNumber, SolarTrackerInsightsModel solarTrackerInsightsModel) async {
+  Future<void> navigateToSolarTracker(
+      SolarTrackerModel solarTracker, SolarTrackerInsightsModel solarTrackerInsightsModel) async {
     await _navigationService.navigateTo(
       RouteEnum.solarTracker.name,
       arguments: SolarTrackerViewModel(
-        serialNumber: serialNumber,
+        solarTracker: solarTracker,
         location: locationModel,
-        solarTrackerInsightsModel: solarTrackerInsightsModel,
       ),
     );
 
@@ -137,7 +129,10 @@ class LocationInsightsViewModel extends ChangeNotifier {
     final response = await _bottomSheetService.showCustomSheet(
       variant: BottomSheetType.addDevice,
       isScrollControlled: true,
-      data: AddDeviceViewModel(deviceType: DeviceType.solarTracker),
+      data: AddDeviceViewModel(
+        deviceType: DeviceType.solarTracker,
+        solarTrackerSerialNumbers: locationModel.solarTrackers.map((st) => st.serialNumber).toList(),
+      ),
     );
 
     if (response == null || !response.confirmed) {
@@ -145,10 +140,12 @@ class LocationInsightsViewModel extends ChangeNotifier {
     }
 
     try {
-      await _locationRepository.addSolarTracker(locationModel.id, response.data);
-      final insights = await _locationRepository.fetchSolarTrackerInsights(locationModel.id, response.data);
-      locationModel.solarTrackers.add(response.data);
-      locationModel.capacity += insights.capacity;
+      final solarTracker = response.data as SolarTrackerModel;
+
+      await _locationRepository.addSolarTracker(locationModel.id, solarTracker.serialNumber);
+      await _locationRepository.fetchSolarTrackerInsights(locationModel.id, solarTracker.serialNumber);
+      locationModel.solarTrackers.add(solarTracker);
+      locationModel.capacity += solarTracker.capacity;
       notifyListeners();
     } on UnauthorizedApiException {
       handleUnauthorized();
@@ -157,12 +154,23 @@ class LocationInsightsViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> inviteUser() async {
+    final result = await _dialogService.showCustomDialog(
+      variant: DialogType.inviteUser,
+      data: InviteUserViewModel(locationModel),
+    );
+
+    if (result != null || result?.confirmed == true) {
+      await showSnackbar(AppStrings.userWasInvitedSuccessfully);
+    }
+  }
+
   Future<void> _deleteLocation() async {
     _isLoading = true;
     notifyListeners();
 
     try {
-      await _userRepository.removeLocation(locationModel.id);
+      await _userRepository.deleteLocation(locationModel.id);
       _locationRepository.removeLocationInsights(locationModel.id);
       _navigationService.back();
       return;
@@ -191,14 +199,18 @@ class LocationInsightsViewModel extends ChangeNotifier {
     _deleteLocation();
   }
 
-  bool get isLoading => _locationInsightsModel == null || _isLoading;
-  LocationInsightsModel get locationInsightsModel => _locationInsightsModel!;
+  bool get isLocationAvailable => _userRepository.userModel!.locations.contains(locationModel);
 
-  WeatherStationInsightsModel? get weatherStationInsightsModel => _locationInsightsModel!.weatherStation;
+  bool get isLoading => locationInsightsModel == null || _isLoading;
+  LocationInsightsModel? get locationInsightsModel =>
+      _locationRepository.getLocationInsightsByLocationId(locationModel.id);
+
+  bool get isWeatherStationAvailable => locationModel.weatherStation != null;
+  WeatherStationInsightsModel get weatherStationInsightsModel => locationInsightsModel!.weatherStation!;
   bool get isWsTempSensorActive =>
-      _locationInsightsModel!.weatherStation!.isActive &&
-      _locationInsightsModel!.weatherStation!.sensorsStatus.temperatureSensor;
+      locationInsightsModel!.weatherStation!.isActive &&
+      locationInsightsModel!.weatherStation!.sensorsStatus.temperatureSensor;
   bool get isWsAnemometerActive =>
-      _locationInsightsModel!.weatherStation!.isActive &&
-      _locationInsightsModel!.weatherStation!.sensorsStatus.anemometer;
+      locationInsightsModel!.weatherStation!.isActive &&
+      locationInsightsModel!.weatherStation!.sensorsStatus.anemometer;
 }

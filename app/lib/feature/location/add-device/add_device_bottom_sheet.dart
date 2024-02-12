@@ -38,13 +38,13 @@ class AddDeviceBottomSheet extends StatelessWidget {
             return viewModel.isScanSuccessful
                 ? Center(
                     child: Lottie.asset(
-                      'assets/animations/success.json',
+                      AppAnimations.success,
                       width: AppStyle.successAnimationSize,
                       height: AppStyle.successAnimationSize,
                       repeat: false,
                       onLoaded: (_) => {
                         Future.delayed(const Duration(seconds: 2), () {
-                          completer(SheetResponse(confirmed: true, data: viewModel.serialNumber));
+                          completer(SheetResponse(confirmed: true, data: viewModel.deviceModel));
                         })
                       },
                     ),

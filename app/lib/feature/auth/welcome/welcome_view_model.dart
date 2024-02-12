@@ -16,7 +16,7 @@ class WelcomeViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> checkAuthLimits() async {
+  Future<bool> _checkAuthLimits() async {
     if (_authRepository.limits != null) {
       return true;
     }
@@ -25,19 +25,20 @@ class WelcomeViewModel extends ChangeNotifier {
       await _authRepository.fetchLimits();
       return true;
     } on UnknownApiException catch (e) {
-      showSnackbar(e.message);
+      print('aa');
+      await showSnackbar(e.message);
       return false;
     }
   }
 
   Future<void> navigateToSignIn() async {
-    if (await checkAuthLimits()) {
+    if (await _checkAuthLimits()) {
       _navigationService.navigateTo(RouteEnum.signin.name);
     }
   }
 
   Future<void> navigateToSignUp() async {
-    if (await checkAuthLimits()) {
+    if (await _checkAuthLimits()) {
       _navigationService.navigateTo(RouteEnum.signup.name);
     }
   }

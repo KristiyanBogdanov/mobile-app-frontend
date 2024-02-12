@@ -39,10 +39,10 @@ class AddLocationPage extends StatelessWidget {
                       const ColumnSectionTitleView(title: AppStrings.solarTrackersSectionTitle),
                       DevicesRowView(
                         onAddButtonPressed: viewModel.addSolarTracker,
-                        devices: viewModel.solarTrackers.map((serialNumber) {
+                        devices: viewModel.solarTrackers.map((solarTracker) {
                           return DeviceBoxView(
-                            label: serialNumber,
-                            onRemovePressed: () => viewModel.removeSolarTracker(serialNumber),
+                            label: solarTracker.serialNumber,
+                            onRemovePressed: () => viewModel.removeSolarTracker(solarTracker),
                           );
                         }).toList(),
                       ),

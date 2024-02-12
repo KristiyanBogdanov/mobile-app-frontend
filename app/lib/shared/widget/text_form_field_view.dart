@@ -44,6 +44,10 @@ class _TextFormFieldViewState extends State<TextFormFieldView> {
       ),
       cursorColor: AppStyle.contrastColor1,
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: AppStyle.horizontalPadding12,
+          vertical: AppStyle.verticalPadding16,
+        ),
         hintText: widget.hintText,
         errorText: widget.errorText,
         hintStyle: TextStyle(

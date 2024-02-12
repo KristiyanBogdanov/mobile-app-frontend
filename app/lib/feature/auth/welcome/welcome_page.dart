@@ -50,7 +50,7 @@ class WelcomePage extends StatelessWidget {
                   ),
                   SizedBox(height: AppStyle.verticalPadding32),
                   Image.asset(
-                    'assets/images/welcome.png',
+                    AppImages.welcomePage,
                     width: AppStyle.welcomePageImageSize,
                     height: AppStyle.welcomePageImageSize,
                   ),

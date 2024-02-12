@@ -14,6 +14,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       (json['hwNotifications'] as List<dynamic>)
           .map((e) => HwNotificationModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      (json['invitations'] as List<dynamic>).map((e) => InvitationModel.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -22,4 +23,5 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'email': instance.email,
       'locations': instance.locations,
       'hwNotifications': instance.hwNotifications,
+      'invitations': instance.invitations,
     };

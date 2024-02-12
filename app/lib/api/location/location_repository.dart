@@ -1,4 +1,3 @@
-import 'package:app/api/location/dto/index.dart';
 import 'package:app/api/location/location_service.dart';
 import 'package:app/api/location/model/index.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
@@ -12,23 +11,25 @@ class LocationRepository {
     limits = await _locationService.getLimits();
   }
 
-  Future<ValidateSerialNumberDto> validateSTSerialNumber(String serialNumber) async {
+  Future<LocationModel> getLocation(String locationId) async {
+    return await _locationService.getLocation(locationId);
+  }
+
+  Future<ValidateSTSerialNumberModel> validateSTSerialNumber(String serialNumber) async {
     return await _locationService.validateSTSerialNumber(serialNumber);
   }
 
-  Future<ValidateSerialNumberDto> validateWSSerialNumber(String serialNumber) async {
+  Future<ValidateWSSerialNumberModel> validateWSSerialNumber(String serialNumber) async {
     return await _locationService.validateWSSerialNumber(serialNumber);
   }
 
-  Future<LocationInsightsModel> fetchLocationInsights(String locationId) async {
+  Future<void> fetchLocationInsights(String locationId) async {
     final insights = await _locationService.getLocationInsights(locationId);
     _locationInsights[locationId] = insights;
-
-    return insights;
   }
 
-  Future<WeatherStationInsightsModel> getWeatherStationInsights(String locationId, String wsSerialNumber) async {
-    return await _locationService.getWeatherStationInsights(wsSerialNumber);
+  Future<WeatherStationInsightsModel> getWeatherStationInsights(String locationId) async {
+    return await _locationService.getWeatherStationInsights(locationId);
   }
 
   Future<void> addWeatherStation(String locationId, String wsSerialNumber) async {
@@ -39,11 +40,9 @@ class LocationRepository {
     await _locationService.removeWeatherStation(locationId);
   }
 
-  Future<SolarTrackerInsightsModel> fetchSolarTrackerInsights(String locationId, String serialNumber) async {
+  Future<void> fetchSolarTrackerInsights(String locationId, String serialNumber) async {
     final insights = await _locationService.getSolarTrackerInsights(locationId, serialNumber);
     _locationInsights[locationId]!.solarTrackers[serialNumber] = insights;
-
-    return insights;
   }
 
   Future<void> addSolarTracker(String locationId, String serialNumber) async {
@@ -65,4 +64,6 @@ class LocationRepository {
   }
 
   LocationInsightsModel? getLocationInsightsByLocationId(String locationId) => _locationInsights[locationId];
+  SolarTrackerInsightsModel? getSolarTrackerInsightsByLocationId(String locationId, String serialNumber) =>
+      _locationInsights[locationId]?.solarTrackers[serialNumber];
 }

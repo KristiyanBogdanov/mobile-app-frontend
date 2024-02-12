@@ -1,3 +1,4 @@
+import 'package:app/api/firebase/firebase_api.dart';
 import 'package:app/feature/location/location-insights/overview/views/index.dart';
 import 'package:app/feature/location/location-insights/root/location_insights_view_model.dart';
 import 'package:app/shared/constant/index.dart';
@@ -13,8 +14,8 @@ class OverviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LocationInsightsViewModel>(
-      builder: (context, viewModel, child) {
+    return Consumer2<LocationInsightsViewModel, FirebaseApi>(
+      builder: (context, viewModel, _, child) {
         return SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
@@ -32,8 +33,8 @@ class OverviewView extends StatelessWidget {
                     child: FlutterMap(
                       options: MapOptions(
                         initialCenter: LatLng(
-                          viewModel.locationInsightsModel.solarTrackers.entries.first.value.coordinates.latitude,
-                          viewModel.locationInsightsModel.solarTrackers.entries.first.value.coordinates.longitude,
+                          viewModel.locationInsightsModel!.solarTrackers.entries.first.value.coordinates.latitude,
+                          viewModel.locationInsightsModel!.solarTrackers.entries.first.value.coordinates.longitude,
                         ),
                         initialZoom: AppStyle.mapInitialZoom,
                       ),
@@ -44,20 +45,20 @@ class OverviewView extends StatelessWidget {
                         ),
                         MarkerLayer(
                           markers: [
-                            ...viewModel.locationModel.solarTrackers.map((serialNumber) {
-                              final solarTracker = viewModel.locationInsightsModel.solarTrackers[serialNumber]!;
+                            ...viewModel.locationModel.solarTrackers.map((st) {
+                              final stInsights = viewModel.locationInsightsModel!.solarTrackers[st.serialNumber]!;
                               return buildMapMarkerView(
-                                solarTracker.coordinates.latitude,
-                                solarTracker.coordinates.longitude,
-                                'assets/icons/solar-tracker-avatar.png',
-                                serialNumber,
+                                stInsights.coordinates.latitude,
+                                stInsights.coordinates.longitude,
+                                AppImages.solarTrackerAvatar,
+                                st.serialNumber,
                               );
                             }),
-                            if (viewModel.locationInsightsModel.weatherStation != null)
+                            if (viewModel.isWeatherStationAvailable)
                               buildMapMarkerView(
-                                viewModel.locationInsightsModel.weatherStation!.coordinates.latitude,
-                                viewModel.locationInsightsModel.weatherStation!.coordinates.longitude,
-                                'assets/icons/weather-station-avatar.png',
+                                viewModel.weatherStationInsightsModel.coordinates.latitude,
+                                viewModel.weatherStationInsightsModel.coordinates.longitude,
+                                AppImages.weatherStationAvatar,
                                 viewModel.locationModel.weatherStation!,
                               ),
                           ],
@@ -89,14 +90,14 @@ class OverviewView extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: viewModel.locationModel.solarTrackers.length,
                     itemBuilder: (context, index) {
-                      final serialNumber = viewModel.locationModel.solarTrackers[index];
-                      final solarTracker = viewModel.locationInsightsModel.solarTrackers[serialNumber]!;
+                      final st = viewModel.locationModel.solarTrackers[index];
+                      final stInsights = viewModel.locationInsightsModel!.solarTrackers[st.serialNumber]!;
 
                       return SolarTrackerCardView(
-                        serialNumber: serialNumber,
-                        capacity: solarTracker.capacity,
-                        isActive: solarTracker.isActive,
-                        onTap: () => viewModel.navigateToSolarTracker(serialNumber, solarTracker),
+                        serialNumber: st.serialNumber,
+                        capacity: st.capacity,
+                        isActive: stInsights.isActive,
+                        onTap: () => viewModel.navigateToSolarTracker(st, stInsights),
                       );
                     },
                   ),
@@ -112,8 +113,8 @@ class OverviewView extends StatelessWidget {
                     if (viewModel.locationModel.amIOwner)
                       AddTextButtonView(
                         icon: Icons.person_add_alt_outlined,
-                        text: AppStrings.share,
-                        onPressed: () {},
+                        text: AppStrings.invite,
+                        onPressed: () async => await viewModel.inviteUser(),
                       )
                   ],
                 ),

@@ -5,13 +5,13 @@ part 'generated/new_location_dto.g.dart';
 @JsonSerializable()
 class NewLocationDto {
   final String name;
-  final List<String> solarTrackers;
+  final List<String> solarTrackerSerialNumbers;
   final String? weatherStation;
   final String? cctv;
 
   NewLocationDto(
     this.name,
-    this.solarTrackers,
+    this.solarTrackerSerialNumbers,
     this.weatherStation,
     this.cctv,
   );

@@ -12,12 +12,10 @@ import 'package:stacked_services/stacked_services.dart';
 class AddLocationViewModel extends ChangeNotifier {
   bool _isLoading = false;
   String _name = '';
-  final List<String> solarTrackers = [];
+  final List<SolarTrackerModel> solarTrackers = [];
   String? weatherStation;
   String? cctv;
   String? nameError;
-  String? capacityError;
-  String? weatherStationError;
   final _bottomSheetService = DependencyInjection.getIt<BottomSheetService>();
   final _navigationService = DependencyInjection.getIt<NavigationService>();
   final _userRepotitory = DependencyInjection.getIt<UserRepository>();
@@ -55,14 +53,14 @@ class AddLocationViewModel extends ChangeNotifier {
 
     nameError = _validateName();
 
-    if (nameError != null || capacityError != null) {
+    if (nameError != null) {
       notifyListeners();
       return;
     }
 
     final newLocationDto = NewLocationDto(
       _name,
-      solarTrackers,
+      solarTrackers.map((st) => st.serialNumber).toList(),
       weatherStation,
       cctv,
     );
@@ -76,8 +74,6 @@ class AddLocationViewModel extends ChangeNotifier {
       return;
     } on UnauthorizedApiException {
       handleUnauthorized();
-    } on STSerialNumberAlreadyUsedException catch (e) {
-      showSnackbar(e.message);
     } on BadRequestApiException catch (e) {
       showSnackbar(e.message);
     } on UnknownApiException catch (e) {
@@ -110,8 +106,6 @@ class AddLocationViewModel extends ChangeNotifier {
 
   void _clearErrors() {
     nameError = null;
-    capacityError = null;
-    weatherStationError = null;
     notifyListeners();
   }
 
@@ -130,16 +124,19 @@ class AddLocationViewModel extends ChangeNotifier {
 
   Future<void> addSolarTracker() async {
     final response = await _showAddDeviceSheet(
-      AddDeviceViewModel(deviceType: DeviceType.solarTracker, solarTrackerSerialNumbers: solarTrackers),
+      AddDeviceViewModel(
+        deviceType: DeviceType.solarTracker,
+        solarTrackerSerialNumbers: solarTrackers.map((st) => st.serialNumber).toList(),
+      ),
     );
 
     if (response != null && response.confirmed) {
-      solarTrackers.add(response.data as String);
+      solarTrackers.add(response.data);
       notifyListeners();
     }
   }
 
-  void removeSolarTracker(String serialNumber) {
+  void removeSolarTracker(SolarTrackerModel serialNumber) {
     solarTrackers.remove(serialNumber);
     notifyListeners();
   }

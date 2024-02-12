@@ -49,6 +49,7 @@ class AppStyle {
   static final double borderRadius16 = 16.r;
   static final double borderRadius18 = 18.r;
   static final double borderRadius20 = 20.r;
+  static final double borderRadius24 = 24.r;
 
   // Border width
   static final double borderWidth1 = 1.w;
@@ -130,4 +131,7 @@ class AppStyle {
   static final double solarTrackerCardHeight = 116.h;
   static final double noLineChartDataCardHeight = 200.h;
   static final double notSharedCardHeight = 130.h;
+
+  // HwNotificationView
+  static const double hwNotificationExtentRatio = 0.3;
 }

@@ -1,18 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../validate_serial_number_dto.dart';
+part of '../validate_ws_serial_number_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ValidateSerialNumberDto _$ValidateSerialNumberDtoFromJson(Map<String, dynamic> json) => ValidateSerialNumberDto(
+ValidateWSSerialNumberModel _$ValidateWSSerialNumberModelFromJson(Map<String, dynamic> json) =>
+    ValidateWSSerialNumberModel(
       json['isValid'] as bool,
       json['isUsed'] as bool?,
       json['isAdded'] as bool?,
     );
 
-Map<String, dynamic> _$ValidateSerialNumberDtoToJson(ValidateSerialNumberDto instance) => <String, dynamic>{
+Map<String, dynamic> _$ValidateWSSerialNumberModelToJson(ValidateWSSerialNumberModel instance) => <String, dynamic>{
       'isValid': instance.isValid,
       'isUsed': instance.isUsed,
       'isAdded': instance.isAdded,

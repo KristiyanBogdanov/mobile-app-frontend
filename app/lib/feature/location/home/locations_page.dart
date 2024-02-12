@@ -1,3 +1,4 @@
+import 'package:app/api/firebase/firebase_api.dart';
 import 'package:app/feature/location/home/locations_view_model.dart';
 import 'package:app/feature/location/home/views/index.dart';
 import 'package:app/shared/constant/index.dart';
@@ -48,12 +49,12 @@ class LocationsPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Consumer<LocationsViewModel>(
-                  builder: (context, viewModel, child) {
+                Consumer2<LocationsViewModel, FirebaseApi>(
+                  builder: (context, viewModel, _, child) {
                     return Expanded(
                       child: viewModel.locations.isEmpty
                           ? const NoContentView(
-                              svgAsset: 'assets/images/no-locations.svg',
+                              svgAsset: AppImages.noLocations,
                               title: AppStrings.noLocationsTitle,
                               description: AppStrings.noLocationsDescription,
                             )

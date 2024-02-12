@@ -22,7 +22,8 @@ class AppBarView extends StatelessWidget implements PreferredSizeWidget {
       ),
       title: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
+          fontSize: AppStyle.fontSize20,
           color: AppStyle.textColor,
         ),
       ),

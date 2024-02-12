@@ -8,7 +8,7 @@ class AddDeviceViewModel extends ChangeNotifier {
   final DeviceType _deviceType;
   final List<String> solarTrackerSerialNumbers;
   bool isScanSuccessful = false;
-  String serialNumber = '';
+  Object deviceModel = Object();
   String? serialNumberError;
   final _locationRepository = DependencyInjection.getIt<LocationRepository>();
 
@@ -22,44 +22,52 @@ class AddDeviceViewModel extends ChangeNotifier {
       return;
     }
 
-    serialNumberError = _deviceType == DeviceType.solarTracker
+    final response = _deviceType == DeviceType.solarTracker
         ? await _validateSTSerialNumber(code)
         : await _validateWSSerialNumber(code);
 
-    if (serialNumberError == null) {
+    if (serialNumberError == null && response != null) {
       isScanSuccessful = true;
-      serialNumber = code;
+      deviceModel = response;
+      print(solarTrackerSerialNumbers);
     }
 
     notifyListeners();
   }
 
-  Future<String?> _validateSTSerialNumber(String serialNumber) async {
+  Future<SolarTrackerModel?> _validateSTSerialNumber(String serialNumber) async {
     if (solarTrackerSerialNumbers.contains(serialNumber)) {
-      return AppStrings.stSerialNumberAlreadyAdded;
-    }
-
-    final validateSerialNumberDto = await _locationRepository.validateSTSerialNumber(serialNumber);
-
-    if (!validateSerialNumberDto.isValid) {
-      return AppStrings.invalidSTSerialNumber;
-    } else if (validateSerialNumberDto.isAdded != null && validateSerialNumberDto.isAdded!) {
-      return AppStrings.locationWithThisSTSerialNumberAlreadyAdded;
-    } else if (validateSerialNumberDto.isUsed != null && validateSerialNumberDto.isUsed!) {
-      return AppStrings.locationWithThisSTSerialNumberAlreadExists;
-    } else {
+      serialNumberError = AppStrings.stSerialNumberAlreadyAdded;
       return null;
     }
+
+    final response = await _locationRepository.validateSTSerialNumber(serialNumber);
+
+    if (!response.isValid) {
+      serialNumberError = AppStrings.invalidSTSerialNumber;
+    } else if (response.isAdded != null && response.isAdded!) {
+      serialNumberError = AppStrings.locationWithThisSTSerialNumberAlreadyAdded;
+    } else if (response.isUsed != null && response.isUsed!) {
+      serialNumberError = AppStrings.locationWithThisSTSerialNumberAlreadExists;
+    } else {
+      serialNumberError = null;
+      return response.solarTracker!;
+    }
+
+    return null;
   }
 
   Future<String?> _validateWSSerialNumber(String serialNumber) async {
-    final validateSerialNumberDto = await _locationRepository.validateWSSerialNumber(serialNumber);
+    final response = await _locationRepository.validateWSSerialNumber(serialNumber);
 
-    if (!validateSerialNumberDto.isValid) {
-      return AppStrings.invalidWSSerialNumber;
+    if (!response.isValid) {
+      serialNumberError = AppStrings.invalidWSSerialNumber;
     } else {
-      return null;
+      serialNumberError = null;
+      return serialNumber;
     }
+
+    return null;
   }
 }
 

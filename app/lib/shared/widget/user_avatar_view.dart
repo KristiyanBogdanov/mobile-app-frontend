@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 class UserAvatarView extends StatelessWidget {
   final String initial;
+  final double? radius;
+  final double? fontSize;
   final Color? color;
   final List _colors = [
     Colors.red,
@@ -21,6 +23,8 @@ class UserAvatarView extends StatelessWidget {
 
   UserAvatarView({
     required this.initial,
+    this.radius,
+    this.fontSize,
     this.color,
     super.key,
   });
@@ -28,15 +32,15 @@ class UserAvatarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.center, // Align the avatar to the center left
       widthFactor: AppStyle.avatarWidthFactor,
       child: CircleAvatar(
-        radius: AppStyle.borderRadius18,
+        radius: radius ?? AppStyle.borderRadius18,
         backgroundColor: color ?? _colors[Random().nextInt(_colors.length)],
         child: Text(
-          initial,
+          initial.toUpperCase(),
           style: TextStyle(
-            fontSize: AppStyle.fontSize12,
+            fontSize: fontSize ?? AppStyle.fontSize12,
             fontWeight: FontWeight.w500,
             color: color != null ? Colors.black : Colors.white,
           ),

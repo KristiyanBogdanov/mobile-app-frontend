@@ -9,25 +9,23 @@ import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class SolarTrackerViewModel extends ChangeNotifier {
-  final String serialNumber;
+  final SolarTrackerModel solarTracker;
   final LocationModel location;
-  SolarTrackerInsightsModel solarTrackerInsightsModel;
   bool isLoading = false;
   final _dialogService = DependencyInjection.getIt<DialogService>();
   final _navigationService = DependencyInjection.getIt<NavigationService>();
   final _locationRepository = DependencyInjection.getIt<LocationRepository>();
 
   SolarTrackerViewModel({
-    required this.serialNumber,
+    required this.solarTracker,
     required this.location,
-    required this.solarTrackerInsightsModel,
   }) {
     _fetchSolarTrackerInsights(showError: false);
   }
 
   Future<void> _fetchSolarTrackerInsights({bool showError = true}) async {
     try {
-      solarTrackerInsightsModel = await _locationRepository.fetchSolarTrackerInsights(location.id, serialNumber);
+      await _locationRepository.fetchSolarTrackerInsights(location.id, solarTracker.serialNumber);
       notifyListeners();
     } on UnauthorizedApiException {
       handleUnauthorized();
@@ -57,9 +55,9 @@ class SolarTrackerViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await _locationRepository.removeSolarTracker(location.id, serialNumber);
-      location.solarTrackers.remove(serialNumber);
-      location.capacity -= solarTrackerInsightsModel.capacity;
+      await _locationRepository.removeSolarTracker(location.id, solarTracker.serialNumber);
+      location.solarTrackers.remove(solarTracker);
+      location.capacity -= solarTracker.capacity;
       _navigationService.back();
       return;
     } on UnauthorizedApiException {
@@ -72,6 +70,11 @@ class SolarTrackerViewModel extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+
+  bool get isSolarTrackerInsightsAvailable =>
+      _locationRepository.getSolarTrackerInsightsByLocationId(location.id, solarTracker.serialNumber) != null;
+  SolarTrackerInsightsModel get solarTrackerInsightsModel =>
+      _locationRepository.getSolarTrackerInsightsByLocationId(location.id, solarTracker.serialNumber)!;
 
   bool get isIrradianceSenssorActive =>
       solarTrackerInsightsModel.isActive && solarTrackerInsightsModel.sensorsStatus.irradianceSensor;

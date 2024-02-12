@@ -1,9 +1,7 @@
 import 'package:app/api/auth/index.dart';
 import 'package:app/api/firebase/firebase_api.dart';
-import 'package:app/api/hw-notification/index.dart';
 import 'package:app/api/location/index.dart';
 import 'package:app/api/user/index.dart';
-import 'package:app/feature/global_state.dart';
 import 'package:app/util/api/index.dart';
 import 'package:app/util/http/index.dart';
 import 'package:app/util/route/index.dart';
@@ -22,8 +20,6 @@ class DependencyInjection {
     getIt.registerLazySingleton<BottomSheetService>(() => BottomSheetService());
     getIt.registerSingleton<NavigationService>(NavigationService());
 
-    getIt.registerSingleton<FirebaseApi>(FirebaseApi());
-
     getIt.registerSingleton<MobileAppApi>(MobileAppApi());
     getIt.registerSingleton<JwtStorage>(JwtStorage());
     getIt.registerSingleton<HttpService>(HttpService());
@@ -37,9 +33,6 @@ class DependencyInjection {
     getIt.registerLazySingleton<LocationService>(() => LocationService());
     getIt.registerLazySingleton<LocationRepository>(() => LocationRepository());
 
-    getIt.registerSingleton<HwNotificationService>(HwNotificationService());
-    getIt.registerSingleton<HwNotificationRepository>(HwNotificationRepository());
-
-    getIt.registerSingleton<GlobalState>(GlobalState());
+    getIt.registerSingleton<FirebaseApi>(FirebaseApi());
   }
 }

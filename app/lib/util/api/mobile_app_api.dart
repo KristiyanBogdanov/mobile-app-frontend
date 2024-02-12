@@ -1,7 +1,7 @@
 class MobileAppApi {
   final _auth = '/auth';
-  final _user = '/user';
-  final _location = '/location';
+  final _user = '/users';
+  final _location = '/locations';
 
   String getAuthLimits() {
     return '$_auth/limits';
@@ -28,51 +28,55 @@ class MobileAppApi {
   }
 
   String addNewLocation() {
-    return '$_user/add-location';
+    return '$_user/locations';
   }
 
-  String addExistingLocation(String locationUuid) {
-    return '$_user/add-existing-location/$locationUuid';
+  String removeLocation(String locationId) {
+    return '$_user/locations/$locationId';
   }
 
-  String removeLocation(String locationUuid) {
-    return '$_user/location/$locationUuid';
+  String inviteUserToLocation() {
+    return '$_user/invitations';
   }
 
-  String updateHwNotificationStatus(String notificationId) {
-    return '$_user/hw-notification/$notificationId';
+  String respondToInvitation(String invitationId) {
+    return '$_user/invitations/$invitationId';
   }
 
-  String deleteHwNotification(String notificationId) {
-    return '$_user/hw-notification/$notificationId';
+  String deleteHwNotification(String hwNotificationId) {
+    return '$_user/hw-notifications/$hwNotificationId';
   }
 
   String getLocationLimits() {
     return '$_location/limits';
   }
 
+  String getLocation(String locationId) {
+    return '$_location/$locationId';
+  }
+
   String validateSTSerialNumber(String serialNumber) {
-    return '$_location/validate/st-serial-number/$serialNumber';
+    return '$_location/validate/solar-tracker/$serialNumber';
   }
 
   String validateWSSerialNumber(String serialNumber) {
-    return '$_location/validate/ws-serial-number/$serialNumber';
+    return '$_location/validate/weather-station/$serialNumber';
   }
 
   String getLocationInsights(String locationId) {
     return '$_location/$locationId/insights';
   }
 
-  String getWeatherStationInsights(String wsSerialNumber) {
-    return '$_location/insights/weather-stations/$wsSerialNumber';
+  String getWeatherStationInsights(String locationId) {
+    return '$_location/$locationId/insights/weather-station';
   }
 
   String addWeatherStation(String locationId, String wsSerialNumber) {
-    return '$_location/$locationId/weather-stations/$wsSerialNumber';
+    return '$_location/$locationId/weather-station/$wsSerialNumber';
   }
 
   String removeWeatherStation(String locationId) {
-    return '$_location/$locationId/weather-stations';
+    return '$_location/$locationId/weather-station';
   }
 
   String getSolarTrackerInsights(String locationId, String serialNumber) {

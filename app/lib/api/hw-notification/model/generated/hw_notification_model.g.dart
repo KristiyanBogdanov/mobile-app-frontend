@@ -13,8 +13,8 @@ HwNotificationModel _$HwNotificationModelFromJson(Map<String, dynamic> json) => 
       $enumDecode(_$DeviceTypeEnumMap, json['deviceType']),
       $enumDecode(_$NotificationImportanceEnumMap, json['importance']),
       json['message'] as String,
+      json['advice'] as String,
       json['timestamp'] as String,
-      $enumDecode(_$NotificationStatusEnumMap, json['status']),
     );
 
 Map<String, dynamic> _$HwNotificationModelToJson(HwNotificationModel instance) => <String, dynamic>{
@@ -24,13 +24,13 @@ Map<String, dynamic> _$HwNotificationModelToJson(HwNotificationModel instance) =
       'deviceType': _$DeviceTypeEnumMap[instance.deviceType]!,
       'importance': _$NotificationImportanceEnumMap[instance.importance]!,
       'message': instance.message,
+      'advice': instance.advice,
       'timestamp': instance.timestamp,
-      'status': _$NotificationStatusEnumMap[instance.status]!,
     };
 
 const _$NotificationTypeEnumMap = {
-  HwNotificationType.deviceState: 'DEVICE_STATE',
-  HwNotificationType.inactiveDevice: 'INACTIVE_DEVICE',
+  NotificationType.deviceStateReport: 'DEVICE_STATE_REPORT',
+  NotificationType.inactiveDevice: 'INACTIVE_DEVICE',
 };
 
 const _$DeviceTypeEnumMap = {
@@ -42,9 +42,4 @@ const _$NotificationImportanceEnumMap = {
   HwNotificationImportance.information: 'INFORMATION',
   HwNotificationImportance.warning: 'WARNING',
   HwNotificationImportance.critical: 'CRITICAL',
-};
-
-const _$NotificationStatusEnumMap = {
-  NotificationStatus.active: 'ACTIVE',
-  NotificationStatus.seen: 'SEEN',
 };

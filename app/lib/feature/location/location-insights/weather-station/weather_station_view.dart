@@ -1,3 +1,4 @@
+import 'package:app/api/firebase/firebase_api.dart';
 import 'package:app/feature/location/location-insights/root/location_insights_view_model.dart';
 import 'package:app/feature/location/location-insights/weather-station/views/index.dart';
 import 'package:app/shared/constant/index.dart';
@@ -20,13 +21,13 @@ class _WeatherStationViewState extends State<WeatherStationView> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LocationInsightsViewModel>(
-      builder: (context, viewModel, child) {
+    return Consumer2<LocationInsightsViewModel, FirebaseApi>(
+      builder: (context, viewModel, _, child) {
         if (viewModel.isWeatherStationLoading) {
           return const LoadingView();
-        } else if (viewModel.weatherStationInsightsModel == null) {
+        } else if (!viewModel.isWeatherStationAvailable) {
           return NoContentView(
-            svgAsset: 'assets/images/no-weather-station.svg',
+            svgAsset: AppImages.noWeatherStation,
             title: AppStrings.noWeatherStationInstalledTitle,
             description: viewModel.locationModel.amIOwner ? null : AppStrings.noWeatherStationInstalledDescription,
             onActionButtonPressed:
@@ -47,10 +48,10 @@ class _WeatherStationViewState extends State<WeatherStationView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     LastUpdateCardView(
-                      lastUpdate: viewModel.weatherStationInsightsModel!.lastUpdate,
-                      temperature: viewModel.weatherStationInsightsModel!.currentTemperature,
-                      windSpeed: viewModel.weatherStationInsightsModel!.currentWindSpeed,
-                      windDirection: viewModel.weatherStationInsightsModel!.currentWindDirection,
+                      lastUpdate: viewModel.weatherStationInsightsModel.lastUpdate,
+                      temperature: viewModel.weatherStationInsightsModel.currentTemperature,
+                      windSpeed: viewModel.weatherStationInsightsModel.currentWindSpeed,
+                      windDirection: viewModel.weatherStationInsightsModel.currentWindDirection,
                       onRefresh: () async => await viewModel.refreshWeatherStationInsights(),
                     ),
                     const ColumnSpacingView(),
@@ -68,7 +69,7 @@ class _WeatherStationViewState extends State<WeatherStationView> {
                           ),
                           child: Center(
                             child: Text(
-                              '${viewModel.weatherStationInsightsModel!.sensorsStatus.count}',
+                              '${viewModel.weatherStationInsightsModel.sensorsStatus.count}',
                               style: TextStyle(
                                 color: AppStyle.textColor,
                                 fontSize: AppStyle.fontSize14,
@@ -127,18 +128,18 @@ class _WeatherStationViewState extends State<WeatherStationView> {
                     SizedBox(height: AppStyle.verticalPadding12),
                     if (_currentLineChart == 0)
                       LineChartView(
-                        avgSensorValues: viewModel.weatherStationInsightsModel!.last24hAvgTemperature,
+                        avgSensorValues: viewModel.weatherStationInsightsModel.last24hAvgTemperature,
                         leftTitleUnit: (value) => AppStrings.temperatureValue(value, merge: true),
                       )
                     else if (_currentLineChart == 1)
                       LineChartView(
-                        avgSensorValues: viewModel.weatherStationInsightsModel!.last24hAvgWindSpeed,
+                        avgSensorValues: viewModel.weatherStationInsightsModel.last24hAvgWindSpeed,
                         leftTitleUnit: (value) => AppStrings.windSpeedValue(value, merge: true),
                       ),
                     const ColumnSpacingView(),
                     Text(
                       AppStrings.installedOn(
-                        viewModel.weatherStationInsightsModel!.installationDate.parseWithDateFormat('dd MMM yyyy'),
+                        viewModel.weatherStationInsightsModel.installationDate.parseWithDateFormat('dd MMM yyyy'),
                       ),
                       style: TextStyle(
                         color: AppStyle.textColorWith07Opacity,

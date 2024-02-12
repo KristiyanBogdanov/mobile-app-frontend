@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class TextFieldView extends StatelessWidget {
   final Function onChanged;
   final TextInputType? keyboardType;
+  final String? hintText;
   final String? errorText;
 
   const TextFieldView({
     required this.onChanged,
     this.keyboardType,
+    this.hintText,
     this.errorText,
     super.key,
   });
@@ -23,10 +25,14 @@ class TextFieldView extends StatelessWidget {
       ),
       cursorColor: AppStyle.contrastColor1,
       decoration: InputDecoration(
-        hintText: AppStrings.inputFieldHint,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: AppStyle.horizontalPadding12,
+          vertical: AppStyle.verticalPadding16,
+        ),
+        hintText: hintText ?? AppStrings.inputFieldHint,
         errorText: errorText,
         hintStyle: TextStyle(
-          color: AppStyle.textColor.withOpacity(0.5),
+          color: AppStyle.textColorWith05Opacity,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppStyle.borderRadius12),

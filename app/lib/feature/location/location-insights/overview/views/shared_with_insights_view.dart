@@ -53,13 +53,6 @@ class SharedWithInsightsView extends StatelessWidget {
                 ),
               ],
             ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.more_vert,
-                color: AppStyle.iconColor,
-              ),
-            ),
           ],
         ),
       ),

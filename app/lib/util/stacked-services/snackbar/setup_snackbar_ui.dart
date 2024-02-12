@@ -14,6 +14,7 @@ void setupSnackbarUi() {
       dismissDirection: DismissDirection.down,
       backgroundColor: AppStyle.secondaryColor2,
       textColor: AppStyle.textColor,
+      instantInit: true,
     ),
   );
 }

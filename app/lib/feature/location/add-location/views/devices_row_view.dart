@@ -19,7 +19,6 @@ class DevicesRowView extends StatelessWidget {
     return Wrap(
       spacing: AppStyle.horizontalPadding8,
       runSpacing: AppStyle.verticalPadding8,
-      // scrollDirection: Axis.horizontal,
       children: [
         if (isAddButtonVisible)
           IconButton(

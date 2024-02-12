@@ -1,5 +1,7 @@
+import 'package:app/api/firebase/firebase_api.dart';
+import 'package:app/api/invitation/model/invitation_model.dart';
 import 'package:app/feature/notification/notifications_view_model.dart';
-import 'package:app/feature/notification/views/notification.dart';
+import 'package:app/feature/notification/views/index.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
@@ -37,31 +39,36 @@ class NotificationsPage extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                child: Consumer<NotificationsViewModel>(
-                  builder: (context, viewModel, child) {
-                    return viewModel.notifications.isEmpty
+              Consumer2<NotificationsViewModel, FirebaseApi>(
+                builder: (context, viewModel, _, child) {
+                  return Expanded(
+                    child: viewModel.notifications.isEmpty
                         ? const NoContentView(
-                            svgAsset: 'assets/images/no-notifications.svg',
+                            svgAsset: AppImages.noNotifications,
                             title: AppStrings.noNotificationsTitle,
                             description: AppStrings.noNotificationsDescription,
                           )
                         : ListView.builder(
-                            padding: EdgeInsets.symmetric(
-                              vertical: AppStyle.verticalPadding12,
-                            ),
                             itemCount: viewModel.notifications.length,
                             itemBuilder: (context, index) {
                               final notification = viewModel.notifications[index];
-                              return NotificationView(
+
+                              if (notification is InvitationModel) {
+                                return InvitationView(
+                                  invitation: notification,
+                                  onAccept: () async => await viewModel.acceptInvitation(notification),
+                                  onReject: () async => await viewModel.rejectInvitation(notification),
+                                );
+                              }
+
+                              return HwNotificationView(
                                 notification: notification,
-                                onTap: () => viewModel.onNotificationTap(notification),
-                                onDismissed: () => viewModel.deleteNotification(notification),
+                                onDelete: (context) async => await viewModel.deleteNotification(notification),
                               );
                             },
-                          );
-                  },
-                ),
+                          ),
+                  );
+                },
               ),
             ],
           ),

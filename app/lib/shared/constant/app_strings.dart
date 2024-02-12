@@ -12,6 +12,7 @@ class AppStrings {
   static const String signUpSubtitle = 'Sign up to continue';
   static const String signUpButton = 'Sign up';
   static const String createAccountButton = 'Register';
+  static const String signOutButton = 'Sign out';
 
   static const String usernameHint = 'Username';
   static const String emailHint = 'Email';
@@ -48,6 +49,7 @@ class AppStrings {
   static const String locationsPageTitle = 'Locations';
   static const String notificationsPageTitle = 'Notifications';
   static const String marketplacePageTitle = 'Marketplace';
+  static const String profilePageTitle = 'Profile';
 
   static const String stSerialNumberAlreadyUsedError = 'Some of the solar trackers are already used';
   static const String locationAlreadyAddedError = 'Location is already added';
@@ -92,7 +94,7 @@ class AppStrings {
 
   static const String addNewLocationButton = 'new';
   static const String add = 'add';
-  static const String share = 'share';
+  static const String invite = 'invite';
 
   static const String scanQRCodeTitle = 'Scan QR Code';
   static const String scanQRCodeDescription = 'Align the QR Code within the frame';
@@ -101,15 +103,15 @@ class AppStrings {
   static const String noLocationsDescription = 'Add a new location from the button above.';
   static const String noNotificationsTitle = 'No notifications yet';
   static const String noNotificationsDescription = 'You will see notifications here.';
-  static String daysAgo(int days) => '${days} days';
-  static String hoursAgo(int hours) => '${hours} hours';
-  static String minutesAgo(int minutes) => '${minutes} min';
+  static String daysAgo(int days) => days == 1 ? '1 day' : '$days days';
+  static String hoursAgo(int hours) => hours == 1 ? '1 hour' : '$hours hours';
+  static String minutesAgo(int minutes) => minutes == 1 ? '1 minute' : '$minutes minutes';
   static const String justNow = 'Just now';
   static const String deviceState = 'Device state';
   static const String inactiveDevice = 'Iinactive device';
-  static const String information = 'No action required';
-  static const String warning = 'You should check your device';
-  static const String critical = 'We recommend you to check your device immediately and contact support';
+  static const String information = 'Information';
+  static const String warning = 'Warning';
+  static const String critical = 'Critical';
 
   static const String overviewTabTitle = 'Overview';
   static const String weatherStationTabTitle = 'Weather station';
@@ -160,6 +162,15 @@ class AppStrings {
   static const String deleteSolarTrackerConfirmationDescription = 'Are you sure you want to delete this solar tracker?';
   static const String deleteSolarTrackerConfirmationButton = 'Yes';
   static const String deleteSolarTracker = 'Delete solar tracker';
+  static const String deletedSolarTracker = 'The solar tracker has been deleted';
+  static const String deletedLocation = 'The location has been deleted';
+  static const String inviteUserDialogTitle = 'Invite user';
+  static const String inviteUserButton = 'Invite';
+  static const String inviteUserFailedBecauseOfLocationNotExists = 'Location does not exist anymore';
+  static const String invalidEmail = 'Invalid email';
+  static const String delete = 'Delete';
+  static const String userWasInvitedSuccessfully = 'User was invited successfully';
+  static const String userNotFound = 'User not found';
 
   static const String futureDevelopmentLabel = 'This feature is for future development.';
 }

@@ -6,6 +6,7 @@ import 'package:app/util/http/jwt_storage.dart';
 import 'package:app/util/route/index.dart';
 import 'package:app/util/stacked-services/index.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -23,6 +24,7 @@ Future main() async {
   DependencyInjection.configure();
 
   setupBottomSheetUi();
+  setupDialogUi();
   setupSnackbarUi();
 
   final initialRoute = await _getInitialRoute();
@@ -60,29 +62,27 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(AppStyle.designWidth, AppStyle.designHeight),
       minTextAdapt: true,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: AppStrings.appTitle,
-        theme: ThemeData(
-          fontFamily: 'Nunito',
-          brightness: Brightness.dark,
-          dialogBackgroundColor: AppStyle.secondaryColor1,
+      child: ChangeNotifierProvider(
+        create: (context) => DependencyInjection.getIt<FirebaseApi>(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: AppStrings.appTitle,
+          theme: ThemeData(
+            fontFamily: 'Nunito',
+            brightness: Brightness.dark,
+            dialogBackgroundColor: AppStyle.secondaryColor1,
+          ),
+          navigatorKey: StackedService.navigatorKey,
+          initialRoute: initialRoute.name,
+          onGenerateRoute: DependencyInjection.getIt<RouteGenerator>().generateRoute,
         ),
-        navigatorKey: StackedService.navigatorKey,
-        initialRoute: initialRoute.name,
-        onGenerateRoute: DependencyInjection.getIt<RouteGenerator>().generateRoute,
       ),
     );
   }
 }
 
-// TODO: fix error handling where snackbar is shown
-// TODO: remove global state and use repositories instead
-// TODO: rename all view files to _view.dart
 // TODO: finish notification design and fix delete issue
-// TODO: check all corner radiuses
 // TODO: add shared widget for the padding of every page (rename padding16 in AppStyle to defaultAppPadding)
-// TODO: add AppImges class
-// TODO: add getters and setters on all models
 // TODO: test with two different phones (remove, add, update, delete) and update
 // TODO: change the theme
+// TODO: Delete the google-services.json and google.plist files if you had these installed before: https://stackoverflow.com/questions/70404936/missing-firebase-options-dart-file-in-course-get-to-know-firebase-for-flutter
