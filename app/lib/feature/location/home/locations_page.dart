@@ -42,7 +42,9 @@ class LocationsPage extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        AddNewLocationButtonView(
+                        AddNewButtonView(
+                          text: AppStrings.addNewLocationButton,
+                          icon: Icons.add,
                           onPressed: () async => await _viewModel.addNewLocation(),
                         ),
                       ],
@@ -67,7 +69,7 @@ class LocationsPage extends StatelessWidget {
                                 final locationModel = viewModel.locations[index];
                                 return LocationCardView(
                                   locationModel: locationModel,
-                                  callback: () async => await viewModel.navigateToLocation(locationModel),
+                                  onTap: () async => await viewModel.navigateToLocation(locationModel),
                                 );
                               },
                             ),

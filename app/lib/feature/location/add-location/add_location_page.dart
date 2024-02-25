@@ -12,19 +12,19 @@ class AddLocationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => AddLocationViewModel(),
-      child: Consumer<AddLocationViewModel>(
-        builder: (context, viewModel, child) {
-          return Scaffold(
-            backgroundColor: AppStyle.bgColor,
-            appBar: const AppBarView(
-              title: AppStrings.addNewLocationPageTitle,
-            ),
-            body: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: AppStyle.horizontalPadding16,
-                vertical: AppStyle.verticalPadding16,
-              ),
-              child: Column(
+      child: Scaffold(
+        backgroundColor: AppStyle.bgColor,
+        appBar: const AppBarView(
+          title: AppStrings.addNewLocationPageTitle,
+        ),
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: AppStyle.horizontalPadding16,
+            vertical: AppStyle.verticalPadding16,
+          ),
+          child: Consumer<AddLocationViewModel>(
+            builder: (context, viewModel, child) {
+              return Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
@@ -68,10 +68,10 @@ class AddLocationPage extends StatelessWidget {
                     isDisabled: viewModel.isAddLocationButtonDisabled,
                   ),
                 ],
-              ),
-            ),
-          );
-        },
+              );
+            },
+          ),
+        ),
       ),
     );
   }

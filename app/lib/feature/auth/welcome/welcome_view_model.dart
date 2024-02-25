@@ -25,7 +25,6 @@ class WelcomeViewModel extends ChangeNotifier {
       await _authRepository.fetchLimits();
       return true;
     } on UnknownApiException catch (e) {
-      print('aa');
       await showSnackbar(e.message);
       return false;
     }

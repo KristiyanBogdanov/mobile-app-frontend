@@ -123,7 +123,7 @@ class OverviewView extends StatelessWidget {
                   const NotSharedCardView()
                 else
                   ...viewModel.locationModel.sharedWith.map((user) {
-                    return SharedWithInsightsView(
+                    return UserDetailsCardView(
                       username: user.username,
                       email: user.email,
                     );

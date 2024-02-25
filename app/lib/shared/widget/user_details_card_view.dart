@@ -2,11 +2,11 @@ import 'package:app/shared/constant/index.dart';
 import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
 
-class SharedWithInsightsView extends StatelessWidget {
+class UserDetailsCardView extends StatelessWidget {
   final String username;
   final String email;
 
-  const SharedWithInsightsView({
+  const UserDetailsCardView({
     required this.username,
     required this.email,
     super.key,

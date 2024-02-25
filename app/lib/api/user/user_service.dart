@@ -4,7 +4,6 @@ import 'package:app/api/invitation/dto/respond_to_invitation_dto.dart';
 import 'package:app/api/location/index.dart';
 import 'package:app/api/user/dto/invite_user_to_location_dto.dart';
 import 'package:app/api/user/index.dart';
-import 'package:app/api/user/model/index.dart';
 import 'package:app/util/api/mobile_app_api.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/http/index.dart';

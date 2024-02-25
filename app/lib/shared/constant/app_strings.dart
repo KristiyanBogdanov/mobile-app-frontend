@@ -173,4 +173,35 @@ class AppStrings {
   static const String userNotFound = 'User not found';
 
   static const String futureDevelopmentLabel = 'This feature is for future development.';
+
+  static const String noPublicationsTitle = 'No publications yet';
+  static const String noPublicationsDescription = 'You will see publications here.';
+  static const String errorFetchingPublicationsTitle = 'Error fetching publications';
+  static const String errorFetchingPublicationsDescription = 'Please try again later.';
+  static const String productCategories = 'Product categories';
+  static const String serviceCategories = 'Service categories';
+  static const String applyFiltersButton = 'Apply filters';
+  static String invalidPublicationTitleLength(int minLength, int maxLength) =>
+      'Publication title length must be between $minLength and $maxLength characters';
+  static const String addPublicationPageTitle = 'Add new publication';
+  static const String addPublicationButton = 'Add publication';
+  static const String publicationTypeSectionTitle = 'Publication type';
+  static const String publicationTypeProduct = 'Product';
+  static const String publicationTypeService = 'Service';
+  static const String publicationTitleSectionTitle = 'Title';
+  static const String publicationDescriptionSectionTitle = 'Description';
+  static const String publicationPriceSectionTitle = 'Price';
+  static const String publicationCategorySectionTitle = 'Category';
+  static const String publicationImagesSectionTitle = 'Images';
+  static const String publicationProductConditionSectionTitle = 'Condition';
+  static const String publicationUserDetailsSectionTitle = 'User details';
+  static const String nagotiablePrice = 'Negotiable price';
+  static const String serviceDetailsPageTitle = 'Service details';
+  static const String productDetailsPageTitle = 'Product details';
+  static const String readMore = 'read more';
+  static const String showLess = ' show less';
+  static String productCondition(String condition) => 'Product is $condition';
+  static const String deletePublicationConfirmationTitle = 'Delete publication';
+  static const String deletePublicationConfirmationDescription = 'Are you sure you want to delete the publication?';
+  static const String deletePublicationConfirmationButton = 'Yes';
 }
