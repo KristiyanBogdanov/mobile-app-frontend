@@ -1,6 +1,7 @@
 import 'package:app/feature/home/index.dart';
 import 'package:app/feature/home/views/index.dart';
 import 'package:app/feature/location/home/locations_page.dart';
+import 'package:app/feature/marketplace/home/marketplace_page.dart';
 import 'package:app/feature/notification/notifications_page.dart';
 import 'package:app/feature/profile/profile_page.dart';
 import 'package:app/shared/constant/index.dart';
@@ -34,11 +35,7 @@ class HomeView extends StatelessWidget {
     } else if (index == PageEnum.notifications.value) {
       return const NotificationsPage();
     } else if (index == PageEnum.marketplace.value) {
-      return const Scaffold(
-        body: Center(
-          child: Text(AppStrings.marketplacePageTitle),
-        ),
-      );
+      return const MarketplacePage();
     } else if (index == PageEnum.profile.value) {
       return ProfilePage();
     }

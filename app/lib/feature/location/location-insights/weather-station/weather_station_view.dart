@@ -99,17 +99,9 @@ class _WeatherStationViewState extends State<WeatherStationView> {
                       ],
                     ),
                     SizedBox(height: AppStyle.verticalPadding12),
-                    DropdownButton(
-                      value: _currentLineChart,
+                    DropdownButtonView(
+                      currentValue: _currentLineChart,
                       onChanged: (value) => _onLineChartChanged(value),
-                      dropdownColor: AppStyle.secondaryColor2,
-                      style: TextStyle(
-                        color: AppStyle.textColor,
-                        fontFamily: 'Nunito',
-                        fontSize: AppStyle.fontSize16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      borderRadius: BorderRadius.circular(AppStyle.borderRadius16),
                       items: const [
                         DropdownMenuItem(
                           value: 0,

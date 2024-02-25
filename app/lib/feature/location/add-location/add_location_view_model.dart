@@ -84,15 +84,7 @@ class AddLocationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _fieldIsEmpty(String? field) {
-    return field == null || field.isEmpty;
-  }
-
   String? _validateName() {
-    if (_fieldIsEmpty(_name)) {
-      return AppStrings.requiredLocationName;
-    }
-
     if (_name.length < _locationRepository.limits!.nameMinLength ||
         _name.length > _locationRepository.limits!.nameMaxLength) {
       return AppStrings.invalidLocationNameLength(

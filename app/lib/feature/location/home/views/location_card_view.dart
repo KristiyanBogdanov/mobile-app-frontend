@@ -5,11 +5,11 @@ import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
 
 class LocationCardView extends StatelessWidget {
-  final VoidCallback callback;
+  final VoidCallback onTap;
   final LocationModel locationModel;
 
   const LocationCardView({
-    required this.callback,
+    required this.onTap,
     required this.locationModel,
     super.key,
   });
@@ -22,7 +22,7 @@ class LocationCardView extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppStyle.borderRadius20),
       ),
       child: InkWell(
-        onTap: callback,
+        onTap: onTap,
         borderRadius: BorderRadius.circular(AppStyle.borderRadius20),
         child: Padding(
           padding: EdgeInsets.symmetric(

@@ -6,4 +6,9 @@ enum RouteEnum {
   addLocation,
   locationInsights,
   solarTracker,
+  marketplace,
+  addPublication,
+  productDetails,
+  serviceDetails,
+  fullScreenImage,
 }

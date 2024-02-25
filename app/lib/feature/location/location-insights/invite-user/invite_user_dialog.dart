@@ -1,4 +1,3 @@
-import 'package:app/feature/location/add-location/views/index.dart';
 import 'package:app/feature/location/location-insights/invite-user/invite_user_view_model.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:app/shared/widget/index.dart';

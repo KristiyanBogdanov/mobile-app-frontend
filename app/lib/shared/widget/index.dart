@@ -14,3 +14,7 @@ export './user_avatar_view.dart';
 export './unauthorized_dialog_view.dart';
 export './popup_menu_item_view.dart';
 export './add_text_button_view.dart';
+export './add_new_button_view.dart';
+export './dropdown_button_view.dart';
+export './text_field_view.dart';
+export './user_details_card_view.dart';

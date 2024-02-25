@@ -6,12 +6,14 @@ class TextFieldView extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? hintText;
   final String? errorText;
+  final int? maxLines;
 
   const TextFieldView({
     required this.onChanged,
     this.keyboardType,
     this.hintText,
     this.errorText,
+    this.maxLines,
     super.key,
   });
 
@@ -24,6 +26,7 @@ class TextFieldView extends StatelessWidget {
         color: AppStyle.textColor,
       ),
       cursorColor: AppStyle.contrastColor1,
+      maxLines: maxLines,
       decoration: InputDecoration(
         contentPadding: EdgeInsets.symmetric(
           horizontal: AppStyle.horizontalPadding12,
@@ -31,6 +34,7 @@ class TextFieldView extends StatelessWidget {
         ),
         hintText: hintText ?? AppStrings.inputFieldHint,
         errorText: errorText,
+        errorMaxLines: 2,
         hintStyle: TextStyle(
           color: AppStyle.textColorWith05Opacity,
         ),

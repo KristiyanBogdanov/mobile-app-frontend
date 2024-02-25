@@ -1,10 +1,14 @@
 import 'package:app/shared/constant/index.dart';
 import 'package:flutter/material.dart';
 
-class AddNewLocationButtonView extends StatelessWidget {
+class AddNewButtonView extends StatelessWidget {
+  final String text;
+  final IconData icon;
   final VoidCallback onPressed;
 
-  const AddNewLocationButtonView({
+  const AddNewButtonView({
+    required this.text,
+    required this.icon,
     required this.onPressed,
     super.key,
   });
@@ -22,14 +26,14 @@ class AddNewLocationButtonView extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(
-            Icons.add_rounded,
+          Icon(
+            icon,
             color: AppStyle.iconColor,
           ),
           SizedBox(width: AppStyle.horizontalPadding4),
-          const Text(
-            AppStrings.addNewLocationButton,
-            style: TextStyle(color: AppStyle.textColor),
+          Text(
+            text,
+            style: const TextStyle(color: AppStyle.textColor),
           ),
         ],
       ),

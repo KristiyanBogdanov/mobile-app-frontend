@@ -2,6 +2,7 @@ class MobileAppApi {
   final _auth = '/auth';
   final _user = '/users';
   final _location = '/locations';
+  final _marketplace = '/marketplace-publications';
 
   String getAuthLimits() {
     return '$_auth/limits';
@@ -89,5 +90,25 @@ class MobileAppApi {
 
   String removeSolarTracker(String locationId, String serialNumber) {
     return '$_location/$locationId/solar-trackers/$serialNumber';
+  }
+
+  String getPublicationLimits() {
+    return '$_marketplace/limits';
+  }
+
+  String postProduct() {
+    return '$_marketplace/products';
+  }
+
+  String postService() {
+    return '$_marketplace/services';
+  }
+
+  String getPublications(int page, int limit) {
+    return '$_marketplace?page=$page&limit=$limit';
+  }
+
+  String deletePublication(String publicationId) {
+    return '$_marketplace/$publicationId';
   }
 }

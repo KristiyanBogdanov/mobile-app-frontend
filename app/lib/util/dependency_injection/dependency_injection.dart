@@ -1,6 +1,7 @@
 import 'package:app/api/auth/index.dart';
 import 'package:app/api/firebase/firebase_api.dart';
 import 'package:app/api/location/index.dart';
+import 'package:app/api/marketplace/index.dart';
 import 'package:app/api/user/index.dart';
 import 'package:app/util/api/index.dart';
 import 'package:app/util/http/index.dart';
@@ -32,6 +33,9 @@ class DependencyInjection {
 
     getIt.registerLazySingleton<LocationService>(() => LocationService());
     getIt.registerLazySingleton<LocationRepository>(() => LocationRepository());
+
+    getIt.registerLazySingleton<MarketplaceService>(() => MarketplaceService());
+    getIt.registerLazySingleton<MarketplaceRepository>(() => MarketplaceRepository());
 
     getIt.registerSingleton<FirebaseApi>(FirebaseApi());
   }

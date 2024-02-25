@@ -134,4 +134,14 @@ class AppStyle {
 
   // HwNotificationView
   static const double hwNotificationExtentRatio = 0.3;
+
+  // Marketplace
+  static const int marketplaceGridCrossAxisCount = 2;
+  static final double marketplaceGridCrossAxisSpacing = 4.w;
+  static final double marketplaceGridMainAxisSpacing = 4.h;
+  static const double marketplaceGridChildAspectRatio = 0.65;
+  static const int publicationCardTitleMaxLines = 2;
+  static final double publicationDetailsImageCarouselHeight = 350.h;
+  static const int publicationDetailsTrimLines = 5;
+
 }

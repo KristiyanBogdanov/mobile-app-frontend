@@ -29,7 +29,6 @@ class AddDeviceViewModel extends ChangeNotifier {
     if (serialNumberError == null && response != null) {
       isScanSuccessful = true;
       deviceModel = response;
-      print(solarTrackerSerialNumbers);
     }
 
     notifyListeners();
