@@ -2,7 +2,6 @@ import 'package:app/api/invitation/model/invitation_model.dart';
 import 'package:app/shared/constant/index.dart';
 import 'package:app/shared/widget/index.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InvitationView extends StatelessWidget {
   final InvitationModel invitation;
@@ -19,22 +18,23 @@ class InvitationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: 80.h,
       color: AppStyle.secondaryColor2,
       child: ListTile(
         leading: UserAvatarView(
-          initial: invitation.ownerUsername[0].toUpperCase(),
-          radius: 20.w, //AppStyle.borderRadius24,
+          initial: invitation.ownerUsername[0],
+          radius: AppStyle.iconSize20,
         ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              invitation.ownerUsername,
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-                color: AppStyle.textColor,
+            Expanded(
+              child: Text(
+                AppStrings.invitationTitle(invitation.ownerUsername, invitation.locationName),
+                style: TextStyle(
+                  fontSize: AppStyle.fontSize14,
+                  fontWeight: FontWeight.w500,
+                  color: AppStyle.textColor,
+                ),
               ),
             ),
             Row(
@@ -50,13 +50,13 @@ class InvitationView extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppStyle.borderRadius24),
                     ),
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(AppStyle.verticalPadding10),
                   ),
                 ),
                 SizedBox(width: AppStyle.horizontalPadding4),
                 IconButton(
                   onPressed: onAccept,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.check,
                     color: AppStyle.contrastColor1,
                   ),
@@ -65,7 +65,7 @@ class InvitationView extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppStyle.borderRadius24),
                     ),
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(AppStyle.verticalPadding10),
                   ),
                 ),
               ],

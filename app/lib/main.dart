@@ -81,8 +81,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// TODO: finish notification design and fix delete issue
 // TODO: add shared widget for the padding of every page (rename padding16 in AppStyle to defaultAppPadding)
-// TODO: test with two different phones (remove, add, update, delete) and update
 // TODO: change the theme
 // TODO: Delete the google-services.json and google.plist files if you had these installed before: https://stackoverflow.com/questions/70404936/missing-firebase-options-dart-file-in-course-get-to-know-firebase-for-flutter

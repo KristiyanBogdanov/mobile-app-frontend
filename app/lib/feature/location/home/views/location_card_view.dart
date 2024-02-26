@@ -45,13 +45,13 @@ class LocationCardView extends StatelessWidget {
                 children: [
                   DeviceAvailabilityIndicatorView(
                     assetName: AppStrings.weatherStation,
-                    assetIcon: 'assets/icons/weather-station.png',
+                    assetIcon: AppImages.weatherStation,
                     isAvailable: locationModel.weatherStation != null ? true : false,
                   ),
                   SizedBox(width: AppStyle.horizontalPadding16),
                   DeviceAvailabilityIndicatorView(
                     assetName: AppStrings.cctv,
-                    assetIcon: 'assets/icons/cctv.png',
+                    assetIcon: AppImages.cctv,
                     isAvailable: locationModel.cctv != null ? true : false,
                   ),
                 ],
@@ -64,7 +64,7 @@ class LocationCardView extends StatelessWidget {
                     PVSystemIndicatorView(
                       indicatorName: AppStrings.capacity,
                       indicatorValue: '${locationModel.capacity.toString()} ${AppStrings.slots}',
-                      assetIcon: 'assets/icons/capacity-avatar.png',
+                      assetIcon: AppImages.capacityAvatar,
                       iconSize: AppStyle.iconSize40,
                     ),
                     SizedBox(width: AppStyle.horizontalPadding30),
@@ -78,7 +78,7 @@ class LocationCardView extends StatelessWidget {
                     PVSystemIndicatorView(
                       indicatorName: AppStrings.installedSolarTrackers(locationModel.solarTrackers.length),
                       indicatorValue: '${locationModel.solarTrackers.length} ${AppStrings.installed}',
-                      assetIcon: 'assets/icons/solar-tracker-avatar.png',
+                      assetIcon: AppImages.solarTrackerAvatar,
                       iconSize: AppStyle.iconSize40,
                     ),
                   ],

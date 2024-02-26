@@ -49,16 +49,12 @@ class AddPublicationPage extends StatelessWidget {
                                     currentValue: viewModel.publicationType.index,
                                     onChanged: (index) => index != null ? viewModel.setPublicationType(index) : null,
                                     alignment: AlignmentDirectional.centerEnd,
-                                    items: const [
-                                      DropdownMenuItem(
-                                        value: 0,
-                                        child: Text(AppStrings.publicationTypeProduct),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: 1,
-                                        child: Text(AppStrings.publicationTypeService),
-                                      ),
-                                    ],
+                                    items: PublicationType.values.map((type) {
+                                      return DropdownMenuItem(
+                                        value: PublicationType.values.indexOf(type),
+                                        child: Text(type.name),
+                                      );
+                                    }).toList(),
                                   ),
                                 ],
                               ),
@@ -170,8 +166,8 @@ class AddPublicationPage extends StatelessWidget {
                                       children: [
                                         Image.file(
                                           image,
-                                          height: 120,
-                                          width: 120,
+                                          height: AppStyle.addPublicationImageSize,
+                                          width: AppStyle.addPublicationImageSize,
                                           fit: BoxFit.cover,
                                         ),
                                         Positioned(
@@ -179,7 +175,7 @@ class AddPublicationPage extends StatelessWidget {
                                           right: 0,
                                           child: IconButton(
                                             onPressed: () => viewModel.removeImage(image),
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Icons.close_rounded,
                                               color: AppStyle.iconColor,
                                             ),

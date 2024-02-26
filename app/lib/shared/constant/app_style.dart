@@ -143,5 +143,6 @@ class AppStyle {
   static const int publicationCardTitleMaxLines = 2;
   static final double publicationDetailsImageCarouselHeight = 350.h;
   static const int publicationDetailsTrimLines = 5;
+  static final double addPublicationImageSize = 120.w;
 
 }

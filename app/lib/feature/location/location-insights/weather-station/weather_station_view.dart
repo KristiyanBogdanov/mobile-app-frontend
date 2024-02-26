@@ -87,12 +87,12 @@ class _WeatherStationViewState extends State<WeatherStationView> {
                       crossAxisCount: 2,
                       children: [
                         SensorStatusCardView(
-                          assetName: 'assets/icons/solar-tracker-avatar.png',
+                          assetName: AppImages.tempSensorAvatar,
                           sensorName: AppStrings.temperatureSensor,
                           isActive: viewModel.isWsTempSensorActive,
                         ),
                         SensorStatusCardView(
-                          assetName: 'assets/icons/solar-tracker-avatar.png',
+                          assetName: AppImages.anemometerAvatar,
                           sensorName: AppStrings.anemometer,
                           isActive: viewModel.isWsAnemometerActive,
                         ),

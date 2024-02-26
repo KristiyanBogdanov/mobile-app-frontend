@@ -32,12 +32,16 @@ class SharedWithCardView extends StatelessWidget {
         : Row(
             children: [
               ..._firstFewSharedWith.map((user) {
-                return UserAvatarView(initial: user.username[0].toUpperCase());
+                return UserAvatarView(
+                  initial: user.username[0].toUpperCase(),
+                  widthFactor: AppStyle.avatarWidthFactor,
+                );
               }),
               _isSharedWithMoreThanTwo
                   ? UserAvatarView(
                       initial: '+${sharedWith.length - AppStyle.maxSharedWith}',
                       color: AppStyle.textColor,
+                      widthFactor: AppStyle.avatarWidthFactor,
                     )
                   : const SizedBox(),
               SizedBox(width: AppStyle.horizontalPadding20),

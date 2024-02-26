@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 class SelectCategoryView extends StatelessWidget {
   final String title;
   final List<String> categories;
-  final Function(String) isCategorySelected;
-  final Function(String) onCategorySelected;
+  final Function isCategorySelected;
+  final Function onCategorySelected;
 
   const SelectCategoryView({
     required this.title,

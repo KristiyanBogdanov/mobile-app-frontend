@@ -14,15 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-Future<void> _handleBackgroundMessage(RemoteMessage message) async {
-  print('Handling a background message ${message.messageId}');
-  print(message.notification?.title);
-  print(message.notification?.body);
-  print(message.data);
-  print("HERE3");
-}
+Future<void> _handleBackgroundMessage(RemoteMessage message) async {}
 
-Future<void> _handleMessage2(RemoteMessage? message) async {
+Future<void> _updateAppState(RemoteMessage? message) async {
   if (message == null) {
     return;
   }
@@ -35,11 +29,9 @@ Future<void> _handleMessage2(RemoteMessage? message) async {
   if (notificationType == NotificationType.inactiveDevice.name ||
       notificationType == NotificationType.deviceStateReport.name) {
     final hwNotification = HwNotificationModel.fromJson(jsonDecode(message.data['body']));
-    await userRepsitory.addHwNotification(hwNotification);
+    userRepsitory.addHwNotification(hwNotification);
   } else if (notificationType == NotificationType.locationUpdate.name) {
     final locationId = jsonDecode(message.data['body'])['locationId'];
-
-    print("locationId: $locationId");
 
     try {
       final location = await locationRepository.getLocation(locationId);
@@ -55,6 +47,9 @@ Future<void> _handleMessage2(RemoteMessage? message) async {
   } else if (notificationType == NotificationType.invitationUpdate.name) {
     final invitationId = jsonDecode(message.data['body'])['invitationId'];
     userRepsitory.removeInvitation(invitationId);
+  } else if (notificationType == NotificationType.hwNotificationUpdate.name) {
+    final hwNotificationId = jsonDecode(message.data['body'])['hwNotificationId'];
+    userRepsitory.removeHwNotification(hwNotificationId);
   }
 }
 
@@ -68,16 +63,16 @@ class FirebaseApi extends ChangeNotifier {
   );
   final _localNotifications = FlutterLocalNotificationsPlugin();
   final _navigationService = DependencyInjection.getIt<NavigationService>();
-  final _userRepsitory = DependencyInjection.getIt<UserRepository>();
 
   Future<String?> getDeviceToken() async {
     return await _firebaseMessaging.getToken();
   }
 
-  void _handleMessage(RemoteMessage? message) {
-    print("HERE2");
+  Future<void> _handleMessage(RemoteMessage? message) async {
     if (message != null) {
-      _navigationService.clearStackAndShow(RouteEnum.home.name, arguments: PageEnum.notifications.value);
+      await _updateAppState(message);
+      await _navigationService.clearStackAndShow(RouteEnum.home.name, arguments: PageEnum.notifications.value);
+      notifyListeners();
     }
   }
 
@@ -92,11 +87,7 @@ class FirebaseApi extends ChangeNotifier {
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
     FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
     FirebaseMessaging.onMessage.listen((message) async {
-      await _handleMessage2(message);
-      // TODO: location update get location data, if not found exception -> remove location from repo
-      // TODO: invitation update get invitation and get location data
-
-      //await _userRepsitory.fetchNotifications();
+      await _updateAppState(message);
       notifyListeners();
 
       final notification = message.notification;

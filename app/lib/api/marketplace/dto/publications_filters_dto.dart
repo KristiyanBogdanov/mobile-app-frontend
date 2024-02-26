@@ -1,3 +1,4 @@
+import 'package:app/api/marketplace/enum/index.dart';
 import 'package:flutter/foundation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -5,12 +6,12 @@ part 'generated/publications_filters_dto.g.dart';
 
 @JsonSerializable()
 class PublicationsFiltersDto {
-  List<String> productCategories;
-  List<String> serviceCategories;
+  List<ProductCategory> productCategories;
+  List<ServiceCategory> serviceCategories;
 
   PublicationsFiltersDto({
-    this.productCategories = const [],
-    this.serviceCategories = const [],
+    this.productCategories = ProductCategory.values,
+    this.serviceCategories = ServiceCategory.values,
   });
 
   @override

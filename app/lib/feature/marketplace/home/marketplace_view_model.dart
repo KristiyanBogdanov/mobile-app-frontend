@@ -30,9 +30,6 @@ class MarketplaceViewModel extends ChangeNotifier {
     if (!areLimitsFetched) {
       await _marketplaceRepository.fetchLimits();
     }
-
-    filters.productCategories = [..._marketplaceRepository.limits!.productCategories];
-    filters.serviceCategories = [..._marketplaceRepository.limits!.serviceCategories];
   }
 
   @override

@@ -11,8 +11,8 @@ PostProductDto _$PostProductDtoFromJson(Map<String, dynamic> json) => PostProduc
       json['description'] as String,
       $enumDecode(_$PricingOptionEnumMap, json['pricingOption']),
       (json['price'] as num?)?.toDouble(),
-      json['condition'] as String,
-      json['category'] as String,
+      $enumDecode(_$ProductConditionEnumMap, json['condition']),
+      $enumDecode(_$ProductCategoryEnumMap, json['category']),
     );
 
 Map<String, dynamic> _$PostProductDtoToJson(PostProductDto instance) => <String, dynamic>{
@@ -20,11 +20,26 @@ Map<String, dynamic> _$PostProductDtoToJson(PostProductDto instance) => <String,
       'description': instance.description,
       'pricingOption': _$PricingOptionEnumMap[instance.pricingOption]!,
       'price': instance.price ?? {},
-      'condition': instance.condition,
-      'category': instance.category,
+      'condition': _$ProductConditionEnumMap[instance.condition]!,
+      'category': _$ProductCategoryEnumMap[instance.category]!,
     };
 
 const _$PricingOptionEnumMap = {
   PricingOption.fixed: 'FIXED',
   PricingOption.negotiable: 'NEGOTIABLE',
+};
+
+const _$ProductConditionEnumMap = {
+  ProductCondition.newT: 'NEW',
+  ProductCondition.used: 'USED',
+};
+
+const _$ProductCategoryEnumMap = {
+  ProductCategory.solarPanels: 'SOLAR_PANELS',
+  ProductCategory.inverters: 'INVERTERS',
+  ProductCategory.batteries: 'BATTERIES',
+  ProductCategory.chargeControllers: 'CHARGE_CONTROLLERS',
+  ProductCategory.motors: 'MOTORS',
+  ProductCategory.cablesAndConnectors: 'CABLES_AND_CONNECTORS',
+  ProductCategory.other: 'OTHER',
 };

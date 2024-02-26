@@ -14,7 +14,7 @@ class MarketplaceRepository {
   }
 
   Future<GetPublicationsModel> getPublications(int page, int limit, PublicationsFiltersDto filters) async {
-    return _marketplaceService.getPublications(page, limit, filters, areLimitsFetched: limits != null);
+    return _marketplaceService.getPublications(page, limit, filters);
   }
 
   Future<void> postProduct(PostProductDto product, List<File> images) async {

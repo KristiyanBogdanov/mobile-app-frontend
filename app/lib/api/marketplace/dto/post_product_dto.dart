@@ -1,4 +1,4 @@
-import 'package:app/api/marketplace/enum/pricing_option.dart';
+import 'package:app/api/marketplace/enum/index.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'generated/post_product_dto.g.dart';
@@ -9,8 +9,8 @@ class PostProductDto {
   final String description;
   final PricingOption pricingOption;
   final double? price;
-  final String condition;
-  final String category;
+  final ProductCondition condition;
+  final ProductCategory category;
 
   PostProductDto(
     this.title,

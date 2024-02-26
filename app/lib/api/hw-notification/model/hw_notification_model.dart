@@ -27,6 +27,16 @@ class HwNotificationModel {
     this.timestamp,
   );
 
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is HwNotificationModel && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
+
   factory HwNotificationModel.fromJson(Map<String, dynamic> json) => _$HwNotificationModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$HwNotificationModelToJson(this);

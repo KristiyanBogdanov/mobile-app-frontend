@@ -38,13 +38,21 @@ class UserRepository {
     removeLocationFromList(locationId);
   }
 
-  Future<void> addHwNotification(HwNotificationModel notification) async {
-    userModel!.hwNotifications.add(notification);
+  void addHwNotification(HwNotificationModel notification) {
+    if (userModel!.hwNotifications.contains(notification)) {
+      return;
+    }
+
+    userModel!.hwNotifications.insert(0, notification);
+  }
+
+  void removeHwNotification(String hwNotificationId) {
+    userModel!.hwNotifications.removeWhere((hwNotification) => hwNotification.id == hwNotificationId);
   }
 
   Future<void> deleteHwNotification(String notificationId) async {
     await _userService.deleteHwNotification(notificationId);
-    userModel!.hwNotifications.removeWhere((notification) => notification.id == notificationId);
+    removeHwNotification(notificationId);
   }
 
   Future<void> inviteUserToLocation(String locationId, String email) async {
@@ -52,7 +60,11 @@ class UserRepository {
   }
 
   void addInvitation(InvitationModel invitation) {
-    userModel!.invitations.add(invitation);
+    if (userModel!.invitations.contains(invitation)) {
+      return;
+    }
+
+    userModel!.invitations.insert(0, invitation);
   }
 
   void removeInvitation(String invitationId) {

@@ -89,7 +89,7 @@ class SignUpPage extends StatelessWidget {
                     ),
                     PrimaryButton(
                       isDisabled: !viewModel.isButtonEnabled,
-                      text: AppStrings.createAccountButton,
+                      text: AppStrings.signUpButton,
                       onPressed: () async => await _viewModel.signUp(),
                     ),
                   ],

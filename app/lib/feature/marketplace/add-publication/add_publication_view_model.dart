@@ -1,8 +1,7 @@
 import 'dart:io';
 
 import 'package:app/api/marketplace/dto/index.dart';
-import 'package:app/api/marketplace/enum/pricing_option.dart';
-import 'package:app/api/marketplace/enum/publication_type.dart';
+import 'package:app/api/marketplace/enum/index.dart';
 import 'package:app/api/marketplace/index.dart';
 import 'package:app/shared/constant/app_strings.dart';
 import 'package:app/util/common/handle_unauthorized.dart';
@@ -19,20 +18,15 @@ class AddPublicationViewModel extends ChangeNotifier {
   PublicationType publicationType = PublicationType.product;
   String _title = '';
   String _description = '';
-  late String category;
+  String category = ProductCategory.values.first.name;
   PricingOption pricingOption = PricingOption.fixed;
   double? _price;
-  late String condition;
+  String condition = ProductCondition.values.first.name;
   final List<File> images = [];
   String? titleError;
   final imagePicker = ImagePicker();
   final _marketplaceRepository = DependencyInjection.getIt<MarketplaceRepository>();
   final _navigationService = DependencyInjection.getIt<NavigationService>();
-
-  AddPublicationViewModel() {
-    category = _marketplaceRepository.limits!.productCategories.first;
-    condition = _marketplaceRepository.limits!.productConditionOptions.first;
-  }
 
   Future<void> addPublication() async {
     _clearErrors();
@@ -55,8 +49,8 @@ class AddPublicationViewModel extends ChangeNotifier {
                 _description,
                 pricingOption,
                 _price,
-                condition,
-                category,
+                ProductCondition.fromString(condition),
+                ProductCategory.fromString(category),
               ),
               images,
             )
@@ -66,7 +60,7 @@ class AddPublicationViewModel extends ChangeNotifier {
                 _description,
                 pricingOption,
                 _price,
-                category,
+                ServiceCategory.fromString(category),
               ),
               images,
             );
@@ -107,8 +101,8 @@ class AddPublicationViewModel extends ChangeNotifier {
     if (publicationType != newType) {
       publicationType = newType;
       category = publicationType == PublicationType.product
-          ? _marketplaceRepository.limits!.productCategories.first
-          : _marketplaceRepository.limits!.serviceCategories.first;
+          ? ProductCategory.values.first.name
+          : ServiceCategory.values.first.name;
 
       notifyListeners();
     }
@@ -126,14 +120,14 @@ class AddPublicationViewModel extends ChangeNotifier {
 
   void setCategory(int index) {
     category = publicationType == PublicationType.product
-        ? _marketplaceRepository.limits!.productCategories[index]
-        : _marketplaceRepository.limits!.serviceCategories[index];
+        ? ProductCategory.values[index].name
+        : ServiceCategory.values[index].name;
 
     notifyListeners();
   }
 
   void setProductCondition(int index) {
-    condition = _marketplaceRepository.limits!.productConditionOptions[index];
+    condition = ProductCondition.values[index].name;
     notifyListeners();
   }
 
@@ -169,8 +163,8 @@ class AddPublicationViewModel extends ChangeNotifier {
       (pricingOption == PricingOption.fixed ? _price != null : true);
 
   List<String> get categories => publicationType == PublicationType.product
-      ? _marketplaceRepository.limits!.productCategories
-      : _marketplaceRepository.limits!.serviceCategories;
+      ? ProductCategory.values.map((value) => value.name).toList()
+      : ServiceCategory.values.map((value) => value.name).toList();
 
-  List<String> get productConditions => _marketplaceRepository.limits!.productConditionOptions;
+  List<String> get productConditions => ProductCondition.values.map((value) => value.name).toList();
 }

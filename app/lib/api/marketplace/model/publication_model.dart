@@ -8,7 +8,6 @@ abstract class PublicationModel {
   final List<String> images;
   final PricingOption pricingOption;
   final double? price;
-  final String category;
   final String createdAt;
   final bool amIPublisher;
   final BriefUserInfoModel publisher;
@@ -20,7 +19,6 @@ abstract class PublicationModel {
     this.images,
     this.pricingOption,
     this.price,
-    this.category,
     this.createdAt,
     this.amIPublisher,
     this.publisher,

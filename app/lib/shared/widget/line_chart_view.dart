@@ -197,7 +197,7 @@ class _LineChartViewState extends State<LineChartView> {
       final sensorValue = widget.avgSensorValues![i];
 
       if (sensorValue.average != null) {
-        spots.add(FlSpot(maxX - i.toDouble() + _minX, sensorValue.average!));
+        spots.add(FlSpot(maxX - i.toDouble(), sensorValue.average!));
       }
     }
 

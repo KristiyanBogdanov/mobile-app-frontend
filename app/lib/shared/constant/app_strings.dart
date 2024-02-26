@@ -11,7 +11,6 @@ class AppStrings {
   static const String signUpPageTitle = 'Create an account';
   static const String signUpSubtitle = 'Sign up to continue';
   static const String signUpButton = 'Sign up';
-  static const String createAccountButton = 'Register';
   static const String signOutButton = 'Sign out';
 
   static const String usernameHint = 'Username';
@@ -54,8 +53,6 @@ class AppStrings {
   static const String stSerialNumberAlreadyUsedError = 'Some of the solar trackers are already used';
   static const String locationAlreadyAddedError = 'Location is already added';
   static const String addNewLocationBadRequest = 'Invalid add new location data';
-  static const String addExistingLocationBadRequest =
-      'Invalid add existing location data'; // TODO: I think this string is meaningless
 
   static const String addNewLocationPageTitle = 'Add new location';
   static const String locationNameSectionTitle = 'Location name';
@@ -186,8 +183,6 @@ class AppStrings {
   static const String addPublicationPageTitle = 'Add new publication';
   static const String addPublicationButton = 'Add publication';
   static const String publicationTypeSectionTitle = 'Publication type';
-  static const String publicationTypeProduct = 'Product';
-  static const String publicationTypeService = 'Service';
   static const String publicationTitleSectionTitle = 'Title';
   static const String publicationDescriptionSectionTitle = 'Description';
   static const String publicationPriceSectionTitle = 'Price';
@@ -200,8 +195,37 @@ class AppStrings {
   static const String productDetailsPageTitle = 'Product details';
   static const String readMore = 'read more';
   static const String showLess = ' show less';
-  static String productCondition(String condition) => 'Product is $condition';
+  static String productCondition(String condition) => 'Product is ${condition.toLowerCase()}';
   static const String deletePublicationConfirmationTitle = 'Delete publication';
   static const String deletePublicationConfirmationDescription = 'Are you sure you want to delete the publication?';
   static const String deletePublicationConfirmationButton = 'Yes';
+
+  static const String solarTrackerAlreadyDeleted = 'Error! Solar tracker already deleted';
+
+  static const String productPublicationType = 'Product';
+  static const String servicePublicationType = 'Service';
+
+  static const String solarPanelsProductCategory = 'Solar panels';
+  static const String invertersProductCategory = 'Inverters';
+  static const String batteriesProductCategory = 'Batteries';
+  static const String chargeControllersProductCategory = 'Charge controllers';
+  static const String motorsProductCategory = 'Motors';
+  static const String cablesAndConnectorsProductCategory = 'Cables & Connectors';
+  static const String otherProductCategory = 'Other';
+
+  static const String newProductCondition = 'New';
+  static const String usedProductCondition = 'Used';
+
+  static const String cleaningServiceCategory = 'Cleaning';
+  static const String legalConsultingServiceCategory = 'Legal consulting';
+  static const String designingServiceCategory = 'Designing';
+  static const String performanceAnalysisServiceCategory = 'Performance analysis';
+  static const String installationServiceCategory = 'Installation';
+  static const String otherServiceCategory = 'Other';
+
+  static const String fixedPricingOption = 'Fixed';
+  static const String negotiablePricingOption = 'Negotiable';
+
+  static String invitationTitle(String ownerUsername, String locationName) =>
+      '$ownerUsername invited you to join location named $locationName';
 }

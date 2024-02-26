@@ -4,7 +4,8 @@ const deviceStateReportName = 'DEVICE_STATE_REPORT';
 const inactiveDeviceName = 'INACTIVE_DEVICE';
 const locationUpdateName = 'LOCATION_UPDATE';
 const invitationName = 'INVITATION';
-const invitationUpdateName = 'INVITATION_UPDATE';
+const invitationUpdateName = 'INVITATIONS_UPDATE';
+const hwNotificationUpdateName = 'HW_NOTIFICATIONS_UPDATE';
 
 enum NotificationType {
   @JsonValue(deviceStateReportName)
@@ -16,7 +17,9 @@ enum NotificationType {
   @JsonValue(invitationName)
   invitation(invitationName),
   @JsonValue(invitationUpdateName)
-  invitationUpdate(invitationUpdateName);
+  invitationUpdate(invitationUpdateName),
+  @JsonValue(hwNotificationUpdateName)
+  hwNotificationUpdate(hwNotificationUpdateName);
 
   final String name;
   const NotificationType(this.name);

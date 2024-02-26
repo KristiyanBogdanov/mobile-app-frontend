@@ -20,7 +20,7 @@ class AddTextButtonView extends StatelessWidget {
       style: TextButton.styleFrom(
         backgroundColor: AppStyle.contrastColor1.withOpacity(0.2),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppStyle.borderRadius20),
+          borderRadius: BorderRadius.circular(AppStyle.borderRadius24),
         ),
         padding: EdgeInsets.symmetric(horizontal: AppStyle.horizontalPadding16),
       ),

@@ -16,19 +16,8 @@ class MarketplaceService {
     return PublicationLimitsModel.fromJson(response.data);
   }
 
-  Future<GetPublicationsModel> getPublications(
-    int page,
-    int limit,
-    PublicationsFiltersDto filters, {
-    areLimitsFetched = true,
-  }) async {
-    Object? data;
-
-    if (areLimitsFetched) {
-      data = filters;
-    }
-
-    final response = await _httpService.get(_mobileAppApi.getPublications(page, limit), data: data);
+  Future<GetPublicationsModel> getPublications(int page, int limit, PublicationsFiltersDto filters) async {
+    final response = await _httpService.get(_mobileAppApi.getPublications(page, limit), data: filters);
     return GetPublicationsModel.fromJson(response.data);
   }
 

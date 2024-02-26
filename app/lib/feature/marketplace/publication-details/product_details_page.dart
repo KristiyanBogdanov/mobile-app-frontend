@@ -103,7 +103,7 @@ class ProductDetailsPage extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(AppStyle.borderRadius8),
                                       ),
                                       child: Text(
-                                        AppStrings.productCondition(product.condition),
+                                        AppStrings.productCondition(product.condition.name),
                                         style: TextStyle(
                                           color: AppStyle.textColor,
                                           fontSize: AppStyle.fontSize12,

@@ -18,6 +18,16 @@ class InvitationModel {
     this.timestamp,
   );
 
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is InvitationModel && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
+
   factory InvitationModel.fromJson(Map<String, dynamic> json) => _$InvitationModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$InvitationModelToJson(this);

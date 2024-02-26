@@ -11,18 +11,27 @@ PostServiceDto _$PostServiceDtoFromJson(Map<String, dynamic> json) => PostServic
       json['description'] as String,
       $enumDecode(_$PricingOptionEnumMap, json['pricingOption']),
       (json['price'] as num?)?.toDouble(),
-      json['category'] as String,
+      $enumDecode(_$ServiceCategoryEnumMap, json['category']),
     );
 
 Map<String, dynamic> _$PostServiceDtoToJson(PostServiceDto instance) => <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
       'pricingOption': _$PricingOptionEnumMap[instance.pricingOption]!,
-      'price': instance.price,
-      'category': instance.category,
+      'price': instance.price ?? {},
+      'category': _$ServiceCategoryEnumMap[instance.category]!,
     };
 
 const _$PricingOptionEnumMap = {
   PricingOption.fixed: 'FIXED',
   PricingOption.negotiable: 'NEGOTIABLE',
+};
+
+const _$ServiceCategoryEnumMap = {
+  ServiceCategory.cleaning: 'CLEANING',
+  ServiceCategory.legalConsulting: 'LEGAL_CONSULTING',
+  ServiceCategory.designing: 'DESIGNING',
+  ServiceCategory.performanceAnalysis: 'PERFORMANCE_ANALYSIS',
+  ServiceCategory.installation: 'INSTALLATION',
+  ServiceCategory.other: 'OTHER',
 };
