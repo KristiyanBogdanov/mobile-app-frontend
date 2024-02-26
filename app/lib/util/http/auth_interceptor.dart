@@ -59,29 +59,6 @@ class AuthInterceptor implements Interceptor {
             return handler.reject(DioException(requestOptions: error.requestOptions));
         }
       }
-
-      // final response = await _dio.get(
-      //   _mobileAppApi.refreshTokens(),
-      //   options: Options(
-      //     headers: {
-      //       'Authorization': 'Bearer ${await _jwtStorage.getRefreshToken()}',
-      //     },
-      //     validateStatus: (_) => true,
-      //   ),
-      // );
-
-      // switch (response.statusCode) {
-      //   case HttpStatus.ok:
-      //     final accessToken = readAccessTokenFromJsonBody(response.data);
-      //     final refreshToken = readRefreshTokenFromJsonBody(response.data);
-
-      //     await _jwtStorage.saveTokens(accessToken, refreshToken);
-      //     error.requestOptions.headers['Authorization'] = 'Bearer ${await _jwtStorage.getAccessToken()}';
-
-      //     return handler.resolve(await _dio.fetch(error.requestOptions));
-      //   default:
-      //     handler.reject(DioException(requestOptions: error.requestOptions));
-      // }
     }
 
     return handler.next(error);
