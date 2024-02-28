@@ -73,7 +73,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                         child: PrimaryButton(
                           text: AppStrings.signOutButton,
-                          bgColor: AppStyle.negativeColor.withOpacity(0.15),
+                          bgColor: AppStyle.negativeColor,
                           onPressed: () async {
                             await _viewModel.signOut();
                           },

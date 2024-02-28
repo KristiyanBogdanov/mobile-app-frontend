@@ -59,15 +59,15 @@ class WelcomePage extends StatelessWidget {
               Column(
                 children: [
                   PrimaryButton(
-                    text: AppStrings.signInButton,
-                    onPressed: () async => await _viewModel.navigateToSignIn(),
+                    text: AppStrings.signUpButton,
+                    onPressed: () async => await _viewModel.navigateToSignUp(),
                   ),
                   SizedBox(height: AppStyle.verticalPadding8),
                   PrimaryButton(
-                    text: AppStrings.signUpButton,
-                    onPressed: () async => await _viewModel.navigateToSignUp(),
+                    text: AppStrings.signInButton,
                     bgColor: AppStyle.textColor,
                     textColor: Colors.black,
+                    onPressed: () async => await _viewModel.navigateToSignIn(),
                   ),
                 ],
               )

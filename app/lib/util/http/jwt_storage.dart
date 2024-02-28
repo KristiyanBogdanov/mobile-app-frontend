@@ -1,18 +1,18 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class JwtStorage {
   static const _accessTokenKey = 'access_token';
   static const _refreshTokenKey = 'refresh_token';
   String _accessToken = '';
   String _refreshToken = '';
+  final _secureStorage = const FlutterSecureStorage();
 
   Future<void> saveTokens(String accessToken, String refreshToken) async {
     _accessToken = accessToken;
     _refreshToken = refreshToken;
 
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString(_accessTokenKey, accessToken);
-    prefs.setString(_refreshTokenKey, refreshToken);
+    await _secureStorage.write(key: _accessTokenKey, value: accessToken);
+    await _secureStorage.write(key: _refreshTokenKey, value: refreshToken);
   }
 
   Future<String> getAccessToken() async {
@@ -20,8 +20,7 @@ class JwtStorage {
       return _accessToken;
     }
 
-    final prefs = await SharedPreferences.getInstance();
-    _accessToken = prefs.getString(_accessTokenKey) ?? '';
+    _accessToken = await _secureStorage.read(key: _accessTokenKey) ?? '';
 
     return _accessToken;
   }
@@ -31,8 +30,7 @@ class JwtStorage {
       return _refreshToken;
     }
 
-    final prefs = await SharedPreferences.getInstance();
-    _refreshToken = prefs.getString(_refreshTokenKey) ?? '';
+    _refreshToken = await _secureStorage.read(key: _refreshTokenKey) ?? '';
 
     return _refreshToken;
   }
@@ -51,8 +49,7 @@ class JwtStorage {
     _accessToken = '';
     _refreshToken = '';
 
-    final prefs = await SharedPreferences.getInstance();
-    prefs.remove(_accessTokenKey);
-    prefs.remove(_refreshTokenKey);
+    await _secureStorage.delete(key: _accessTokenKey);
+    await _secureStorage.delete(key: _refreshTokenKey);
   }
 }
