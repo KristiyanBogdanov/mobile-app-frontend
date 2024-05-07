@@ -4,9 +4,11 @@ import 'package:app/api/firebase/notification_type.dart';
 import 'package:app/api/hw-notification/index.dart';
 import 'package:app/api/invitation/model/invitation_model.dart';
 import 'package:app/api/location/exception/index.dart';
+import 'package:app/api/location/exception/location_access_denied_excepion.dart';
 import 'package:app/api/location/location_repository.dart';
 import 'package:app/api/user/user_repository.dart';
 import 'package:app/feature/home/index.dart';
+import 'package:app/shared/constant/index.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
 import 'package:app/util/route/index.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -16,9 +18,9 @@ import 'package:stacked_services/stacked_services.dart';
 
 Future<void> _handleBackgroundMessage(RemoteMessage message) async {}
 
-Future<void> _updateAppState(RemoteMessage? message) async {
+Future<String?> _updateAppState(RemoteMessage? message) async {
   if (message == null) {
-    return;
+    return null;
   }
 
   final locationRepository = DependencyInjection.getIt<LocationRepository>();
@@ -40,6 +42,11 @@ Future<void> _updateAppState(RemoteMessage? message) async {
     } on LocationNotFoundException {
       userRepsitory.removeLocationFromList(locationId);
       locationRepository.removeLocationInsights(locationId);
+      return AppStrings.deletedLocation;
+    } on LocationAccessDeniedException {
+      userRepsitory.removeLocationFromList(locationId);
+      locationRepository.removeLocationInsights(locationId);
+      return AppStrings.locationAccessDenied;
     }
   } else if (notificationType == NotificationType.invitation.name) {
     final invitation = InvitationModel.fromJson(jsonDecode(message.data['body']));
@@ -51,6 +58,8 @@ Future<void> _updateAppState(RemoteMessage? message) async {
     final hwNotificationId = jsonDecode(message.data['body'])['hwNotificationId'];
     userRepsitory.removeHwNotification(hwNotificationId);
   }
+
+  return null;
 }
 
 class FirebaseApi extends ChangeNotifier {
@@ -63,6 +72,7 @@ class FirebaseApi extends ChangeNotifier {
   );
   final _localNotifications = FlutterLocalNotificationsPlugin();
   final _navigationService = DependencyInjection.getIt<NavigationService>();
+  late String _message;
 
   Future<String?> getDeviceToken() async {
     return await _firebaseMessaging.getToken();
@@ -70,7 +80,7 @@ class FirebaseApi extends ChangeNotifier {
 
   Future<void> _handleMessage(RemoteMessage? message) async {
     if (message != null) {
-      await _updateAppState(message);
+      _message = await _updateAppState(message) ?? '';
       await _navigationService.clearStackAndShow(RouteEnum.home.name, arguments: PageEnum.notifications.value);
       notifyListeners();
     }
@@ -87,7 +97,7 @@ class FirebaseApi extends ChangeNotifier {
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
     FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
     FirebaseMessaging.onMessage.listen((message) async {
-      await _updateAppState(message);
+      _message = await _updateAppState(message) ?? '';
       notifyListeners();
 
       final notification = message.notification;
@@ -136,4 +146,6 @@ class FirebaseApi extends ChangeNotifier {
     await _initPushNotifications();
     await _initLocalNotifications();
   }
+
+  String get message => _message;
 }

@@ -92,6 +92,10 @@ class MobileAppApi {
     return '$_location/$locationId/solar-trackers/$serialNumber';
   }
 
+  String removeUserFromLocation(String locationId, String userId) {
+    return '$_user/locations/$locationId/users/$userId';
+  }
+
   String getPublicationLimits() {
     return '$_marketplace/limits';
   }

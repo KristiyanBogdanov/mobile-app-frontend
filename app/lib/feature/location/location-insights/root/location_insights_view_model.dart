@@ -165,6 +165,18 @@ class LocationInsightsViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> removeUser(String userId) async {
+    try {
+      await _userRepository.removeUserFromLocation(locationModel.id, userId);
+      locationModel.sharedWith.removeWhere((user) => user.id == userId);
+      notifyListeners();
+    } on UnauthorizedApiException {
+      handleUnauthorized();
+    } on UnknownApiException catch (e) {
+      showSnackbar(e.message);
+    }
+  }
+
   Future<void> _deleteLocation() async {
     _isLoading = true;
     notifyListeners();

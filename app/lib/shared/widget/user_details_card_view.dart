@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 class UserDetailsCardView extends StatelessWidget {
   final String username;
   final String email;
+  final PopupMenuButton<dynamic>? menuButton;
 
   const UserDetailsCardView({
     required this.username,
     required this.email,
+    this.menuButton,
     super.key,
   });
 
@@ -20,9 +22,11 @@ class UserDetailsCardView extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppStyle.borderRadius20),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: AppStyle.horizontalPadding16,
-          vertical: AppStyle.verticalPadding12,
+        padding: EdgeInsets.fromLTRB(
+          AppStyle.horizontalPadding16,
+          AppStyle.verticalPadding12,
+          AppStyle.horizontalPadding8,
+          AppStyle.verticalPadding12,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,6 +57,7 @@ class UserDetailsCardView extends StatelessWidget {
                 ),
               ],
             ),
+            if (menuButton != null) menuButton!,
           ],
         ),
       ),

@@ -45,6 +45,10 @@ class UserService {
     await _httpService.delete(_mobileAppApi.respondToInvitation(invitationId), data: respondDto);
   }
 
+  Future<void> removeUserFromLocation(String locationId, String userId) async {
+    await _httpService.delete(_mobileAppApi.removeUserFromLocation(locationId, userId));
+  }
+
   Future<void> deleteHwNotification(String notificationId) async {
     await _httpService.delete(_mobileAppApi.deleteHwNotification(notificationId));
   }
