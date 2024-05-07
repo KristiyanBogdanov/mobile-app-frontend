@@ -22,14 +22,14 @@ class LocationInsightsPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => viewModel,
       child: Consumer<FirebaseApi>(
-        builder: (context, _, child) {
+        builder: (context, firebaseChangeNotifier, child) {
           return !viewModel.isLocationAvailable
               ? Scaffold(
                   backgroundColor: AppStyle.bgColor,
                   appBar: AppBarView(title: viewModel.locationModel.name),
-                  body: const NoContentView(
+                  body: NoContentView(
                     svgAsset: AppImages.deletedModel,
-                    title: AppStrings.deletedLocation,
+                    title: firebaseChangeNotifier.message,
                   ),
                 )
               : DefaultTabController(

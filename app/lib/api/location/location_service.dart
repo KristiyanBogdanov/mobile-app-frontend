@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app/api/location/exception/index.dart';
+import 'package:app/api/location/exception/location_access_denied_excepion.dart';
 import 'package:app/api/location/model/index.dart';
 import 'package:app/util/api/mobile_app_api.dart';
 import 'package:app/util/dependency_injection/dependency_injection.dart';
@@ -20,6 +21,7 @@ class LocationService {
       _mobileAppApi.getLocation(locationId),
       customExceptions: {
         HttpStatus.notFound: LocationNotFoundException(),
+        HttpStatus.forbidden: LocationAccessDeniedException(),
       },
     );
 

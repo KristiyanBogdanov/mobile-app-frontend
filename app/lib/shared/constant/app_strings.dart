@@ -161,6 +161,7 @@ class AppStrings {
   static const String deleteSolarTracker = 'Delete solar tracker';
   static const String deletedSolarTracker = 'The solar tracker has been deleted';
   static const String deletedLocation = 'The location has been deleted';
+  static const String locationAccessDenied = 'You do not have access to this location';
   static const String inviteUserDialogTitle = 'Invite user';
   static const String inviteUserButton = 'Invite';
   static const String inviteUserFailedBecauseOfLocationNotExists = 'Location does not exist anymore';
@@ -228,4 +229,6 @@ class AppStrings {
 
   static String invitationTitle(String ownerUsername, String locationName) =>
       '$ownerUsername invited you to join location named $locationName';
+
+  static const String removeUser = 'Remove';
 }

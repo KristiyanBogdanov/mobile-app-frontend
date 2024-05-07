@@ -126,6 +126,27 @@ class OverviewView extends StatelessWidget {
                     return UserDetailsCardView(
                       username: user.username,
                       email: user.email,
+                      menuButton: viewModel.locationModel.amIOwner
+                          ? PopupMenuButton(
+                              onSelected: (value) {
+                                if (value == 0) {
+                                  viewModel.removeUser(user.id);
+                                }
+                              },
+                              color: AppStyle.secondaryColor1,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(AppStyle.borderRadius20),
+                              ),
+                              itemBuilder: (context) {
+                                return [
+                                  PopupMenuItemView(
+                                    value: 0,
+                                    text: AppStrings.removeUser,
+                                  ),
+                                ];
+                              },
+                            )
+                          : null,
                     );
                   })
               ],

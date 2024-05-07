@@ -76,6 +76,10 @@ class UserRepository {
     removeInvitation(invitationId);
   }
 
+  Future<void> removeUserFromLocation(String locationId, String userId) async {
+    await _userService.removeUserFromLocation(locationId, userId);
+  }
+
   void clearData() {
     userModel = null;
   }
