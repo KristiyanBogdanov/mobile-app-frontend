@@ -1,0 +1,1 @@
+export './invitation_model.dart';

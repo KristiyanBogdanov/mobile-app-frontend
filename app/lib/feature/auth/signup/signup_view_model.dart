@@ -1,0 +1,101 @@
+import 'package:app/api/auth/index.dart';
+import 'package:app/api/firebase/firebase_api.dart';
+import 'package:app/api/user/user_repository.dart';
+import 'package:app/feature/auth/auth_validator.dart';
+import 'package:app/shared/constant/app_strings.dart';
+import 'package:app/util/dependency_injection/dependency_injection.dart';
+import 'package:app/util/http/index.dart';
+import 'package:app/util/route/index.dart';
+import 'package:app/util/stacked-services/index.dart';
+import 'package:flutter/material.dart';
+import 'package:stacked_services/stacked_services.dart';
+
+class SignUpViewModel extends ChangeNotifier {
+  bool isButtonEnabled = true;
+  String _username = '';
+  String _email = '';
+  String _password = '';
+  String? usernameError;
+  String? emailError;
+  String? passwordError;
+  final formKey = GlobalKey<FormState>();
+  late final AuthValidator _authValidator;
+  final _navigationService = DependencyInjection.getIt<NavigationService>();
+  final _authRepository = DependencyInjection.getIt<AuthRepository>();
+  final _userRepository = DependencyInjection.getIt<UserRepository>();
+  final _firebaseApi = DependencyInjection.getIt<FirebaseApi>();
+
+  SignUpViewModel() {
+    _authValidator = AuthValidator(_authRepository.limits!);
+  }
+
+  Future<void> signUp() async {
+    _clearErrors();
+
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
+    try {
+      final fcmToken = await _firebaseApi.getDeviceToken();
+
+      if (fcmToken == null) {
+        showSnackbar(AppStrings.firebaseError);
+        return;
+      }
+
+      isButtonEnabled = false;
+      notifyListeners();
+
+      _userRepository.userModel =
+          await _authRepository.signUp(SignUpDto(_username.trim(), _email, _password, fcmToken));
+      _navigationService.clearStackAndShow(RouteEnum.home.name);
+
+      return;
+    } on EmailAlreadyUsedException catch (e) {
+      emailError = e.message;
+    } on BadRequestApiException catch (e) {
+      showSnackbar(e.message);
+    } on UnknownApiException catch (e) {
+      showSnackbar(e.message);
+    }
+
+    isButtonEnabled = true;
+    notifyListeners();
+  }
+
+  String? validateUsername(String? username) {
+    return _authValidator.validateUsername(username);
+  }
+
+  String? validateEmail(String? email) {
+    return _authValidator.validateEmail(email);
+  }
+
+  String? validatePassword(String? password) {
+    return _authValidator.validatePassword(password);
+  }
+
+  String? validateConfirmPassword(String? confirmPassword) {
+    return _authValidator.validateConfirmPassword(_password, confirmPassword);
+  }
+
+  void _clearErrors() {
+    usernameError = null;
+    emailError = null;
+    passwordError = null;
+    notifyListeners();
+  }
+
+  void setUsername(String username) {
+    _username = username;
+  }
+
+  void setEmail(String email) {
+    _email = email;
+  }
+
+  void setPassword(String password) {
+    _password = password;
+  }
+}
